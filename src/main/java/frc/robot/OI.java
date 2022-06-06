@@ -21,9 +21,9 @@ public class OI {
 
     //creating buttons for the joysticks
     ButtonReader  triggerLeft = new ButtonReader(leftJoy, kButtonID_Drive1);
-    ButtonReader  button2Left = new ButtonReader(leftJoy, kButtonID_Drive2);
+    ButtonReader  button2Left = new ButtonReader(leftJoy, INTAKE_BUTTON_DRIVER_ID);
     ButtonReader  button3Left = new ButtonReader(leftJoy, kButtonID_Drive3);
-    ButtonReader  button4Left = new ButtonReader(leftJoy, kButtonID_Drive4);
+    ButtonReader  button4Left = new ButtonReader(leftJoy, INTAKE_REVERSE_BUTTON_DRIVER_ID);
     ButtonReader  button5Left = new ButtonReader(leftJoy, kButtonID_Drive5);
     ButtonReader  button6Left = new ButtonReader(leftJoy, kButtonID_Drive6);
     ButtonReader  button7Left = new ButtonReader(leftJoy, kButtonID_Drive7);
@@ -41,7 +41,7 @@ public class OI {
     ButtonReader  Ybutton = new ButtonReader(XBOX1, kButtonID_XboxY);
     ButtonReader  LBbutton = new ButtonReader(XBOX1, kButtonID_XboxLB);
     ButtonReader  Backbutton = new ButtonReader(XBOX1, kButtonID_XboxBack);
-    ButtonReader  outtakeButton = new ButtonReader(XBOX1, kButtonID_XboxStart);
+    ButtonReader  outtakeButton = new ButtonReader(XBOX1, INTAKE_REVERSE_BUTTON_ID);
     ButtonReader  RBbutton = new ButtonReader(XBOX1, kButtonID_XboxRB);
 
     //xbox joysticks
@@ -82,13 +82,13 @@ public class OI {
             if (buttonID == kButtonID_Drive1) {
                 return triggerLeft;
             }
-            else if (buttonID == kButtonID_Drive2) {
+            else if (buttonID == INTAKE_BUTTON_DRIVER_ID) {
                 return button2Left;
             }
             else if (buttonID == kButtonID_Drive3) {
                 return button3Left;
             }
-            else if (buttonID == kButtonID_Drive4) {
+            else if (buttonID == INTAKE_REVERSE_BUTTON_DRIVER_ID) {
                 return button4Left;
             }
             else if (buttonID == kButtonID_Drive5) {
@@ -140,7 +140,7 @@ public class OI {
             else if (buttonID == kButtonID_XboxBack) {
                 return Backbutton;
             }
-            else if (buttonID == kButtonID_XboxStart) {
+            else if (buttonID == INTAKE_REVERSE_BUTTON_ID) {
                 return outtakeButton;
             }
             else if (buttonID == kButtonID_XboxRB) {
