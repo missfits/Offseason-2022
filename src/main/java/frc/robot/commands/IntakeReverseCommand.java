@@ -9,13 +9,13 @@ import frc.robot.SensorBoard;
 import frc.robot.OI;
 
 
-public class IntakeCommand extends CommandBase{
+public class IntakeReverseCommand extends CommandBase{
     
     Intake m_intake;
     SensorBoard m_sensorControl;
     OI m_humanControl;
 
-    public IntakeCommand(SensorBoard sensorControl, OI humanControl, Intake intake) {
+    public IntakeReverseCommand(SensorBoard sensorControl, OI humanControl, Intake intake) {
         m_sensorControl = sensorControl;
         m_humanControl = humanControl;
         m_intake = intake;
@@ -31,7 +31,7 @@ public class IntakeCommand extends CommandBase{
 
     @Override
     public void execute() {
-        m_intake.setIntakeRollersPower(INTAKE_ROLLERS_FORWARD_POWER);
+        m_intake.setIntakeRollersPower(INTAKE_ROLLERS_REVERSE_POWER);
         m_intake.lowerIntakeArm();
     }
 

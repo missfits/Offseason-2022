@@ -33,6 +33,7 @@ public class RobotContainer {
 
   private final ShootCommand m_shootCommand;
   private final IntakeCommand m_intakeCommand;
+  private final IntakeReverseCommand m_intakeReverseCommand;
 
 
 
@@ -50,6 +51,7 @@ public class RobotContainer {
 
     m_shootCommand = new ShootCommand(m_sensorControl, m_humanControl, m_shooter);
     m_intakeCommand = new IntakeCommand(m_sensorControl, m_humanControl, m_intake);
+    m_intakeReverseCommand = new IntakeReverseCommand(m_sensorControl, m_humanControl, m_intake);
     
   }
 
@@ -75,8 +77,12 @@ public class RobotContainer {
       CommandScheduler.getInstance().schedule(m_shootCommand);
     }
 
-    if(m_humanControl.isDown(m_humanControl.getDesiredButton(XBOX_CONTROLLER_PORT, INTAKE_BUTTON_ID))) {
+    if(m_humanControl.isDown(m_humanControl.getDesiredButton(XBOX_CONTROLLER_PORT, INTAKE_BUTTON_ID)) || m_humanControl.isDown(m_humanControl.getDesiredButton(LEFT_JOY_PORT, INTAKE_BUTTON_DRIVER_ID))) {
       CommandScheduler.getInstance().schedule(m_intakeCommand);
+    }
+
+    if(m_humanControl.isDown(m_humanControl.getDesiredButton(XBOX_CONTROLLER_PORT, INTAKE_REVERSE_BUTTON_ID)) || m_humanControl.isDown(m_humanControl.getDesiredButton(LEFT_JOY_PORT, INTAKE_REVERSE_BUTTON_DRIVER_ID))) {
+      CommandScheduler.getInstance().schedule(m_intakeReverseCommand);
     }
   }
 }

@@ -43,14 +43,14 @@ public final class Constants {
     public static int kButtonID_XboxLB = 5;
     public static int kButtonID_XboxRB = 6;
     public static int kButtonID_XboxBack = 7;
-    public static int kButtonID_XboxStart = 8;
+    public static int INTAKE_REVERSE_BUTTON_ID = 8;
 
     // Driving Joystick Button IDs
     public static int kButtonID_Drive1 = 1; // trigger
     public static int kButtonID_DriveRight1 = 1;
-    public static int kButtonID_Drive2 = 2;
+    public static int INTAKE_BUTTON_DRIVER_ID = 2;
     public static int kButtonID_Drive3 = 3;
-    public static int kButtonID_Drive4 = 4;
+    public static int INTAKE_REVERSE_BUTTON_DRIVER_ID = 4;
     public static int kButtonID_Drive5 = 5;
     public static int kButtonID_Drive6 = 6;
     public static int kButtonID_Drive7 = 7;
@@ -67,5 +67,5 @@ public final class Constants {
     //motor powers
     public static double INTAKE_ROLLERS_FORWARD_POWER = 1.0;
     public static double INTAKE_ROLLERS_REVERSE_POWER = -1.0;
-    public static double INTKAE_ROLLERS_RESET_POWER = 0.0;
+    public static double INTAKE_ROLLERS_RESET_POWER = 0.0;
 }
