@@ -53,6 +53,7 @@ public class RobotContainer {
     m_intakeCommand = new IntakeCommand(m_sensorControl, m_humanControl, m_intake);
     m_intakeReverseCommand = new IntakeReverseCommand(m_sensorControl, m_humanControl, m_intake);
     
+    System.out.println("end of robot container constructor");
   }
 
   /**
@@ -72,12 +73,20 @@ public class RobotContainer {
   //   // An ExampleCommand will run in autonomous
 
   // }
+
+  public void updateButtons() {
+    m_humanControl.updateButtons();
+  }
   public void updateControls() {
+
+    // System.out.println("updating controls");
     if (m_humanControl.isDown(m_humanControl.getDesiredButton(XBOX_CONTROLLER_PORT, SHOOT_BUTTON_ID))) { //XBOX_CONTROLLER_PORT, SHOOT_BUTTON_ID
       CommandScheduler.getInstance().schedule(m_shootCommand);
+      System.out.println("shooting");
     }
 
     if(m_humanControl.isDown(m_humanControl.getDesiredButton(XBOX_CONTROLLER_PORT, INTAKE_BUTTON_ID)) || m_humanControl.isDown(m_humanControl.getDesiredButton(LEFT_JOY_PORT, INTAKE_BUTTON_DRIVER_ID))) {
+      System.out.println("intaking");
       CommandScheduler.getInstance().schedule(m_intakeCommand);
     }
 

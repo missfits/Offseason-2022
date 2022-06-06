@@ -57,6 +57,8 @@ public class Shooter extends SubsystemBase{
 
         m_distance = m_sensorControl.getLimelightDistance();
 
+        System.out.println("end of shooter constructor");
+
     }
 
     @Override

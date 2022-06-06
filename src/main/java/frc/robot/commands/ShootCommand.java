@@ -23,6 +23,8 @@ public class ShootCommand extends CommandBase{
         m_shooter = shooter;
 
         m_desiredVelocity = 0.0;
+
+        System.out.println("end of shoot command constructor");
     }
 
     @Override

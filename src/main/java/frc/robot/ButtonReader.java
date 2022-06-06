@@ -29,10 +29,16 @@ public class ButtonReader {
     }
 
     public boolean stateJustChanged() {
+        if (m_lastState != m_currState) {
+            System.out.println("helloooo");
+        }
         return (m_lastState != m_currState);
     }
 
     public boolean isDown(){
+        if (m_currState == true) {
+            System.out.println("helloasdkfljasdlfkjsf");
+        }
         return m_currState;
     }
 }
