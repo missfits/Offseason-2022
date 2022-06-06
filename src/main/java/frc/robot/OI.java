@@ -41,11 +41,14 @@ public class OI {
     ButtonReader  Ybutton = new ButtonReader(XBOX1, kButtonID_XboxY);
     ButtonReader  LBbutton = new ButtonReader(XBOX1, kButtonID_XboxLB);
     ButtonReader  Backbutton = new ButtonReader(XBOX1, kButtonID_XboxBack);
+
+    // Button Backbutton = new Button(XBOX1, kButtonID_XboxBack);
+
     ButtonReader  outtakeButton = new ButtonReader(XBOX1, INTAKE_REVERSE_BUTTON_ID);
     ButtonReader  RBbutton = new ButtonReader(XBOX1, kButtonID_XboxRB);
 
     //xbox joysticks
-    public XboxController xboxcontroller = new XboxController(0);
+    // public XboxController xboxcontroller = new XboxController(0);
 
     // SensorBoard m_sensorControl;
 
@@ -58,6 +61,35 @@ public class OI {
 
         
       
+    }
+
+    public void updateButtons() {
+        triggerLeft.readValue();
+        button2Left.readValue();
+        button3Left.readValue();
+        button4Left.readValue();
+        button5Left.readValue();
+        button6Left.readValue();
+        button7Left.readValue();
+        button8Left.readValue();
+        button9Left.readValue();
+        button10Left.readValue();
+        button11Left.readValue();
+        button12Left.readValue();
+        triggerRight.readValue();
+
+    //creating buttons for the XBOX
+        intakeButton.readValue();
+        shootButton.readValue();
+        Xbutton.readValue();
+        Ybutton.readValue();
+        LBbutton.readValue();
+        Backbutton.readValue();
+
+    // Button Backbutton = new Button(XBOX1, kButtonID_XboxBack);
+
+        outtakeButton.readValue();
+        RBbutton.readValue();
     }
 
     public boolean wasJustPressed(ButtonReader button) {
@@ -77,6 +109,7 @@ public class OI {
     }
 
     public ButtonReader getDesiredButton(int joystickID, int buttonID) {
+        // System.out.println("get desired button");
         if (joystickID == LEFT_JOY_PORT || joystickID == RIGHT_JOY_PORT) {
 
             if (buttonID == kButtonID_Drive1) {
@@ -126,6 +159,7 @@ public class OI {
                 return intakeButton;
             }
             else if (buttonID == SHOOT_BUTTON_ID) {
+                // System.out.println("shoot button desired");
                 return shootButton;
             }
             else if (buttonID == kButtonID_XboxX) {
