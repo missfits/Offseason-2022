@@ -35,7 +35,7 @@ public class OI {
     ButtonReader  triggerRight = new ButtonReader(rightJoy, kButtonID_DriveRight1);
 
     //creating buttons for the XBOX
-    ButtonReader  intakeButton = new ButtonReader(XBOX1, kButtonID_XboxA);
+    ButtonReader  intakeButton = new ButtonReader(XBOX1, INTAKE_BUTTON_ID);
     ButtonReader  shootButton = new ButtonReader(XBOX1, SHOOT_BUTTON_ID);
     ButtonReader  Xbutton = new ButtonReader(XBOX1, kButtonID_XboxX);
     ButtonReader  Ybutton = new ButtonReader(XBOX1, kButtonID_XboxY);
@@ -122,7 +122,7 @@ public class OI {
 
         //xbox
         else {
-            if (buttonID == kButtonID_XboxA) {
+            if (buttonID == INTAKE_BUTTON_ID) {
                 return intakeButton;
             }
             else if (buttonID == SHOOT_BUTTON_ID) {

@@ -36,7 +36,7 @@ public final class Constants {
     public static int kControllerID_DriveRightXBOX = 2;
 
     //XBOX button IDs
-    public static int kButtonID_XboxA = 1;
+    public static int INTAKE_BUTTON_ID = 1;
     public static int SHOOT_BUTTON_ID = 2;
     public static int kButtonID_XboxX = 3;
     public static int kButtonID_XboxY = 4;
@@ -47,7 +47,7 @@ public final class Constants {
 
     // Driving Joystick Button IDs
     public static int kButtonID_Drive1 = 1; // trigger
-    public static int kButtonID_DriveRight1 = kButtonID_Drive1;
+    public static int kButtonID_DriveRight1 = 1;
     public static int kButtonID_Drive2 = 2;
     public static int kButtonID_Drive3 = 3;
     public static int kButtonID_Drive4 = 4;
@@ -59,4 +59,13 @@ public final class Constants {
     public static int kButtonID_Drive10 = 10;
     public static int kButtonID_Drive11 = 11;
     public static int kButtonID_Drive12 = 12;
+
+    //pneumatics
+    public static int INTAKE_SOLENOID_FORWARD_PORT = 7;
+    public static int INTAKE_SOLENOID_REVERSE_PORT = 6;
+
+    //motor powers
+    public static double INTAKE_ROLLERS_FORWARD_POWER = 1.0;
+    public static double INTAKE_ROLLERS_REVERSE_POWER = -1.0;
+    public static double INTKAE_ROLLERS_RESET_POWER = 0.0;
 }
