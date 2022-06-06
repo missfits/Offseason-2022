@@ -7,12 +7,13 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import frc.robot.commands.*;
 
-import frc.robot.Constants;
+import static frc.robot.Constants.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -23,11 +24,15 @@ import frc.robot.Constants;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final SensorBoard m_sensorControl;
-  private final Shooter m_shooter;
+  
 
   private final OI m_humanControl;
 
+  private final Shooter m_shooter;
+  private final Intake m_intake;
+
   private final ShootCommand m_shootCommand;
+  private final IntakeCommand m_intakeCommand;
 
 
 
@@ -36,11 +41,15 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     m_sensorControl = new SensorBoard();
-    m_shooter = new Shooter(m_sensorControl);
+
 
     m_humanControl = new OI();
 
+    m_shooter = new Shooter(m_sensorControl);
+    m_intake = new Intake(m_sensorControl);
+
     m_shootCommand = new ShootCommand(m_sensorControl, m_humanControl, m_shooter);
+    m_intakeCommand = new IntakeCommand(m_sensorControl, m_humanControl, m_intake);
     
   }
 
@@ -62,8 +71,12 @@ public class RobotContainer {
 
   // }
   public void updateControls() {
-    if (m_humanControl.isDown(m_humanControl.getDesiredButton(0, 2))) { //XBOX_CONTROLLER_PORT, SHOOT_BUTTON_ID
+    if (m_humanControl.isDown(m_humanControl.getDesiredButton(XBOX_CONTROLLER_PORT, SHOOT_BUTTON_ID))) { //XBOX_CONTROLLER_PORT, SHOOT_BUTTON_ID
       CommandScheduler.getInstance().schedule(m_shootCommand);
+    }
+
+    if(m_humanControl.isDown(m_humanControl.getDesiredButton(XBOX_CONTROLLER_PORT, INTAKE_BUTTON_ID))) {
+      CommandScheduler.getInstance().schedule(m_intakeCommand);
     }
   }
 }

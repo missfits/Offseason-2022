@@ -1,6 +1,6 @@
 package frc.robot.commands;
 
-import frc.robot.Constants;
+import static frc.robot.Constants.*;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -55,6 +55,6 @@ public class ShootCommand extends CommandBase{
 
     @Override
     public boolean isFinished() {
-        return !(m_humanControl.isDown(m_humanControl.getDesiredButton(0, 2))); //XBOX_CONTROLLER_PORT, SHOOT_BUTTON_ID
+        return !(m_humanControl.isDown(m_humanControl.getDesiredButton(XBOX_CONTROLLER_PORT, SHOOT_BUTTON_ID))); //XBOX_CONTROLLER_PORT, SHOOT_BUTTON_ID
     }
 }
