@@ -34,12 +34,12 @@ public class ShootCommand extends CommandBase{
 
     @Override
     public void execute() {
-        m_desiredVelocity = m_shooter.calculateFlywheelVelocityDesired(); //staticflywheelvel
+        m_desiredVelocity = m_shooter.calculateStaticFlywheelVelocity(); //desired
         m_shooter.setFlywheelSpeedRPM(m_desiredVelocity); 
-        
         if (m_shooter.isFlywheelAtSpeed(m_desiredVelocity)) {
             if (m_humanControl.isDown(m_humanControl.getDesiredButton(0, 2))) {
                 //index balls
+                System.out.println("shooting");
             }
             else {
                 //index = 0
@@ -52,6 +52,8 @@ public class ShootCommand extends CommandBase{
 
     @Override
     public void end(boolean interrupted) {
+        m_shooter.setFlywheelSetpoint(FLYWHEEL_RESET_POWER);
+        m_shooter.setFlywheelPower(FLYWHEEL_RESET_POWER);
         //index 0
     }
 

@@ -13,15 +13,13 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static int SHOOTER_MOTOR_PORT = 0;
-
     public static int kCANID_MotorLeft1 = 1;
     public static int kCANID_MotorLeft2 = 2;
     public static int kCANID_MotorRight1 = 3;
     public static int kCANID_MotorRight2 = 4;
-    public static int kCANID_MotorIntake = 5;
+    public static int INTAKE_MOTOR_PORT = 5;
     public static int kCANID_MotorConveyor = 6;
-    public static int kCANID_MotorShooter = 7;
+    public static int SHOOTER_MOTOR_PORT = 7;
     public static int kCANID_MotorClimber1 = 8;
     //public static int kCANID_MotorClimber2 = 9; 
 
@@ -68,4 +66,6 @@ public final class Constants {
     public static double INTAKE_ROLLERS_FORWARD_POWER = 1.0;
     public static double INTAKE_ROLLERS_REVERSE_POWER = -1.0;
     public static double INTAKE_ROLLERS_RESET_POWER = 0.0;
+
+    public static double FLYWHEEL_RESET_POWER = 0.0;
 }
