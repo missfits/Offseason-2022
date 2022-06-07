@@ -49,11 +49,10 @@ public class Shooter extends SubsystemBase{
 
         m_atSpeed = false;
 
-        m_distance = 0.0;
-
         m_pFac = m_sensorControl.getFlywheelPEntry();
         m_iFac = m_sensorControl.getFlywheelIEntry();
         m_dFac = m_sensorControl.getFlywheelDEntry();
+        m_flywheelPID = new PIDController(m_pFac, m_iFac, m_dFac);
 
         m_distance = m_sensorControl.getLimelightDistance();
 
@@ -114,6 +113,14 @@ public class Shooter extends SubsystemBase{
 
     public double calculateStaticFlywheelVelocity() {
         return m_sensorControl.getStaticFlywheelVelocityDesired();
+    }
+
+    public void setFlywheelSetpoint(double setpoint) {
+        m_flywheelPID.setSetpoint(setpoint);
+    }
+
+    public void setFlywheelPower(double power) {
+        m_shooterMotor.set(power);
     }
 
     @Override

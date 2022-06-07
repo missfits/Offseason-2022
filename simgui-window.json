@@ -1,11 +1,11 @@
 {
   "MainWindow": {
     "GLOBAL": {
-      "height": "1477",
+      "height": "1490",
       "maximized": "1",
       "style": "0",
       "userScale": "2",
-      "width": "1278",
+      "width": "2560",
       "xpos": "0",
       "ypos": "40"
     }
@@ -33,8 +33,18 @@
     },
     "###Other Devices": {
       "Collapsed": "0",
-      "Pos": "1999,86",
+      "Pos": "1828,142",
       "Size": "437,1216"
+    },
+    "###RoboRIO": {
+      "Collapsed": "0",
+      "Pos": "1006,39",
+      "Size": "184,200"
+    },
+    "###Solenoids": {
+      "Collapsed": "0",
+      "Pos": "290,20",
+      "Size": "264,328"
     },
     "###System Joysticks": {
       "Collapsed": "0",

@@ -82,11 +82,9 @@ public class RobotContainer {
     // System.out.println("updating controls");
     if (m_humanControl.isDown(m_humanControl.getDesiredButton(XBOX_CONTROLLER_PORT, SHOOT_BUTTON_ID))) { //XBOX_CONTROLLER_PORT, SHOOT_BUTTON_ID
       CommandScheduler.getInstance().schedule(m_shootCommand);
-      System.out.println("shooting");
     }
 
     if(m_humanControl.isDown(m_humanControl.getDesiredButton(XBOX_CONTROLLER_PORT, INTAKE_BUTTON_ID)) || m_humanControl.isDown(m_humanControl.getDesiredButton(LEFT_JOY_PORT, INTAKE_BUTTON_DRIVER_ID))) {
-      System.out.println("intaking");
       CommandScheduler.getInstance().schedule(m_intakeCommand);
     }
 
