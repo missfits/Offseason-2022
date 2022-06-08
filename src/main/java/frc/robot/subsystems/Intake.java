@@ -19,14 +19,14 @@ public class Intake extends SubsystemBase{
 
 
     private final CANSparkMax m_intakeMotor;
-    private final Compressor m_compressor;
+    // private final Compressor m_compressor;
     private final DoubleSolenoid m_intakeSolenoid;
 
     public Intake(SensorBoard sensorBoard) {
         m_sensorControl = sensorBoard;
 
         m_intakeMotor = new CANSparkMax(INTAKE_MOTOR_PORT, MotorType.kBrushless);
-        m_compressor = new Compressor(PneumaticsModuleType.CTREPCM);
+        // m_compressor = new Compressor(PneumaticsModuleType.CTREPCM);
         m_intakeSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, INTAKE_SOLENOID_FORWARD_PORT, INTAKE_SOLENOID_REVERSE_PORT);
 
         m_intakeMotor.setInverted(true);

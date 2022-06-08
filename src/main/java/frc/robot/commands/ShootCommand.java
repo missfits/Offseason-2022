@@ -29,15 +29,16 @@ public class ShootCommand extends CommandBase{
 
     @Override
     public void initialize() {
-        m_desiredVelocity = 0.0;
+        m_desiredVelocity = m_shooter.calculateStaticFlywheelVelocity();
     }
 
     @Override
     public void execute() {
         m_desiredVelocity = m_shooter.calculateStaticFlywheelVelocity(); //desired
+        System.out.println(m_desiredVelocity);
         m_shooter.setFlywheelSpeedRPM(m_desiredVelocity); 
         if (m_shooter.isFlywheelAtSpeed(m_desiredVelocity)) {
-            if (m_humanControl.isDown(m_humanControl.getDesiredButton(0, 2))) {
+            if (m_humanControl.isDown(m_humanControl.getDesiredButton(XBOX_CONTROLLER_PORT, SHOOT_BUTTON_ID))) {
                 //index balls
                 System.out.println("shooting");
             }
