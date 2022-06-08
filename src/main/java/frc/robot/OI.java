@@ -186,6 +186,21 @@ public class OI {
 
     }
 
+    public double getLeftJoyY() {
+        return leftJoy.getY();
+    }
+
+    public double getLeftJoyX() {
+        return leftJoy.getX();
+    }
+
+    public double getRightJoyY() {
+        return rightJoy.getY();
+    }
+
+    public double getRightJoyX() {
+        return rightJoy.getX();
+    }
 
 }
  
