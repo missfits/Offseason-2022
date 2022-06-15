@@ -47,6 +47,8 @@ public class OI {
     ButtonReader  outtakeButton = new ButtonReader(XBOX1, INTAKE_REVERSE_BUTTON_ID);
     ButtonReader  RBbutton = new ButtonReader(XBOX1, kButtonID_XboxRB);
 
+
+
     //xbox joysticks
     // public XboxController xboxcontroller = new XboxController(0);
 
@@ -59,7 +61,6 @@ public class OI {
 
     public OI(){
 
-        
       
     }
 
@@ -110,7 +111,7 @@ public class OI {
 
     public ButtonReader getDesiredButton(int joystickID, int buttonID) {
         // System.out.println("get desired button");
-        if (joystickID == LEFT_JOY_PORT || joystickID == RIGHT_JOY_PORT) {
+        if (joystickID == LEFT_JOY_PORT) {
 
             if (buttonID == kButtonID_Drive1) {
                 return triggerLeft;
@@ -148,7 +149,10 @@ public class OI {
             else if (buttonID == kButtonID_Drive12) {
                 return button12Left;
             }
-            else if (buttonID == kButtonID_DriveRight1) {
+        }
+
+        else if (joystickID == RIGHT_JOY_PORT) {
+            if (buttonID == kButtonID_DriveRight1) {
                 return triggerRight;
             }
         }
@@ -159,7 +163,6 @@ public class OI {
                 return intakeButton;
             }
             else if (buttonID == SHOOT_BUTTON_ID) {
-                // System.out.println("shoot button desired");
                 return shootButton;
             }
             else if (buttonID == kButtonID_XboxX) {
