@@ -21,6 +21,7 @@ public final class Constants {
     public static int kCANID_MotorConveyor = 6;
     public static int SHOOTER_MOTOR_PORT = 7;
     public static int kCANID_MotorClimber1 = 8;
+    public static int INDEX_MOTOR_PORT = 0; //change
     //public static int kCANID_MotorClimber2 = 9; 
 
     public static int kMXP = 13;
@@ -36,7 +37,7 @@ public final class Constants {
     //XBOX button IDs
     public static int INTAKE_BUTTON_ID = 1;
     public static int SHOOT_BUTTON_ID = 2;
-    public static int kButtonID_XboxX = 3;
+    public static int PREP_BUTTON_ID = 3;
     public static int kButtonID_XboxY = 4;
     public static int kButtonID_XboxLB = 5;
     public static int kButtonID_XboxRB = 6;
@@ -68,4 +69,15 @@ public final class Constants {
     public static double INTAKE_ROLLERS_RESET_POWER = 0.0;
 
     public static double FLYWHEEL_RESET_POWER = 0.0;
+
+    public static double INDEX_ROLLERS_FORWARD_POWER = 0.4;
+    public static double INDEX_ROLLERS_REVERSE_POWER = -0.4;
+    public static double INDEX_RESET_POWER = 0.0;
+
+    //sensors
+    public static int TOP_LIGHT_SENSOR_PORT = 0;
+    public static int BOTTOM_LIGHT_SENSOR_PORT = 1;
+
+    //ifdef
+    public static boolean EOS = true;
 }

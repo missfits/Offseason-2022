@@ -92,6 +92,8 @@ public class Shooter extends SubsystemBase{
         return m_atSpeed;
     }
 
+
+
     public double getFlywheelVelocity() {
         return m_encoder.getVelocity();
     }
