@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import static frc.robot.Constants.*;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Indexer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.SensorBoard;
 import frc.robot.OI;
@@ -12,13 +13,15 @@ public class ShootCommand extends CommandBase{
     Shooter m_shooter;
     SensorBoard m_sensorControl;
     OI m_humanControl;
+    Indexer m_indexer;
 
     private double m_desiredVelocity;
 
-    public ShootCommand(SensorBoard sensorControl, OI humanControl, Shooter shooter) {
+    public ShootCommand(SensorBoard sensorControl, OI humanControl, Shooter shooter, Indexer indexer) {
         m_sensorControl = sensorControl;
         m_humanControl = humanControl;
         m_shooter = shooter;
+        m_indexer = indexer;
 
         m_desiredVelocity = 0.0;
 
@@ -33,20 +36,24 @@ public class ShootCommand extends CommandBase{
     @Override
     public void execute() {
         m_desiredVelocity = m_shooter.calculateStaticFlywheelVelocity(); //desired
-        System.out.println(m_desiredVelocity);
+        // System.out.println(m_desiredVelocity);
         m_shooter.setFlywheelSpeedRPM(m_desiredVelocity); 
         if (m_shooter.isFlywheelAtSpeed(m_desiredVelocity)) {
             if (m_humanControl.isDown(m_humanControl.getDesiredButton(XBOX_CONTROLLER_PORT, SHOOT_BUTTON_ID))) {
                 //index balls
                 System.out.println("shooting");
+                m_indexer.runEosConveyer(INDEX_ROLLERS_FORWARD_POWER);
             }
             else {
-                //index = 0
+                m_indexer.reset();
             }
         }
         else {
-            //index = 0
+            m_indexer.reset();
         }
+
+        // m_shooter.setFlywheelPower(0.4);
+
     }
 
     @Override

@@ -1,9 +1,20 @@
 package frc.robot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.DigitalInput;
+import static frc.robot.Constants.*;
 
 public class SensorBoard {
 
+    DigitalInput m_topLightSensor, m_bottomLightSensor;
+    public boolean m_intaking;
+
     public SensorBoard() {
+
+        if (!EOS) {
+            m_topLightSensor = new DigitalInput(TOP_LIGHT_SENSOR_PORT);
+            m_bottomLightSensor = new DigitalInput(BOTTOM_LIGHT_SENSOR_PORT);
+        }
+        
 
         SmartDashboard.putNumber("flywheel P", 0.0);
         SmartDashboard.putNumber("flywheel I", 0.0);
@@ -14,6 +25,8 @@ public class SensorBoard {
 
         SmartDashboard.putNumber("distance", 0.0);
         SmartDashboard.putNumber("static flywheel vel", 0.0);
+
+        m_intaking = false;
 
     }
 
@@ -52,4 +65,25 @@ public class SensorBoard {
         return SmartDashboard.getNumber("static flywheel vel", 0.0);
     }
     
+    public boolean getTopLightSensor() {
+        if (!EOS){
+            return !m_topLightSensor.get();
+        }
+        return false;
+    }
+
+    public boolean getBottomLightSensor() {
+        if (!EOS) {
+            return !m_bottomLightSensor.get();
+        }
+        return false;
+    }
+
+    public void setIsIntaking(boolean isIntaking) {
+        m_intaking = isIntaking;
+    }
+
+    public boolean isIntaking() {
+        return m_intaking;
+    }
 }

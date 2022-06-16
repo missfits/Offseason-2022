@@ -12,10 +12,14 @@ public class DefaultDriveCommand extends CommandBase{
     OI m_humanControl;
     Drivetrain m_drivetrain;
 
+
+
     public DefaultDriveCommand (SensorBoard sensorControl, OI humanControl, Drivetrain drivetrain) {
         m_sensorControl = sensorControl;
         m_humanControl = humanControl;
         m_drivetrain = drivetrain;
+
+        addRequirements(drivetrain);
     }
 
     @Override

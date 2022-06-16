@@ -37,7 +37,7 @@ public class OI {
     //creating buttons for the XBOX
     ButtonReader  intakeButton = new ButtonReader(XBOX1, INTAKE_BUTTON_ID);
     ButtonReader  shootButton = new ButtonReader(XBOX1, SHOOT_BUTTON_ID);
-    ButtonReader  Xbutton = new ButtonReader(XBOX1, kButtonID_XboxX);
+    ButtonReader  prepButton = new ButtonReader(XBOX1, PREP_BUTTON_ID);
     ButtonReader  Ybutton = new ButtonReader(XBOX1, kButtonID_XboxY);
     ButtonReader  LBbutton = new ButtonReader(XBOX1, kButtonID_XboxLB);
     ButtonReader  Backbutton = new ButtonReader(XBOX1, kButtonID_XboxBack);
@@ -82,7 +82,7 @@ public class OI {
     //creating buttons for the XBOX
         intakeButton.readValue();
         shootButton.readValue();
-        Xbutton.readValue();
+        prepButton.readValue();
         Ybutton.readValue();
         LBbutton.readValue();
         Backbutton.readValue();
@@ -165,8 +165,8 @@ public class OI {
             else if (buttonID == SHOOT_BUTTON_ID) {
                 return shootButton;
             }
-            else if (buttonID == kButtonID_XboxX) {
-                return Xbutton;
+            else if (buttonID == PREP_BUTTON_ID) {
+                return prepButton;
             }
             else if (buttonID == kButtonID_XboxY) {
                 return Ybutton;
