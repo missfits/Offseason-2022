@@ -11,8 +11,8 @@ public class SensorBoard {
     public SensorBoard() {
 
         if (!EOS) {
-            m_topLightSensor = new DigitalInput(TOP_LIGHT_SENSOR_PORT);
-            m_bottomLightSensor = new DigitalInput(BOTTOM_LIGHT_SENSOR_PORT);
+            m_topLightSensor = new DigitalInput(kSensorID_TopLight);
+            m_bottomLightSensor = new DigitalInput(kSensorID_BottomLight);
         }
         
 

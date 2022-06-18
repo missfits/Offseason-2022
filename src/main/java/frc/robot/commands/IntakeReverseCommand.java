@@ -41,6 +41,6 @@ public class IntakeReverseCommand extends CommandBase{
 
     @Override
     public boolean isFinished() {
-        return !(m_humanControl.isDown(m_humanControl.getDesiredButton(XBOX_CONTROLLER_PORT, INTAKE_BUTTON_ID))); 
+        return !(m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxA))); 
     }
 }

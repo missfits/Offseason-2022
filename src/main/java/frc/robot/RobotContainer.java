@@ -96,11 +96,11 @@ public class RobotContainer {
   public void updateControls() {
 
     // System.out.println("updating controls");
-    if (m_humanControl.isDown(m_humanControl.getDesiredButton(XBOX_CONTROLLER_PORT, PREP_BUTTON_ID))) { //XBOX_CONTROLLER_PORT, SHOOT_BUTTON_ID
+    if (m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxX))) { //kControllerID_XBOX, kButtonID_XboxB
       CommandScheduler.getInstance().schedule(m_shootCommand);
     }
 
-    if(m_humanControl.isDown(m_humanControl.getDesiredButton(XBOX_CONTROLLER_PORT, INTAKE_BUTTON_ID)) || m_humanControl.isDown(m_humanControl.getDesiredButton(LEFT_JOY_PORT, INTAKE_BUTTON_DRIVER_ID))) {
+    if(m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxA)) || m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_LeftJoy, kButtonID_Drive2))) {
       CommandScheduler.getInstance().schedule(m_intakeCommand);
       m_sensorControl.setIsIntaking(true);
     }
@@ -108,7 +108,7 @@ public class RobotContainer {
       m_sensorControl.setIsIntaking(false);
     }
 
-    if(m_humanControl.isDown(m_humanControl.getDesiredButton(XBOX_CONTROLLER_PORT, INTAKE_REVERSE_BUTTON_ID)) || m_humanControl.isDown(m_humanControl.getDesiredButton(LEFT_JOY_PORT, INTAKE_REVERSE_BUTTON_DRIVER_ID))) {
+    if(m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxStart)) || m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_LeftJoy, kButtonID_Drive4))) {
       CommandScheduler.getInstance().schedule(m_intakeReverseCommand);
     }
   }
