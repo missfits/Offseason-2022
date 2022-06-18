@@ -5,6 +5,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import static frc.robot.Constants.*;
 import frc.robot.SensorBoard;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
 
 import edu.wpi.first.math.controller.PIDController;
 
@@ -15,6 +16,7 @@ public class Shooter extends SubsystemBase{
 
     private SensorBoard m_sensorControl;
     
+    private double m_fFac;
     private double m_pFac;
     private double m_iFac;
     private double m_dFac;
@@ -27,10 +29,11 @@ public class Shooter extends SubsystemBase{
     private double m_maxVel;
 
     private double m_distance;
+    private double m_error;
 
     private int m_numTimesAtSpeed;
 
-    private PIDController m_flywheelPID;
+    private SparkMaxPIDController m_flywheelPID;
 
     private boolean m_atSpeed;
 
@@ -40,19 +43,24 @@ public class Shooter extends SubsystemBase{
         m_shooterMotor.setInverted(false); //confirm
         m_encoder = m_shooterMotor.getEncoder();
         
-        m_tolerance = 0.0;
+        m_tolerance = 50;
         m_currVel = 0.0;
         m_numTimesAtSpeed = 0;
+        m_error = 0.0;
 
-        m_minVel = 0.0;
-        m_maxVel = 1.0;
+        m_minVel = -0.6;
+        m_maxVel = 0.6;
 
         m_atSpeed = false;
 
+        m_fFac = m_sensorControl.getFlywheelFEntry();
         m_pFac = m_sensorControl.getFlywheelPEntry();
         m_iFac = m_sensorControl.getFlywheelIEntry();
         m_dFac = m_sensorControl.getFlywheelDEntry();
-        m_flywheelPID = new PIDController(m_pFac, m_iFac, m_dFac);
+        
+        m_flywheelPID = m_shooterMotor.getPIDController();
+        configFlywheelPID();
+        m_flywheelPID.setOutputRange(m_minVel, m_maxVel);
 
         m_distance = m_sensorControl.getLimelightDistance();
 
@@ -65,11 +73,17 @@ public class Shooter extends SubsystemBase{
         m_currVel = getFlywheelVelocity();
         m_currEnc = m_encoder.getPosition();
         m_sensorControl.setFlywheelStates(m_currVel, m_currEnc);
-
+        m_sensorControl.setFlywheelError(m_error);
+        // configFlywheelPID();
 
     }
 
     public void configFlywheelPID() {
+        m_fFac = m_sensorControl.getFlywheelFEntry();
+        m_pFac = m_sensorControl.getFlywheelPEntry();
+        m_iFac = m_sensorControl.getFlywheelIEntry();
+        m_dFac = m_sensorControl.getFlywheelDEntry();
+        m_flywheelPID.setFF(m_fFac);
         m_flywheelPID.setP(m_pFac);
         m_flywheelPID.setI(m_iFac);
         m_flywheelPID.setD(m_dFac);
@@ -99,7 +113,8 @@ public class Shooter extends SubsystemBase{
     }
 
     public void setFlywheelSpeedRPM(double desiredVelocity) { //in RPM, since using currVel
-        m_shooterMotor.set(m_sensorControl.clamp(m_flywheelPID.calculate(m_currVel, desiredVelocity), m_minVel, m_maxVel));
+        m_error = desiredVelocity - m_currVel;
+        setFlywheelSetpoint(desiredVelocity);
     }
 
     public double calculateFlywheelVelocityDesired() { //feet
@@ -118,7 +133,7 @@ public class Shooter extends SubsystemBase{
     }
 
     public void setFlywheelSetpoint(double setpoint) {
-        m_flywheelPID.setSetpoint(setpoint);
+        m_flywheelPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity);
     }
 
     public void setFlywheelPower(double power) {

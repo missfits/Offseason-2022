@@ -35,10 +35,10 @@ public final class Constants {
     public static int kControllerID_DriveRightXBOX = 2;
 
     //XBOX button IDs
-    public static int INTAKE_BUTTON_ID = 1;
-    public static int SHOOT_BUTTON_ID = 2;
-    public static int PREP_BUTTON_ID = 3;
-    public static int kButtonID_XboxY = 4;
+    public static int INTAKE_BUTTON_ID = 1; //A
+    public static int SHOOT_BUTTON_ID = 2; //B
+    public static int PREP_BUTTON_ID = 3; //X
+    public static int kButtonID_XboxY = 4; //Y
     public static int kButtonID_XboxLB = 5;
     public static int kButtonID_XboxRB = 6;
     public static int kButtonID_XboxBack = 7;
@@ -73,6 +73,11 @@ public final class Constants {
     public static double INDEX_ROLLERS_FORWARD_POWER = 0.4;
     public static double INDEX_ROLLERS_REVERSE_POWER = -0.4;
     public static double INDEX_RESET_POWER = 0.0;
+
+    public static double FLYWHEEL_F_FAC = 0.00019;
+    public static double FLYWHEEL_P_FAC = 0.0005;
+    public static double FLYWHEEL_I_FAC = 0.0;
+    public static double FLYWHEEL_D_FAC = 0.008;
 
     //sensors
     public static int TOP_LIGHT_SENSOR_PORT = 0;
