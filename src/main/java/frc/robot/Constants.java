@@ -21,7 +21,7 @@ public final class Constants {
     public static int kCANID_MotorConveyor = 6;
     public static int SHOOTER_MOTOR_PORT = 7;
     public static int kCANID_MotorClimber1 = 8;
-    public static int INDEX_MOTOR_PORT = 0; //change
+    public static int INDEX_MOTOR_PORT = 6; //change
     //public static int kCANID_MotorClimber2 = 9; 
 
     public static int kMXP = 13;
@@ -70,8 +70,8 @@ public final class Constants {
 
     public static double FLYWHEEL_RESET_POWER = 0.0;
 
-    public static double INDEX_ROLLERS_FORWARD_POWER = 0.4;
-    public static double INDEX_ROLLERS_REVERSE_POWER = -0.4;
+    public static double INDEX_ROLLERS_FORWARD_POWER = 1.0;
+    public static double INDEX_ROLLERS_REVERSE_POWER = -1.0;
     public static double INDEX_RESET_POWER = 0.0;
 
     public static double FLYWHEEL_F_FAC = 0.00019;

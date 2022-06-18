@@ -48,8 +48,8 @@ public class Shooter extends SubsystemBase{
         m_numTimesAtSpeed = 0;
         m_error = 0.0;
 
-        m_minVel = -0.6;
-        m_maxVel = 0.6;
+        m_minVel = -1.0;
+        m_maxVel = 1.0;
 
         m_atSpeed = false;
 

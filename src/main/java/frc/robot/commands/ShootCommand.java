@@ -38,19 +38,20 @@ public class ShootCommand extends CommandBase{
         m_desiredVelocity = m_shooter.calculateStaticFlywheelVelocity(); //desired
         // System.out.println(m_desiredVelocity);
         m_shooter.setFlywheelSpeedRPM(m_desiredVelocity); 
-        // if (m_shooter.isFlywheelAtSpeed(m_desiredVelocity)) {
-        //     if (m_humanControl.isDown(m_humanControl.getDesiredButton(XBOX_CONTROLLER_PORT, SHOOT_BUTTON_ID))) {
-        //         //index balls
-        //         System.out.println("shooting");
-        //         m_indexer.runEosConveyer(INDEX_ROLLERS_FORWARD_POWER);
-        //     }
-        //     else {
-        //         m_indexer.reset();
-        //     }
-        // }
-        // else {
-        //     m_indexer.reset();
-        // }
+        if (m_shooter.isFlywheelAtSpeed(m_desiredVelocity)) {
+        // if (true) {
+            if (m_humanControl.isDown(m_humanControl.getDesiredButton(XBOX_CONTROLLER_PORT, SHOOT_BUTTON_ID))) {
+                //index balls
+                System.out.println("shooting");
+                m_indexer.runEosConveyer(INDEX_ROLLERS_FORWARD_POWER);
+            }
+            else {
+                m_indexer.reset();
+            }
+        }
+        else {
+            m_indexer.reset();
+        }
 
         //m_shooter.setFlywheelPower(0.4); //velocity = 2000
 
@@ -60,6 +61,7 @@ public class ShootCommand extends CommandBase{
     public void end(boolean interrupted) {
         m_shooter.setFlywheelSetpoint(FLYWHEEL_RESET_POWER);
         m_shooter.setFlywheelPower(FLYWHEEL_RESET_POWER);
+        m_indexer.reset();
         //index 0
     }
 
