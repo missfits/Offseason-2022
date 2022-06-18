@@ -40,7 +40,7 @@ public class ShootCommand extends CommandBase{
         m_shooter.setFlywheelSpeedRPM(m_desiredVelocity); 
         if (m_shooter.isFlywheelAtSpeed(m_desiredVelocity)) {
         // if (true) {
-            if (m_humanControl.isDown(m_humanControl.getDesiredButton(XBOX_CONTROLLER_PORT, SHOOT_BUTTON_ID))) {
+            if (m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxB))) {
                 //index balls
                 System.out.println("shooting");
                 m_indexer.runEosConveyer(INDEX_ROLLERS_FORWARD_POWER);
@@ -67,9 +67,9 @@ public class ShootCommand extends CommandBase{
 
     @Override
     public boolean isFinished() {
-        // if (!(m_humanControl.isDown(m_humanControl.getDesiredButton(XBOX_CONTROLLER_PORT, PREP_BUTTON_ID)))){
+        // if (!(m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxX)))){
         //     System.out.println("finished!");
         // }
-        return !(m_humanControl.isDown(m_humanControl.getDesiredButton(XBOX_CONTROLLER_PORT, PREP_BUTTON_ID))); //XBOX_CONTROLLER_PORT, SHOOT_BUTTON_ID
+        return !(m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxX))); //kControllerID_XBOX, kButtonID_XboxB
     }
 }

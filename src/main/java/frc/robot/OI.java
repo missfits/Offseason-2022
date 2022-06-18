@@ -11,19 +11,19 @@ import edu.wpi.first.wpilibj.XboxController;
 
 public class OI {
     // Create the joysticks and XBOX controller
-    Joystick XBOX1 = new Joystick(XBOX_CONTROLLER_PORT);
-    public Joystick leftJoy = new Joystick(LEFT_JOY_PORT);
-    public Joystick rightJoy = new Joystick(RIGHT_JOY_PORT);
+    Joystick XBOX1 = new Joystick(kControllerID_XBOX);
+    public Joystick leftJoy = new Joystick(kControllerID_LeftJoy);
+    public Joystick rightJoy = new Joystick(kControllerID_RightJoy);
     //creates solenoids
     //DoubleSolenoid exampleDoublePCM = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 1, 2);
     //DoubleSolenoid exampleDoublePH = new DoubleSolenoid(9, PneumaticsModuleType.REVPH, 4, 5);
 
 
     //creating buttons for the joysticks
-    ButtonReader  triggerLeft = new ButtonReader(leftJoy, kButtonID_Drive1);
-    ButtonReader  button2Left = new ButtonReader(leftJoy, INTAKE_BUTTON_DRIVER_ID);
+    ButtonReader  triggerLeft = new ButtonReader(leftJoy, kButtonID_DriveLeft1);
+    ButtonReader  button2Left = new ButtonReader(leftJoy, kButtonID_Drive2);
     ButtonReader  button3Left = new ButtonReader(leftJoy, kButtonID_Drive3);
-    ButtonReader  button4Left = new ButtonReader(leftJoy, INTAKE_REVERSE_BUTTON_DRIVER_ID);
+    ButtonReader  button4Left = new ButtonReader(leftJoy, kButtonID_Drive4);
     ButtonReader  button5Left = new ButtonReader(leftJoy, kButtonID_Drive5);
     ButtonReader  button6Left = new ButtonReader(leftJoy, kButtonID_Drive6);
     ButtonReader  button7Left = new ButtonReader(leftJoy, kButtonID_Drive7);
@@ -35,16 +35,16 @@ public class OI {
     ButtonReader  triggerRight = new ButtonReader(rightJoy, kButtonID_DriveRight1);
 
     //creating buttons for the XBOX
-    ButtonReader  intakeButton = new ButtonReader(XBOX1, INTAKE_BUTTON_ID);
-    ButtonReader  shootButton = new ButtonReader(XBOX1, SHOOT_BUTTON_ID);
-    ButtonReader  prepButton = new ButtonReader(XBOX1, PREP_BUTTON_ID);
+    ButtonReader  intakeButton = new ButtonReader(XBOX1, kButtonID_XboxA);
+    ButtonReader  shootButton = new ButtonReader(XBOX1, kButtonID_XboxB);
+    ButtonReader  prepButton = new ButtonReader(XBOX1, kButtonID_XboxX);
     ButtonReader  Ybutton = new ButtonReader(XBOX1, kButtonID_XboxY);
     ButtonReader  LBbutton = new ButtonReader(XBOX1, kButtonID_XboxLB);
     ButtonReader  Backbutton = new ButtonReader(XBOX1, kButtonID_XboxBack);
 
     // Button Backbutton = new Button(XBOX1, kButtonID_XboxBack);
 
-    ButtonReader  outtakeButton = new ButtonReader(XBOX1, INTAKE_REVERSE_BUTTON_ID);
+    ButtonReader  outtakeButton = new ButtonReader(XBOX1, kButtonID_XboxStart);
     ButtonReader  RBbutton = new ButtonReader(XBOX1, kButtonID_XboxRB);
 
 
@@ -111,18 +111,18 @@ public class OI {
 
     public ButtonReader getDesiredButton(int joystickID, int buttonID) {
         // System.out.println("get desired button");
-        if (joystickID == LEFT_JOY_PORT) {
+        if (joystickID == kControllerID_LeftJoy) {
 
-            if (buttonID == kButtonID_Drive1) {
+            if (buttonID == kButtonID_DriveLeft1) {
                 return triggerLeft;
             }
-            else if (buttonID == INTAKE_BUTTON_DRIVER_ID) {
+            else if (buttonID == kButtonID_Drive2) {
                 return button2Left;
             }
             else if (buttonID == kButtonID_Drive3) {
                 return button3Left;
             }
-            else if (buttonID == INTAKE_REVERSE_BUTTON_DRIVER_ID) {
+            else if (buttonID == kButtonID_Drive4) {
                 return button4Left;
             }
             else if (buttonID == kButtonID_Drive5) {
@@ -151,7 +151,7 @@ public class OI {
             }
         }
 
-        else if (joystickID == RIGHT_JOY_PORT) {
+        else if (joystickID == kControllerID_RightJoy) {
             if (buttonID == kButtonID_DriveRight1) {
                 return triggerRight;
             }
@@ -159,13 +159,13 @@ public class OI {
 
         //xbox
         else {
-            if (buttonID == INTAKE_BUTTON_ID) {
+            if (buttonID == kButtonID_XboxA) {
                 return intakeButton;
             }
-            else if (buttonID == SHOOT_BUTTON_ID) {
+            else if (buttonID == kButtonID_XboxB) {
                 return shootButton;
             }
-            else if (buttonID == PREP_BUTTON_ID) {
+            else if (buttonID == kButtonID_XboxX) {
                 return prepButton;
             }
             else if (buttonID == kButtonID_XboxY) {
@@ -177,7 +177,7 @@ public class OI {
             else if (buttonID == kButtonID_XboxBack) {
                 return Backbutton;
             }
-            else if (buttonID == INTAKE_REVERSE_BUTTON_ID) {
+            else if (buttonID == kButtonID_XboxStart) {
                 return outtakeButton;
             }
             else if (buttonID == kButtonID_XboxRB) {
