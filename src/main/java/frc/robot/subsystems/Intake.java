@@ -26,6 +26,8 @@ public class Intake extends SubsystemBase{
 
         m_intakeMotor.setInverted(true);
 
+        raiseIntakeArm();
+
 
     }
 

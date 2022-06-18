@@ -16,15 +16,16 @@ public class SensorBoard {
         }
         
 
-        SmartDashboard.putNumber("flywheel P", 0.0);
-        SmartDashboard.putNumber("flywheel I", 0.0);
-        SmartDashboard.putNumber("flywheel D", 0.0);
+        SmartDashboard.putNumber("flywheel P", FLYWHEEL_P_FAC);
+        SmartDashboard.putNumber("flywheel I", FLYWHEEL_I_FAC);
+        SmartDashboard.putNumber("flywheel D", FLYWHEEL_D_FAC);
+        SmartDashboard.putNumber("flywheel F", FLYWHEEL_F_FAC);
 
         SmartDashboard.putNumber("flywheel position", 0.0);
         SmartDashboard.putNumber("flywheel velocity", 0.0);
 
         SmartDashboard.putNumber("distance", 0.0);
-        SmartDashboard.putNumber("static flywheel vel", 0.0);
+        SmartDashboard.putNumber("static flywheel vel", 2000.0);
 
         m_intaking = false;
 
@@ -45,16 +46,20 @@ public class SensorBoard {
         SmartDashboard.putNumber("flywheel velocity", currVel);
     }
 
+    public double getFlywheelFEntry() {
+        return SmartDashboard.getNumber("flywheel F", FLYWHEEL_F_FAC);
+    }
+
     public double getFlywheelPEntry() {
-        return SmartDashboard.getNumber("flywheel P", 0.0);
+        return SmartDashboard.getNumber("flywheel P", FLYWHEEL_P_FAC);
     }
 
     public double getFlywheelIEntry() {
-        return SmartDashboard.getNumber("flywheel I", 0.0);
+        return SmartDashboard.getNumber("flywheel I", FLYWHEEL_I_FAC);
     }
 
     public double getFlywheelDEntry() {
-        return SmartDashboard.getNumber("flywheel D", 0.0);
+        return SmartDashboard.getNumber("flywheel D", FLYWHEEL_D_FAC);
     }
 
     public double getLimelightDistance() {
@@ -62,7 +67,11 @@ public class SensorBoard {
     }
 
     public double getStaticFlywheelVelocityDesired() {
-        return SmartDashboard.getNumber("static flywheel vel", 0.0);
+        return SmartDashboard.getNumber("static flywheel vel", 2000.0);
+    }
+
+    public void setFlywheelError(double error) {
+        SmartDashboard.putNumber("flywheel errror", error);
     }
     
     public boolean getTopLightSensor() {
