@@ -38,7 +38,7 @@ public class Shooter extends SubsystemBase{
     private boolean m_atSpeed;
 
     public Shooter(SensorBoard sensorBoard) {
-        m_shooterMotor = new CANSparkMax(SHOOTER_MOTOR_PORT, MotorType.kBrushless);
+        m_shooterMotor = new CANSparkMax(kCANID_MotorShooter, MotorType.kBrushless);
         m_sensorControl = sensorBoard;
         m_shooterMotor.setInverted(false); //confirm
         m_encoder = m_shooterMotor.getEncoder();

@@ -12,17 +12,20 @@ public class Intake extends SubsystemBase{
 
     private SensorBoard m_sensorControl;
 
-
     private final CANSparkMax m_intakeMotor;
+
+    private DoubleSolenoid m_intakeSolenoid;
     // private final Compressor m_compressor;
-    private final DoubleSolenoid m_intakeSolenoid;
+    
 
     public Intake(SensorBoard sensorBoard) {
         m_sensorControl = sensorBoard;
 
         m_intakeMotor = new CANSparkMax(kCANID_MotorIntake, MotorType.kBrushless);
+
+        m_intakeSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 7, 6);
         // m_compressor = new Compressor(PneumaticsModuleType.CTREPCM);
-        m_intakeSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, kSolenoidID_ForwardChannel, kSolenoidID_ReverseChannel);
+        
 
         m_intakeMotor.setInverted(true);
 
@@ -33,9 +36,6 @@ public class Intake extends SubsystemBase{
 
     @Override
     public void periodic() {
-
-
-
     }
 
     public void setIntakeRollersPower(double power) {
@@ -52,6 +52,7 @@ public class Intake extends SubsystemBase{
 
     public void raiseIntakeArm() {
         m_intakeSolenoid.set(kReverse);
+        
     }
 
     @Override

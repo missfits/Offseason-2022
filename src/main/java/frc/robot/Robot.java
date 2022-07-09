@@ -7,6 +7,11 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
+//
 
 
 /**
@@ -28,16 +33,41 @@ public class Robot extends TimedRobot {
   public void robotInit() {
 
     m_robotContainer = new RobotContainer();
+    NetworkTableInstance inst = NetworkTableInstance.getDefault();
+
+    String tables[] = {
+      "/",
+      "/CameraPublisher",
+      "/CameraPublisher/photonvision-output",
+      "/photonvision",
+      "/photonvision/photonvision",
+    };
+    for (String table : tables) {
+      NetworkTable tt = inst.getTable(table);
+      inst.startClientTeam(6418);
+
+     tt.addSubTableListener((parent, name, t) -> {
+         System.out.println("Parent: " + parent + " Name: " + name);
+      }, false);
+    }
+    
+
+    
   }
 
 
   @Override
   public void robotPeriodic() {
     // System.out.println("hello");
-
+    //System.out.println(m_robotContainer.m_vision.m_limelight.getLatestResult().hasTargets());
     CommandScheduler.getInstance().run();
     m_robotContainer.updateButtons();
     m_robotContainer.updateControls();
+
+    SmartDashboard.putNumber("LimelightX", m_robotContainer.m_vision.x);
+    SmartDashboard.putNumber("LimelightY", m_robotContainer.m_vision.y);
+    SmartDashboard.putNumber("LimelightArea", m_robotContainer.m_vision.area);
+    //System.out.println(m_robotContainer.m_vision.x);
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
