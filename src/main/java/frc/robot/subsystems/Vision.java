@@ -9,6 +9,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 import org.photonvision.PhotonCamera;
+import org.photonvision.PhotonUtils;
 
 import static frc.robot.Constants.*;
 import frc.robot.SensorBoard;
@@ -17,27 +18,37 @@ public class Vision extends SubsystemBase{
 
     private SensorBoard m_sensorControl;
     public PhotonCamera m_limelight;
-    private double CAMERA_HEIGHT_METERS;
-    private double TARGET_HEIGHT_METERS;
-    NetworkTable table;
     NetworkTableEntry tx;
     NetworkTableEntry ty;
     NetworkTableEntry ta;
     public double x;
     public double y;
     public double area;
+    final double CAMERA_HEIGHT_METERS;
+    final double TARGET_HEIGHT_METERS;
+    final double CAMERA_PITCH_RADIANS;
+    final double GOAL_RANGE_METERS;
+    public double DISTANCE_FROM_TARGET;
+    
 
     public Vision(SensorBoard sensorBoard) {
         final String CAMERA_NETWORKTABLE_NAME = "photonvision";
         m_sensorControl = sensorBoard;
         m_limelight = new PhotonCamera(CAMERA_NETWORKTABLE_NAME);
-        
+
         //Camera height = 30 inches
         //Target height = 105 inches
         CAMERA_HEIGHT_METERS = Units.inchesToMeters(30);
         TARGET_HEIGHT_METERS = Units.inchesToMeters(105);
 
+        //Angle of limelight relative to horizontal
+        CAMERA_PITCH_RADIANS = Units.degreesToRadians(45);
 
+        // How far from the target we want to be
+        GOAL_RANGE_METERS = Units.feetToMeters(3);
+
+        //Calculated distance from target
+        DISTANCE_FROM_TARGET = -2;
     }
 
     @Override
@@ -45,6 +56,7 @@ public class Vision extends SubsystemBase{
         //read values periodically
         var results = m_limelight.getLatestResult();
         
+        // Finds center of target relative to top left corner of view
         if (results.hasTargets()) {
             var bestTarget = results.getBestTarget();
 
@@ -63,17 +75,17 @@ public class Vision extends SubsystemBase{
             }
         }
 
-        // //post to smart dashboard periodically
-        // SmartDashboard.putNumber("LimelightX", x);
-        // SmartDashboard.putNumber("LimelightY", y);
-        // SmartDashboard.putNumber("LimelightArea", area);
-        // System.out.println(x);
+        //Getting the distance of targets
+        if (results.hasTargets()) {
+            DISTANCE_FROM_TARGET = PhotonUtils.calculateDistanceToTargetMeters(CAMERA_HEIGHT_METERS, TARGET_HEIGHT_METERS, CAMERA_PITCH_RADIANS, Units.degreesToRadians(results.getBestTarget().getPitch()));
+        } else {
+            // If we have no targets
+            DISTANCE_FROM_TARGET = -1;
+        }  
     }
 
     @Override
     public void simulationPeriodic() {
 
-    }
-
-    
+    } 
 }
