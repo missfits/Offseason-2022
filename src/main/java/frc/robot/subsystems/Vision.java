@@ -77,7 +77,7 @@ public class Vision extends SubsystemBase{
 
         //Getting the distance of targets
         if (results.hasTargets()) {
-            DISTANCE_FROM_TARGET = PhotonUtils.calculateDistanceToTargetMeters(CAMERA_HEIGHT_METERS, TARGET_HEIGHT_METERS, CAMERA_PITCH_RADIANS, Units.degreesToRadians(results.getBestTarget().getPitch()));
+            DISTANCE_FROM_TARGET = (2 * PhotonUtils.calculateDistanceToTargetMeters(CAMERA_HEIGHT_METERS, TARGET_HEIGHT_METERS, CAMERA_PITCH_RADIANS, Units.degreesToRadians(results.getBestTarget().getPitch()))); // idk why this needs to be doubled but it works now
         } else {
             // If we have no targets
             DISTANCE_FROM_TARGET = -1;
