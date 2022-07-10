@@ -1,4 +1,5 @@
 package frc.robot.subsystems;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMax;
@@ -11,7 +12,9 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonUtils;
 
+import frc.robot.subsystems.*;
 import static frc.robot.Constants.*;
+import frc.robot.RobotContainer;
 import frc.robot.SensorBoard;
 
 public class Vision extends SubsystemBase{
@@ -27,7 +30,7 @@ public class Vision extends SubsystemBase{
     final double CAMERA_HEIGHT_METERS;
     final double TARGET_HEIGHT_METERS;
     final double CAMERA_PITCH_RADIANS;
-    final double GOAL_RANGE_METERS;
+    public final double GOAL_RANGE_METERS;
     public double DISTANCE_FROM_TARGET;
     
 
@@ -81,11 +84,14 @@ public class Vision extends SubsystemBase{
         } else {
             // If we have no targets
             DISTANCE_FROM_TARGET = -1;
-        }  
+        }
+        
     }
 
     @Override
     public void simulationPeriodic() {
 
-    } 
+    }
+    
+    
 }

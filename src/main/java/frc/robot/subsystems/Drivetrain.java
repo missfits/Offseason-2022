@@ -9,6 +9,7 @@ import com.revrobotics.SparkMaxRelativeEncoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.math.controller.PIDController;
 
 
 public class Drivetrain extends SubsystemBase{
@@ -32,6 +33,11 @@ public class Drivetrain extends SubsystemBase{
 
     private final MotorControllerGroup m_leftGroup;
     private final MotorControllerGroup m_rightGroup;
+
+    private final double m_pFac;
+    private final double m_iFac;
+    private final double m_dFac;
+    public PIDController m_driveTrainPID;
 
 
     public Drivetrain(SensorBoard sensorControl) {
@@ -58,7 +64,11 @@ public class Drivetrain extends SubsystemBase{
 
         m_robotDrive = new DifferentialDrive(m_leftGroup, m_rightGroup);
         m_leftGroup.setInverted(true);
-
+    
+        m_pFac = 0.1;
+        m_iFac = 0.0;
+        m_dFac = 0.0;
+        m_driveTrainPID = new PIDController(m_pFac, m_iFac, m_dFac);
     }
 
     @Override
