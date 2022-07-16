@@ -15,7 +15,7 @@ public class Indexer extends SubsystemBase{
 
     public Indexer(SensorBoard sensorBoard) {
         m_sensorControl = sensorBoard;
-        m_indexMotor = new CANSparkMax(INDEX_MOTOR_PORT, MotorType.kBrushless);
+        m_indexMotor = new CANSparkMax(kCANID_MotorIndex, MotorType.kBrushless);
         m_indexMotor.setInverted(true); 
 
         m_top = false;
