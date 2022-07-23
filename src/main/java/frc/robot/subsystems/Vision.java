@@ -35,7 +35,7 @@ public class Vision extends SubsystemBase{
     
 
     public Vision(SensorBoard sensorBoard) {
-        final String CAMERA_NETWORKTABLE_NAME = "photonvision";
+        final String CAMERA_NETWORKTABLE_NAME = "limelight";
         m_sensorControl = sensorBoard;
         m_limelight = new PhotonCamera(CAMERA_NETWORKTABLE_NAME);
 

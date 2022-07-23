@@ -89,6 +89,10 @@ public class SensorBoard {
     public void setFlywheelError(double error) {
         SmartDashboard.putNumber("flywheel errror", error);
     }
+
+    public void setTargetYaw(double yaw){
+        SmartDashboard.putNumber("target yaw", yaw);
+    }
     
     public boolean getTopLightSensor() {
         if (!EOS){

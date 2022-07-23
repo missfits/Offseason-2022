@@ -41,7 +41,7 @@ public class Robot extends TimedRobot {
       "/CameraPublisher",
       "/CameraPublisher/photonvision-output",
       "/photonvision",
-      "/photonvision/photonvision",
+      "/photonvision/limelight",
     };
     for (String table : tables) {
       NetworkTable tt = inst.getTable(table);

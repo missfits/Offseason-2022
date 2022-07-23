@@ -48,6 +48,7 @@ public class TurnToTarget extends CommandBase{
             rotationSpeed = 0;
         }
         m_drivetrain.arcadeDrive(forwardSpeed, rotationSpeed);
+        m_sensorControl.setTargetYaw(results.getBestTarget().getYaw());
     }
 
     @Override

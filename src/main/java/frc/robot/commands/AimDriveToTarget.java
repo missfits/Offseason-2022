@@ -27,8 +27,8 @@ public class AimDriveToTarget extends CommandBase{
         m_humanControl = humanControl;
         m_drivetrain = drivetrain;
         m_vision = vision;
-        ANGULAR_P = 0.1;
-        ANGULAR_D = 0.0;
+        ANGULAR_P = 0.03;
+        ANGULAR_D = 0.005;
         turnController = new PIDController(ANGULAR_P, 0, ANGULAR_D);
 
 
@@ -43,14 +43,16 @@ public class AimDriveToTarget extends CommandBase{
     public void execute() {
         //read values periodically
         var results = m_vision.m_limelight.getLatestResult();
-        rotationSpeed = -turnController.calculate(results.getBestTarget().getYaw(), 0);
+        
         if (results.hasTargets()) {
             forwardSpeed = -m_drivetrain.m_driveTrainPID.calculate(m_vision.DISTANCE_FROM_TARGET, m_vision.GOAL_RANGE_METERS);
+            rotationSpeed = turnController.calculate(results.getBestTarget().getYaw(), 0);
         } else {
             forwardSpeed = 0;
             rotationSpeed = 0;
         }
         m_drivetrain.arcadeDrive(forwardSpeed, rotationSpeed);
+        //Add max speed to keep from crazy spinning
     }
 
     @Override
