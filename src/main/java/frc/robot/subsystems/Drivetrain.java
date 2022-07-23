@@ -38,9 +38,11 @@ public class Drivetrain extends SubsystemBase{
     private final double m_iFac;
     private final double m_dFac;
     public PIDController m_driveTrainPID;
+    private final SensorBoard m_sensorControl;
 
 
     public Drivetrain(SensorBoard sensorControl) {
+        m_sensorControl = sensorControl;
         m_leftPrimary = new CANSparkMax(kCANID_MotorLeft1, MotorType.kBrushless);
         m_leftSecondary = new CANSparkMax(kCANID_MotorLeft2, MotorType.kBrushless);
         m_rightPrimary = new CANSparkMax(kCANID_MotorRight1, MotorType.kBrushless);
@@ -65,7 +67,7 @@ public class Drivetrain extends SubsystemBase{
         m_robotDrive = new DifferentialDrive(m_leftGroup, m_rightGroup);
         m_leftGroup.setInverted(true);
     
-        m_pFac = 0.1;
+        m_pFac = m_sensorControl.getFlywheelFEntry();
         m_iFac = 0.0;
         m_dFac = 0.0;
         m_driveTrainPID = new PIDController(m_pFac, m_iFac, m_dFac);
