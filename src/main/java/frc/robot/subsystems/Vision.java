@@ -85,7 +85,7 @@ public class Vision extends SubsystemBase{
             // If we have no targets
             DISTANCE_FROM_TARGET = -1;
         }
-        
+        m_sensorControl.setLimelightDistance(DISTANCE_FROM_TARGET);
     }
 
     @Override

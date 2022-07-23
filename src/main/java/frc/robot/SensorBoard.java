@@ -82,6 +82,10 @@ public class SensorBoard {
         return SmartDashboard.getNumber("distance", 0.0);
     }
 
+    public void setLimelightDistance(double distance){
+        SmartDashboard.putNumber("distance", distance); 
+    }
+
     public double getStaticFlywheelVelocityDesired() {
         return SmartDashboard.getNumber("static flywheel vel", 2000.0);
     }
