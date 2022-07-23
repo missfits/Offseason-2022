@@ -88,4 +88,8 @@ public class Drivetrain extends SubsystemBase{
     public void simulationPeriodic() {
 
     }
+
+    public void arcadeDrive(double forwardSpeed, double rotationSpeed) {
+        m_robotDrive.arcadeDrive(forwardSpeed, rotationSpeed);
+    }
 }

@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.XboxController;
 
 public class OI {
     // Create the joysticks and XBOX controller
-    Joystick XBOX1 = new Joystick(kControllerID_XBOX);
+    public Joystick XBOX1 = new Joystick(kControllerID_XBOX);
     public Joystick leftJoy = new Joystick(kControllerID_LeftJoy);
     public Joystick rightJoy = new Joystick(kControllerID_RightJoy);
     //creates solenoids

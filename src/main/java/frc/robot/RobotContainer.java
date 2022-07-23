@@ -42,6 +42,7 @@ public class RobotContainer {
   private final DefaultDriveCommand m_defaultDriveCommand;
   private final DefaultIndexCommand m_defaultIndexCommand;
   private final LimelightDriveCommand m_limelightDriveCommand;
+  private final TurnToTarget m_turnToTarget;
 
 
 
@@ -70,6 +71,7 @@ public class RobotContainer {
     m_intakeCommand = new IntakeCommand(m_sensorControl, m_humanControl, m_intake);
     m_intakeReverseCommand = new IntakeReverseCommand(m_sensorControl, m_humanControl, m_intake);
     m_limelightDriveCommand = new LimelightDriveCommand(m_sensorControl, m_humanControl, m_drivetrain, m_vision);
+    m_turnToTarget = new TurnToTarget(m_sensorControl, m_humanControl, m_drivetrain, m_vision);
     
     
     System.out.println("end of robot container constructor");
@@ -119,6 +121,10 @@ public class RobotContainer {
 
     if (m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxBack))){
       CommandScheduler.getInstance().schedule(m_limelightDriveCommand);
+    }
+
+    if (m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxRB))){
+      CommandScheduler.getInstance().schedule(m_turnToTarget);
     }
   }
 }
