@@ -1,7 +1,9 @@
 package frc.robot.commands;
 
-import static frc.robot.Constants.*;
 import frc.robot.subsystems.Drivetrain;
+
+import static frc.robot.Constants.Constants.*;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.SensorBoard;
@@ -20,7 +22,7 @@ public class TurnToTarget extends CommandBase{
     final double ANGULAR_P;
     final double ANGULAR_D;
 
-
+    // Robot turns towards target
 
     public TurnToTarget (SensorBoard sensorControl, OI humanControl, Drivetrain drivetrain, Vision vision) {
         m_sensorControl = sensorControl;
@@ -43,6 +45,7 @@ public class TurnToTarget extends CommandBase{
         forwardSpeed = -m_humanControl.XBOX1.getY();
         var results = m_vision.m_limelight.getLatestResult();
         if (results.hasTargets()) {
+            //Calculates angle needed to turn towards target using PID
             rotationSpeed = -turnController.calculate(results.getBestTarget().getYaw(), 0);
         } else {
             rotationSpeed = 0;

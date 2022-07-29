@@ -1,7 +1,9 @@
 package frc.robot.commands;
 
-import static frc.robot.Constants.*;
 import frc.robot.subsystems.Drivetrain;
+
+import static frc.robot.Constants.Constants.*;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.SensorBoard;
@@ -21,7 +23,7 @@ public class AimDriveToTarget extends CommandBase{
     double rotationSpeed;
 
 
-
+    // Turns and drives towards target, stops 2.1 meters away
     public AimDriveToTarget (SensorBoard sensorControl, OI humanControl, Drivetrain drivetrain, Vision vision) {
         m_sensorControl = sensorControl;
         m_humanControl = humanControl;
@@ -41,7 +43,6 @@ public class AimDriveToTarget extends CommandBase{
 
     @Override
     public void execute() {
-        //read values periodically
         var results = m_vision.m_limelight.getLatestResult();
         
         if (results.hasTargets()) {
@@ -52,7 +53,7 @@ public class AimDriveToTarget extends CommandBase{
             rotationSpeed = 0;
         }
         m_drivetrain.arcadeDrive(forwardSpeed, rotationSpeed);
-        //Add max speed to keep from crazy spinning
+        //To Do: Add max speed to keep from crazy spinning
     }
 
     @Override

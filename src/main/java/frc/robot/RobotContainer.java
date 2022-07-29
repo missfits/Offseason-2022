@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import static frc.robot.Constants.Constants.*;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.subsystems.Shooter;
@@ -14,8 +16,6 @@ import frc.robot.subsystems.Vision;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import frc.robot.commands.*;
-
-import static frc.robot.Constants.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a

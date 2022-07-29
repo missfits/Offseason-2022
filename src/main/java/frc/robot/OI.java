@@ -1,5 +1,5 @@
 package frc.robot;
-import static frc.robot.Constants.*;
+import static frc.robot.Constants.Constants.*;
 
 import edu.wpi.first.wpilibj.Joystick;
 

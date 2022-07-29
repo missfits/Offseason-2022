@@ -1,7 +1,9 @@
 package frc.robot.commands;
 
-import static frc.robot.Constants.*;
 import frc.robot.subsystems.Indexer;
+
+import static frc.robot.Constants.Constants.*;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.SensorBoard;
 import frc.robot.OI;
