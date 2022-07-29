@@ -2,6 +2,9 @@ package frc.robot.subsystems;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+import static frc.robot.Constants.Constants.*;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -13,7 +16,6 @@ import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonUtils;
 
 import frc.robot.subsystems.*;
-import static frc.robot.Constants.*;
 import frc.robot.RobotContainer;
 import frc.robot.SensorBoard;
 
@@ -62,7 +64,6 @@ public class Vision extends SubsystemBase{
         // Finds center of target relative to top left corner of view
         if (results.hasTargets()) {
             var bestTarget = results.getBestTarget();
-
             if (bestTarget != null) {
                 area = bestTarget.getArea();
                 var corners = bestTarget.getCorners();

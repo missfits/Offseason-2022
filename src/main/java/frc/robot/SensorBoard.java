@@ -1,7 +1,9 @@
 package frc.robot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import static frc.robot.Constants.Constants.*;
+
 import edu.wpi.first.wpilibj.DigitalInput;
-import static frc.robot.Constants.*;
 
 public class SensorBoard {
 

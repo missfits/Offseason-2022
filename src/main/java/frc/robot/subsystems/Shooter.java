@@ -1,8 +1,11 @@
 package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+import static frc.robot.Constants.Constants.*;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import static frc.robot.Constants.*;
+
 import frc.robot.SensorBoard;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;

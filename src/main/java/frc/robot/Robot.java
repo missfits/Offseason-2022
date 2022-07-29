@@ -35,7 +35,7 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
 
-    //Print out existing NetworkTables
+    //Print out existing NetworkTables for debbuging purposes
     String tables[] = {
       "/",
       "/CameraPublisher",
@@ -66,7 +66,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("LimelightX", m_robotContainer.m_vision.x);
     SmartDashboard.putNumber("LimelightY", m_robotContainer.m_vision.y);
     SmartDashboard.putNumber("LimelightArea", m_robotContainer.m_vision.area);
-    //SmartDashboard.putNumber("Target Distance", m_robotContainer.m_vision.DISTANCE_FROM_TARGET);
+    SmartDashboard.putNumber("Target Distance", m_robotContainer.m_vision.DISTANCE_FROM_TARGET);
     System.out.println(m_robotContainer.m_vision.DISTANCE_FROM_TARGET);
   }
 
