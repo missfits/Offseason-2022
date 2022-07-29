@@ -1,7 +1,9 @@
 package frc.robot.commands;
 
-import static frc.robot.Constants.*;
 import frc.robot.subsystems.Drivetrain;
+
+import static frc.robot.Constants.Constants.*;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.SensorBoard;
 import frc.robot.OI;
@@ -31,10 +33,10 @@ public class LimelightDriveCommand extends CommandBase{
 
     @Override
     public void execute() {
-        //read values periodically
         double forwardSpeed;
         var results = m_vision.m_limelight.getLatestResult();
         if (results.hasTargets()) {
+            //Drives towards target, consistently stops 2.1 meters away, not sure why its stops at this distance
             forwardSpeed = -m_drivetrain.m_driveTrainPID.calculate(m_vision.DISTANCE_FROM_TARGET, m_vision.GOAL_RANGE_METERS);
         } else {
             forwardSpeed = 0;
