@@ -20,9 +20,11 @@ public final class Constants {
     public static int kCANID_MotorIntake = 5;
     public static int kCANID_MotorConveyor = 6;
     public static int kCANID_MotorShooter = 7;
+    public static int kCANID_MotorHood = 0; //change
+    public static int kCANID_MotorRoller = 0; //change
     public static int kCANID_MotorClimber1 = 8;
-    public static int kCANID_MotorIndex = 6; //change
-    //public static int kCANID_MotorClimber2 = 9; 
+    public static int kCANID_MotorIndex = 0; //change
+    //public static int kCANID_MotorClimber2 = 0; 
 
     public static int kMXP = 13;
 
@@ -88,4 +90,16 @@ public final class Constants {
 
     //ifdef
     public static boolean EOS = true;
+
+    //Shooter Hood Positions
+    public static double hoodabsOut = 0; //Example: 0.058
+    public static double hoodabsIn = 0; //Example: 0.956
+    public static double hoodrevOut = 0; //Example: -38
+    public static double hoodrevIn = 0; //Example: 0
+    public static double hoodAngleOut = 0; //Example: 43
+    public static double hoodAngleIn = 0; //Example: 21
+    public static double forwardVelOffset = 0; //Example: 60
+    public static double forwardHoodOffsetFar = 0; //Example: 1
+    public static double forwardHoodOffsetClose = 0; //Example: 4.5
+    public static double change = 0; //Example: 7.5
 }
