@@ -1,4 +1,5 @@
 package frc.robot.subsystems;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.Constants.*;
@@ -15,6 +16,8 @@ import edu.wpi.first.math.controller.PIDController;
 public class Shooter extends SubsystemBase{
     
     private final CANSparkMax m_shooterMotor;
+    private final CANSparkMax m_hoodMotor;
+    private final CANSparkMax m_rollerMotor;
     private RelativeEncoder m_encoder;
 
     private SensorBoard m_sensorControl;
@@ -40,8 +43,10 @@ public class Shooter extends SubsystemBase{
 
     private boolean m_atSpeed;
 
-    public Shooter(SensorBoard sensorBoard) {
+    public Shooter(SensorBoard sensorBoard, Vision vision) {
         m_shooterMotor = new CANSparkMax(kCANID_MotorShooter, MotorType.kBrushless);
+        m_hoodMotor = new CANSparkMax(kCANID_MotorHood, MotorType.kBrushless);
+        m_rollerMotor = new CANSparkMax(kCANID_MotorRoller, MotorType.kBrushless);
         m_sensorControl = sensorBoard;
         m_shooterMotor.setInverted(false); //confirm
         m_encoder = m_shooterMotor.getEncoder();
