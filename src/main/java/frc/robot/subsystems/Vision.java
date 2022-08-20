@@ -102,7 +102,7 @@ public class Vision extends SubsystemBase{
     }
 
     //Return desired hood position based on angleMap
-    double getHoodPOS(VisionLookup visionLookup){
+    public double getHoodPOS(VisionLookup visionLookup){
         double distance = SHOOTER_FROM_TARGET; // original distance offset is in inches, and we are converting it to feet
         double originalDistance = distance;
         double lowerVal = 0;  //lower value in ft 
@@ -146,7 +146,7 @@ public class Vision extends SubsystemBase{
     }
 
     //Return the desired flywheel velocity using lookup table
-    double getDesiredWheelVelocity(VisionLookup visionLookup){
+    public double getDesiredWheelVelocity(VisionLookup visionLookup){
         double distance = SHOOTER_FROM_TARGET; // original distance offset is in inches, and we are converting it to feet
         double originalDistance = distance;
         double lowerVal = 0;  //lower value in ft 
