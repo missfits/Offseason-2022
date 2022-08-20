@@ -15,10 +15,10 @@ import edu.wpi.first.math.controller.PIDController;
 
 public class Shooter extends SubsystemBase{
     
-    private final CANSparkMax m_shooterMotor;
+    public final CANSparkMax m_shooterMotor;
     private final CANSparkMax m_hoodMotor;
     private final CANSparkMax m_rollerMotor;
-    private RelativeEncoder m_encoder;
+    public final RelativeEncoder m_flyWheelEncoder;
 
     private SensorBoard m_sensorControl;
     
@@ -39,7 +39,7 @@ public class Shooter extends SubsystemBase{
 
     private int m_numTimesAtSpeed;
 
-    private SparkMaxPIDController m_flywheelPID;
+    public SparkMaxPIDController m_flywheelPID;
 
     private boolean m_atSpeed;
 
@@ -49,7 +49,7 @@ public class Shooter extends SubsystemBase{
         m_rollerMotor = new CANSparkMax(kCANID_MotorRoller, MotorType.kBrushless);
         m_sensorControl = sensorBoard;
         m_shooterMotor.setInverted(false); //confirm
-        m_encoder = m_shooterMotor.getEncoder();
+        m_flyWheelEncoder = m_shooterMotor.getEncoder();
         
         m_tolerance = 50;
         m_currVel = 0.0;
@@ -79,7 +79,7 @@ public class Shooter extends SubsystemBase{
     @Override
     public void periodic() {
         m_currVel = getFlywheelVelocity();
-        m_currEnc = m_encoder.getPosition();
+        m_currEnc = m_flyWheelEncoder.getPosition();
         m_sensorControl.setFlywheelStates(m_currVel, m_currEnc);
         m_sensorControl.setFlywheelError(m_error);
         // configFlywheelPID();
@@ -117,7 +117,7 @@ public class Shooter extends SubsystemBase{
 
 
     public double getFlywheelVelocity() {
-        return m_encoder.getVelocity();
+        return m_flyWheelEncoder.getVelocity();
     }
 
     public void setFlywheelSpeedRPM(double desiredVelocity) { //in RPM, since using currVel

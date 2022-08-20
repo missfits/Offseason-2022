@@ -14,7 +14,7 @@ public class Intake extends SubsystemBase{
 
     private SensorBoard m_sensorControl;
 
-    private final CANSparkMax m_intakeMotor;
+    public final CANSparkMax m_intakeMotor;
 
     private DoubleSolenoid m_intakeSolenoid;
     // private final Compressor m_compressor;
@@ -32,7 +32,6 @@ public class Intake extends SubsystemBase{
         m_intakeMotor.setInverted(true);
 
         raiseIntakeArm();
-
 
     }
 
