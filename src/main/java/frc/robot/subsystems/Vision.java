@@ -128,13 +128,9 @@ public class Vision extends SubsystemBase{
         double lowerAngle = visionLookup.getAngle(lowerVal);
         double upperAngle = visionLookup.getAngle(upperVal);
     
-        //get the slope of the line between the upper and lower values (interpolating)
-        //position/inch
-        double desiredSlope = (upperAngle - lowerAngle)/12; 
-    
         //multiply the difference in the distance and floored value by the slope to get desired position of hood for that small distance 
         //then add that to the desired position of the lower floored value
-        double desiredHood = (desiredSlope*((originalDistance - lowerVal) * 12) + lowerAngle);
+        double desiredHood = ((upperAngle - lowerAngle)*(originalDistance - lowerVal)  + lowerAngle);
         //To Do : Need to update hoodAngleOut and hoodAngleIn with real values during testing
         if(desiredHood > hoodAngleOut){
             return hoodAngleOut;
