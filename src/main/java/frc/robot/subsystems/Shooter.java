@@ -19,6 +19,7 @@ public class Shooter extends SubsystemBase{
     private final CANSparkMax m_hoodMotor;
     private final CANSparkMax m_rollerMotor;
     public final RelativeEncoder m_flyWheelEncoder;
+    private Vision m_vision;
 
     private SensorBoard m_sensorControl;
     
@@ -146,6 +147,10 @@ public class Shooter extends SubsystemBase{
 
     public void setFlywheelPower(double power) {
         m_shooterMotor.set(power);
+    }
+
+    public void setFlywheelVelocityLimelight(){
+        m_flywheelPID.setReference(m_vision.getDesiredWheelVelocity(), CANSparkMax.ControlType.kVelocity);
     }
 
     @Override

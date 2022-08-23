@@ -26,12 +26,12 @@ import java.util.Iterator;
 
 
 public class VisionLookup{
-    Map<Double, Double> angleMap;
-    Map<Double, Double> velocityMap;
-    public HashMap<String, Object> shootingDataMap;
+    HashMap<Double, Double> angleMap;
+    HashMap<Double, Double> velocityMap;
     public VisionLookup() throws Exception{
         
         //Change to JSON file
+        //Use 2d array or array of objects instead
         angleMap = new HashMap<>();
         angleMap.put(4.0, 23.31);
         angleMap.put(5.0, 23.5);
@@ -75,87 +75,19 @@ public class VisionLookup{
         return velocityMap.get(key);
     }
 
-    //Returns highest distance from angle map
-    double highestDistanceAngle(){
+    double largestKey(HashMap<Double, Double> map){
         double highest = 0;
-        for (double x : angleMap.keySet()){
+        for (double x : map.keySet()){
             if(x > highest){
                 highest = x;
             }
         }
         return highest;
-    }
-    
-    //Returns smallest distance from angle map
-    double lowestDistanceAngle(){
-        double lowest = 25;
-        for (double x : angleMap.keySet()){
-            if(x > lowest){
-                lowest = x;
-            }
-        }
-        return lowest;
     }
 
-    //Returns highest angle from angle map
-    double highestAngle(){
-        double highest = 0;
-        for (double x : angleMap.values()){
-            if(x > highest){
-                highest = x;
-            }
-        }
-        return highest;
-    }
-    
-    //Returns smallest angle from angle map
-    double lowestAngle(){
+    double smallestKey(HashMap<Double, Double> map){
         double lowest = 0;
-        for (double x : angleMap.values()){
-            if(x > lowest){
-                lowest = x;
-            }
-        }
-        return lowest;
-    }
-
-    //Returns highest distance from velocity map
-    double highestDistanceVelocity(){
-        double highest = 0;
-        for (double x : velocityMap.keySet()){
-            if(x > highest){
-                highest = x;
-            }
-        }
-        return highest;
-    }
-    
-    //Returns smallest distance from velocity map
-    double lowestDistanceVelocity(){
-        double lowest = 25;
-        for (double x : velocityMap.keySet()){
-            if(x > lowest){
-                lowest = x;
-            }
-        }
-        return lowest;
-    }
-
-    //Returns highest velocity from velocity map
-    double highestVelocity(){
-        double highest = 0;
-        for (double x : velocityMap.values()){
-            if(x > highest){
-                highest = x;
-            }
-        }
-        return highest;
-    }
-    
-    //Returns smallest velocity from velocity map
-    double lowestVelocity(){
-        double lowest = 25;
-        for (double x : velocityMap.values()){
+        for (double x : map.keySet()){
             if(x > lowest){
                 lowest = x;
             }

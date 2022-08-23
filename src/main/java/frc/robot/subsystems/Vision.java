@@ -5,6 +5,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.Constants.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -35,11 +38,14 @@ public class Vision extends SubsystemBase{
     public final double GOAL_RANGE_METERS;
     public double DISTANCE_FROM_TARGET;
     public double SHOOTER_FROM_TARGET;
+    public VisionLookup m_visionLookup;
+    
     
 
-    public Vision(SensorBoard sensorBoard) {
+    public Vision(SensorBoard sensorBoard, VisionLookup visionLookup) {
         final String CAMERA_NETWORKTABLE_NAME = "limelight";
         m_sensorControl = sensorBoard;
+        m_visionLookup = visionLookup;
         m_limelight = new PhotonCamera(CAMERA_NETWORKTABLE_NAME);
 
         //Camera height = 30 inches
@@ -102,35 +108,8 @@ public class Vision extends SubsystemBase{
     }
 
     //Return desired hood position based on angleMap
-    public double getHoodPOS(VisionLookup visionLookup){
-        double distance = SHOOTER_FROM_TARGET; // original distance offset is in inches, and we are converting it to feet
-        double originalDistance = distance;
-        double lowerVal = 0;  //lower value in ft 
-        //Find lower distance in range by going through keys in map
-        for (double x : visionLookup.angleMap.keySet()){
-            if(x < originalDistance){
-                lowerVal = x;
-            }
-        }
-        double upperVal = lowerVal + 1; //upper value in ft
-    
-        //if either of the int values are higher than the highest lookup table value,
-        //set the values to the highest lookup table value
-        if(lowerVal > visionLookup.highestDistanceAngle()){
-            lowerVal = visionLookup.highestDistanceAngle();
-        }
-    
-        if(upperVal > visionLookup.highestDistanceAngle()){
-            upperVal = visionLookup.highestDistanceAngle();
-        }
-    
-        //gets angle from the lookup table
-        double lowerAngle = visionLookup.getAngle(lowerVal);
-        double upperAngle = visionLookup.getAngle(upperVal);
-    
-        //multiply the difference in the distance and floored value by the slope to get desired position of hood for that small distance 
-        //then add that to the desired position of the lower floored value
-        double desiredHood = ((upperAngle - lowerAngle)*(originalDistance - lowerVal)  + lowerAngle);
+    public double getHoodPOS(){
+        double desiredHood = shooterInterpolation(m_visionLookup.angleMap);
         //To Do : Need to update hoodAngleOut and hoodAngleIn with real values during testing
         if(desiredHood > hoodAngleOut){
             return hoodAngleOut;
@@ -142,53 +121,39 @@ public class Vision extends SubsystemBase{
     }
 
     //Return the desired flywheel velocity using lookup table
-    public double getDesiredWheelVelocity(VisionLookup visionLookup){
-        double distance = SHOOTER_FROM_TARGET; // original distance offset is in inches, and we are converting it to feet
+    public double getDesiredWheelVelocity(){
+        return shooterInterpolation(m_visionLookup.velocityMap);
+     }
+
+
+    public double shooterInterpolation(HashMap<Double, Double> map){
+        double distance = SHOOTER_FROM_TARGET; //in meters
         double originalDistance = distance;
-        double lowerVal = 0;  //lower value in ft 
+        double lowerDistance = 1000;  
         //Find lower distance in range by going through keys in map
-        for (double x : visionLookup.velocityMap.keySet()){
-            if(x < originalDistance){
-                lowerVal = x;
+        for (double x : map.keySet()){
+            if(x < originalDistance && x < lowerDistance){
+                lowerDistance = x;
             }
         }
-        double upperVal = lowerVal + 1; //upper value in ft
     
-        //if either of the distance values are lower than the lowest lookup table value,
-        //set the values to the lowest lookup table value 
-    
-        if(lowerVal < visionLookup.lowestVelocity()){
-            lowerVal = visionLookup.lowestVelocity();
+        //if either of the int values are higher than the highest lookup table value,
+        //set the values to the highest lookup table value
+        if(lowerDistance > m_visionLookup.largestKey(map)){
+            lowerDistance = m_visionLookup.largestKey(map);
         }
+
+        double upperDistance = lowerDistance + 1;
+
+        //gets angle from the lookup table
+        double lowerVal = map.get(lowerDistance);
+        double upperVal = map.get(upperDistance);
     
-        if(upperVal < visionLookup.lowestVelocity()){
-            upperVal = visionLookup.lowestVelocity();
-        }
-    
-        //if either of the distance values are higher than the highest lookup table value,
-        //set the values to the highest lookup table value 
-    
-        if(lowerVal > visionLookup.highestVelocity()){
-            upperVal = visionLookup.highestVelocity();
-        }
-    
-        if(upperVal > visionLookup.highestVelocity()){
-            upperVal = visionLookup.highestVelocity();
-        }
-    
-        //gets value from the lookup table
-        double lowerValVel = visionLookup.getVelocity(lowerVal);
-        double upperValVel = visionLookup.getVelocity(upperVal);
-    
-        //get the slope of the line between the upper and lower values (interpolate)
-        //position/inch
-        double desiredSlope = (upperValVel - lowerValVel)/12; 
-    
-        //multiply the difference in the distance and floored value by the slope to get desired velocity for that small distance 
+        //multiply the difference in the distance and floored value by the slope to get desired position of hood for that small distance 
         //then add that to the desired position of the lower floored value
-        return ( (desiredSlope*((originalDistance - lowerVal)*12) + lowerValVel) );
-    
+        double desiredVal = ((upperVal - lowerVal)*(originalDistance - lowerDistance)  + lowerVal);
+        return desiredVal;
     }
-    
+       
     
 }
