@@ -61,7 +61,7 @@ public class RobotContainer {
     m_intake = new Intake(m_sensorControl);
     m_drivetrain = new Drivetrain(m_sensorControl);
     m_indexer = new Indexer(m_sensorControl);
-    m_vision = new Vision(m_sensorControl);
+    m_vision = new Vision(m_sensorControl, m_visionLookup);
     m_shooter = new Shooter(m_sensorControl, m_vision);
     m_visionLookup = null;
     try {

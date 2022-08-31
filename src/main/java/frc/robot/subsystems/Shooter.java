@@ -19,6 +19,7 @@ public class Shooter extends SubsystemBase{
     private final CANSparkMax m_hoodMotor;
     private final CANSparkMax m_rollerMotor;
     public final RelativeEncoder m_flyWheelEncoder;
+    public final RelativeEncoder m_hoodEncoder;
     private Vision m_vision;
 
     private SensorBoard m_sensorControl;
@@ -41,6 +42,7 @@ public class Shooter extends SubsystemBase{
     private int m_numTimesAtSpeed;
 
     public SparkMaxPIDController m_flywheelPID;
+    public SparkMaxPIDController m_hoodPID;
 
     private boolean m_atSpeed;
 
@@ -51,6 +53,7 @@ public class Shooter extends SubsystemBase{
         m_sensorControl = sensorBoard;
         m_shooterMotor.setInverted(false); //confirm
         m_flyWheelEncoder = m_shooterMotor.getEncoder();
+        m_hoodEncoder = m_hoodMotor.getEncoder();
         
         m_tolerance = 50;
         m_currVel = 0.0;
@@ -68,6 +71,7 @@ public class Shooter extends SubsystemBase{
         m_dFac = m_sensorControl.getFlywheelDEntry();
         
         m_flywheelPID = m_shooterMotor.getPIDController();
+        m_hoodPID = m_hoodMotor.getPIDController();
         configFlywheelPID();
         m_flywheelPID.setOutputRange(m_minVel, m_maxVel);
 
@@ -152,6 +156,17 @@ public class Shooter extends SubsystemBase{
     public void setFlywheelVelocityLimelight(){
         m_flywheelPID.setReference(m_vision.getDesiredWheelVelocity(), CANSparkMax.ControlType.kVelocity);
     }
+    //Need to add translation from angle to motor revs
+    public void setHoodAngleLimelight(){
+        m_hoodEncoder.setPosition(m_vision.getHoodPOS());
+    }
+
+    //Before shooting, run conveyor backwards
+    public void shootSetup(){
+        
+    }
+
+
 
     @Override
     public void simulationPeriodic() {
