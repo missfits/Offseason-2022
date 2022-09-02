@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import static frc.robot.Constants.Constants.*;
 
 
 /**
@@ -54,7 +55,7 @@ public class Robot extends TimedRobot {
     // for (String i : m_robotContainer.m_visionLookup.shootingDataMap.keySet()) {
     //   System.out.println(i);
     // }
-
+      isShooting = false;
     
   }
 
@@ -71,6 +72,10 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Target Distance", m_robotContainer.m_vision.DISTANCE_FROM_TARGET);
     //System.out.println(m_robotContainer.m_vision.DISTANCE_FROM_TARGET);
     //stem.out.println(m_robotContainer.m_vision.DISTANCE_FROM_TARGET);
+
+    if(isShooting == false){
+      m_robotContainer.m_shooter.setFlywheelPower(-0.5);
+    }
   }
 
   /** This function is called once each time the robot enters Disabled mode. */

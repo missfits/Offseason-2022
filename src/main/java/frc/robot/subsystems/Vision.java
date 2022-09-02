@@ -19,6 +19,7 @@ import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonUtils;
 
 import frc.robot.subsystems.*;
+import frc.robot.OI;
 import frc.robot.RobotContainer;
 import frc.robot.SensorBoard;
 
@@ -39,14 +40,27 @@ public class Vision extends SubsystemBase{
     public double DISTANCE_FROM_TARGET;
     public double SHOOTER_FROM_TARGET;
     public VisionLookup m_visionLookup;
+    private double forwardSpeed;
+    private double rotationSpeed;
+    private PIDController turnController;
+    private final double ANGULAR_P;
+    private final double ANGULAR_D;
+    private Drivetrain m_drivetrain;
+    private OI m_humanControl;
     
     
 
-    public Vision(SensorBoard sensorBoard, VisionLookup visionLookup) {
+    public Vision(SensorBoard sensorBoard, VisionLookup visionLookup, Drivetrain drivetrain, OI humanControl) {
         final String CAMERA_NETWORKTABLE_NAME = "limelight";
         m_sensorControl = sensorBoard;
         m_visionLookup = visionLookup;
         m_limelight = new PhotonCamera(CAMERA_NETWORKTABLE_NAME);
+        m_humanControl = humanControl;
+        m_drivetrain = drivetrain;
+        ANGULAR_P = 0.1;
+        ANGULAR_D = 0.0;
+        turnController = new PIDController(ANGULAR_P, 0, ANGULAR_D);
+
 
         //Camera height = 30 inches
         //Target height = 105 inches
@@ -153,6 +167,23 @@ public class Vision extends SubsystemBase{
         //then add that to the desired position of the lower floored value
         double desiredVal = ((upperVal - lowerVal)*(originalDistance - lowerDistance)  + lowerVal);
         return desiredVal;
+    }
+
+    public void turnToTarget(){
+        forwardSpeed = -m_humanControl.XBOX1.getY();
+        var results = m_limelight.getLatestResult();
+        if (results.hasTargets()) {
+            //Calculates angle needed to turn towards target using PID
+            rotationSpeed = -turnController.calculate(results.getBestTarget().getYaw(), 0);
+        } else {
+            rotationSpeed = 0;
+        }
+        m_drivetrain.arcadeDrive(forwardSpeed, rotationSpeed);
+        m_sensorControl.setTargetYaw(results.getBestTarget().getYaw());
+        if(!m_limelight.getLatestResult().hasTargets() || (rotationSpeed == 0)){
+            //End function if there are no targets or if robot has already turned
+            return;
+        }
     }
        
     
