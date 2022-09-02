@@ -102,4 +102,6 @@ public final class Constants {
     public static double forwardHoodOffsetFar = 0; //Example: 1
     public static double forwardHoodOffsetClose = 0; //Example: 4.5
     public static double change = 0; //Example: 7.5
+
+    public static boolean isShooting;
 }

@@ -21,6 +21,7 @@ public class Shooter extends SubsystemBase{
     public final RelativeEncoder m_flyWheelEncoder;
     public final RelativeEncoder m_hoodEncoder;
     private Vision m_vision;
+    private Conveyor m_conveyor;
 
     private SensorBoard m_sensorControl;
     
@@ -46,7 +47,7 @@ public class Shooter extends SubsystemBase{
 
     private boolean m_atSpeed;
 
-    public Shooter(SensorBoard sensorBoard, Vision vision) {
+    public Shooter(SensorBoard sensorBoard, Vision vision, Conveyor conveyor) {
         m_shooterMotor = new CANSparkMax(kCANID_MotorShooter, MotorType.kBrushless);
         m_hoodMotor = new CANSparkMax(kCANID_MotorHood, MotorType.kBrushless);
         m_rollerMotor = new CANSparkMax(kCANID_MotorRoller, MotorType.kBrushless);
@@ -54,6 +55,7 @@ public class Shooter extends SubsystemBase{
         m_shooterMotor.setInverted(false); //confirm
         m_flyWheelEncoder = m_shooterMotor.getEncoder();
         m_hoodEncoder = m_hoodMotor.getEncoder();
+        m_conveyor = conveyor;
         
         m_tolerance = 50;
         m_currVel = 0.0;
@@ -163,9 +165,17 @@ public class Shooter extends SubsystemBase{
 
     //Before shooting, run conveyor backwards
     public void shootSetup(){
-        
+        m_conveyor.setConveyorPosition(-1);//Change to real value
     }
 
+    //After shoot setup, launch balls
+    public void launch(){
+        setFlywheelVelocityLimelight();
+            if(isFlywheelAtSpeed(m_vision.getDesiredWheelVelocity())){
+                //Run conveyor forward to shoot balls
+                m_conveyor.setConveyorPower(0.5);
+            }
+    }
 
 
     @Override
