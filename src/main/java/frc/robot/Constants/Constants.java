@@ -102,6 +102,7 @@ public final class Constants {
     public static double forwardHoodOffsetFar = 0; //Example: 1
     public static double forwardHoodOffsetClose = 0; //Example: 4.5
     public static double change = 0; //Example: 7.5
+    public static double hoodAngleToMotorRevs = 0; //Change to amount of motor revs to move one tooth on hood
 
     public static boolean isShooting;
 }
