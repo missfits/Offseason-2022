@@ -55,8 +55,7 @@ public class Robot extends TimedRobot {
     // for (String i : m_robotContainer.m_visionLookup.shootingDataMap.keySet()) {
     //   System.out.println(i);
     // }
-      isShooting = false;
-    
+      m_robotContainer.m_shooter.setFlywheelPower(-0.5);
   }
 
 
@@ -71,11 +70,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("LimelightArea", m_robotContainer.m_vision.area);
     SmartDashboard.putNumber("Target Distance", m_robotContainer.m_vision.DISTANCE_FROM_TARGET);
     //System.out.println(m_robotContainer.m_vision.DISTANCE_FROM_TARGET);
-    //stem.out.println(m_robotContainer.m_vision.DISTANCE_FROM_TARGET);
+    //System.out.println(m_robotContainer.m_vision.DISTANCE_FROM_TARGET);
 
-    if(isShooting == false){
-      m_robotContainer.m_shooter.setFlywheelPower(-0.5);
-    }
   }
 
   /** This function is called once each time the robot enters Disabled mode. */

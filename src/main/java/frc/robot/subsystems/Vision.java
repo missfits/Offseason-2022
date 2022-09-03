@@ -10,6 +10,8 @@ import java.util.Map;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -121,7 +123,7 @@ public class Vision extends SubsystemBase{
 
     }
 
-    //Return desired hood position based on angleMap
+    /** @return desired hood position based on angleMap */
     public double getHoodPOS(){
         double desiredHood = shooterInterpolation(m_visionLookup.angleMap);
         //To Do : Need to update hoodAngleOut and hoodAngleIn with real values during testing
@@ -134,12 +136,12 @@ public class Vision extends SubsystemBase{
         }
     }
 
-    //Return the desired flywheel velocity using lookup table
+    /** @return the desired flywheel velocity using lookup table */
     public double getDesiredWheelVelocity(){
         return shooterInterpolation(m_visionLookup.velocityMap);
      }
 
-
+    /** Generalized interpolation code for shooter */
     public double shooterInterpolation(HashMap<Double, Double> map){
         double distance = SHOOTER_FROM_TARGET; //in meters
         double originalDistance = distance;
@@ -169,21 +171,44 @@ public class Vision extends SubsystemBase{
         return desiredVal;
     }
 
-    public void turnToTarget(){
+
+    /** Does not end until yaw = 0 or there are no targets
+     * @return true if robot fully turns to target
+     */
+    public boolean turnToTarget(){
         forwardSpeed = -m_humanControl.XBOX1.getY();
         var results = m_limelight.getLatestResult();
-        if (results.hasTargets()) {
-            //Calculates angle needed to turn towards target using PID
-            rotationSpeed = -turnController.calculate(results.getBestTarget().getYaw(), 0);
-        } else {
-            rotationSpeed = 0;
+        Timer timer = new Timer();
+        timer.start();
+        while(timer.get() < 60){
+            // If there is a target, turn to target until yaw = 0, then return true
+            // If there is no target, return false
+
+            if (results.hasTargets()) {
+                //Calculates angle needed to turn towards target using PID
+                rotationSpeed = -turnController.calculate(results.getBestTarget().getYaw(), 0);
+            } else {
+                //Return false if there are no targets
+                return false;
+            
+            }
+            m_drivetrain.arcadeDrive(forwardSpeed, rotationSpeed);
+            m_sensorControl.setTargetYaw(results.getBestTarget().getYaw());
+            if(rotationSpeed == 0){
+                //End function if robot has already turned
+                return true;
+            }
         }
-        m_drivetrain.arcadeDrive(forwardSpeed, rotationSpeed);
-        m_sensorControl.setTargetYaw(results.getBestTarget().getYaw());
-        if(!m_limelight.getLatestResult().hasTargets() || (rotationSpeed == 0)){
-            //End function if there are no targets or if robot has already turned
-            return;
+        //If times exceeds 60 seconds, print out error message and return false
+        if(results.hasTargets()){
+            System.out.println("Function timed out; Yaw = " + results.getBestTarget().getYaw());
+            return false;
         }
+        else{
+            System.out.println("Function timed out; No target found");
+            return false;
+        }
+        
     }
        
     
