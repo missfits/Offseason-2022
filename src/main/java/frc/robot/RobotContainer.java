@@ -56,11 +56,9 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+    //Create instances of subsystems
     m_sensorControl = new SensorBoard();
-
-
     m_humanControl = new OI();
-
     m_intake = new Intake(m_sensorControl);
     m_drivetrain = new Drivetrain(m_sensorControl);
     m_indexer = new Indexer(m_sensorControl);
@@ -74,6 +72,7 @@ public class RobotContainer {
       e.printStackTrace();
   }
 
+    //Commands
     m_defaultDriveCommand = new DefaultDriveCommand(m_sensorControl, m_humanControl, m_drivetrain);
     m_defaultIndexCommand = new DefaultIndexCommand(m_sensorControl, m_humanControl, m_indexer);
 

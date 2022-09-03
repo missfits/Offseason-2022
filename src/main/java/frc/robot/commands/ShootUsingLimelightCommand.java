@@ -18,15 +18,14 @@ public class ShootUsingLimelightCommand extends CommandBase{
     private OI m_humanControl;
     private Vision m_vision;
     private Shooter m_shooter;
-    
-
-
+    private boolean robotHasTurned;
 
     public ShootUsingLimelightCommand (SensorBoard sensorControl, OI humanControl, Vision vision, Shooter shooter) {
         m_sensorControl = sensorControl;
         m_humanControl = humanControl;
         m_vision = vision;
         isShooting = true;
+        robotHasTurned = false;
     }
 
     @Override
@@ -37,26 +36,22 @@ public class ShootUsingLimelightCommand extends CommandBase{
     public void execute() {
         var results = m_vision.m_limelight.getLatestResult();
         if (results.hasTargets()) {
-            //Call turn to target
-            m_vision.turnToTarget();
-            
-            //Setup
-            m_shooter.setHoodAngleLimelight();
-            m_shooter.shootSetup();
-
-            //Shoot ball
-            m_shooter.launch();
-
+            robotHasTurned = m_vision.turnToTarget();
+            //Shoot balls if robot has fully turned to target and yaw = 0
+            if(robotHasTurned == true){
+                m_shooter.shootSetup();
+                m_shooter.launch();
+            }
             
         } else {
-            
+            System.out.println("No targets found");
         }
         
     }
 
     @Override
     public void end(boolean interrupted) {
-        isShooting = false;
+        m_shooter.setFlywheelPower(-0.5);
     }
 
     @Override
