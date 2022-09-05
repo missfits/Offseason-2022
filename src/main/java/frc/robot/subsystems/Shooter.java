@@ -1,8 +1,12 @@
 package frc.robot.subsystems;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+import static frc.robot.Constants.Constants.*;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import static frc.robot.Constants.*;
+
 import frc.robot.SensorBoard;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
@@ -11,8 +15,13 @@ import edu.wpi.first.math.controller.PIDController;
 
 public class Shooter extends SubsystemBase{
     
-    private final CANSparkMax m_shooterMotor;
-    private RelativeEncoder m_encoder;
+    public final CANSparkMax m_shooterMotor;
+    private final CANSparkMax m_hoodMotor;
+    private final CANSparkMax m_rollerMotor;
+    public final RelativeEncoder m_flyWheelEncoder;
+    public final RelativeEncoder m_hoodEncoder;
+    private Vision m_vision;
+    private Conveyor m_conveyor;
 
     private SensorBoard m_sensorControl;
     
@@ -33,15 +42,20 @@ public class Shooter extends SubsystemBase{
 
     private int m_numTimesAtSpeed;
 
-    private SparkMaxPIDController m_flywheelPID;
+    public SparkMaxPIDController m_flywheelPID;
+    public SparkMaxPIDController m_hoodPID;
 
     private boolean m_atSpeed;
 
-    public Shooter(SensorBoard sensorBoard) {
+    public Shooter(SensorBoard sensorBoard, Vision vision, Conveyor conveyor) {
         m_shooterMotor = new CANSparkMax(kCANID_MotorShooter, MotorType.kBrushless);
+        m_hoodMotor = new CANSparkMax(kCANID_MotorHood, MotorType.kBrushless);
+        m_rollerMotor = new CANSparkMax(kCANID_MotorRoller, MotorType.kBrushless);
         m_sensorControl = sensorBoard;
         m_shooterMotor.setInverted(false); //confirm
-        m_encoder = m_shooterMotor.getEncoder();
+        m_flyWheelEncoder = m_shooterMotor.getEncoder();
+        m_hoodEncoder = m_hoodMotor.getEncoder();
+        m_conveyor = conveyor;
         
         m_tolerance = 50;
         m_currVel = 0.0;
@@ -59,6 +73,7 @@ public class Shooter extends SubsystemBase{
         m_dFac = m_sensorControl.getFlywheelDEntry();
         
         m_flywheelPID = m_shooterMotor.getPIDController();
+        m_hoodPID = m_hoodMotor.getPIDController();
         configFlywheelPID();
         m_flywheelPID.setOutputRange(m_minVel, m_maxVel);
 
@@ -71,7 +86,7 @@ public class Shooter extends SubsystemBase{
     @Override
     public void periodic() {
         m_currVel = getFlywheelVelocity();
-        m_currEnc = m_encoder.getPosition();
+        m_currEnc = m_flyWheelEncoder.getPosition();
         m_sensorControl.setFlywheelStates(m_currVel, m_currEnc);
         m_sensorControl.setFlywheelError(m_error);
         // configFlywheelPID();
@@ -109,7 +124,7 @@ public class Shooter extends SubsystemBase{
 
 
     public double getFlywheelVelocity() {
-        return m_encoder.getVelocity();
+        return m_flyWheelEncoder.getVelocity();
     }
 
     public void setFlywheelSpeedRPM(double desiredVelocity) { //in RPM, since using currVel
@@ -139,6 +154,37 @@ public class Shooter extends SubsystemBase{
     public void setFlywheelPower(double power) {
         m_shooterMotor.set(power);
     }
+
+    /** Set desired flywheel velocity based on limelight calculations */
+    public void setFlywheelVelocityLimelight(){
+        m_flywheelPID.setReference(m_vision.getDesiredWheelVelocity(), CANSparkMax.ControlType.kVelocity);
+    }
+
+    //Need to add translation from angle to motor revs
+    /** Set desired hood position */
+    public void setHoodAngleLimelight(){
+        m_hoodEncoder.setPosition(hoodAngleToMotorRevs * m_vision.getHoodPOS());
+    }
+
+    //Create types for angles, motor revs, inherit/composition from int, double
+
+    /** Set desired hood angle before shooting */
+    public void shootSetup(){
+        setHoodAngleLimelight();
+    }
+
+    /** Run conveyor backwards, set flywheel to desired velocity, run conveyor forward and shoot balls */
+    public void launch(){
+        //Move balls away from flywheel
+        m_conveyor.setConveyorPosition(-1);//Change to real value
+        setFlywheelVelocityLimelight();
+        //Wait for flywheel to speed up to desired velocity
+        if(isFlywheelAtSpeed(m_vision.getDesiredWheelVelocity())){
+            //Run conveyor forward to shoot balls
+            m_conveyor.setConveyorPower(0.5);
+        }
+    }
+
 
     @Override
     public void simulationPeriodic() {

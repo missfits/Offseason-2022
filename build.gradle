@@ -65,6 +65,9 @@ dependencies {
     nativeRelease wpi.java.vendor.jniRelease(wpi.platforms.desktop)
     simulationRelease wpi.sim.enableRelease()
 
+    implementation files('vendordeps/libs/json-simple-1.1.jar')
+    implementation files('vendordeps/libs/gson-2.9.0.jar')
+
     testImplementation 'junit:junit:4.13.1'
 }
 

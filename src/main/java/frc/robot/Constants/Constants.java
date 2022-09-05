@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot;
+package frc.robot.Constants;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -20,9 +20,11 @@ public final class Constants {
     public static int kCANID_MotorIntake = 5;
     public static int kCANID_MotorConveyor = 6;
     public static int kCANID_MotorShooter = 7;
+    public static int kCANID_MotorHood = 0; //change
+    public static int kCANID_MotorRoller = 0; //change
     public static int kCANID_MotorClimber1 = 8;
-    public static int kCANID_MotorIndex = 6; //change
-    //public static int kCANID_MotorClimber2 = 9; 
+    public static int kCANID_MotorIndex = 0; //change
+    //public static int kCANID_MotorClimber2 = 0; 
 
     public static int kMXP = 13;
 
@@ -82,6 +84,25 @@ public final class Constants {
     public static double FLYWHEEL_I_FAC = 0.0;
     public static double FLYWHEEL_D_FAC = 0.008;
 
+    public static double DRIVETRAIN_P_FAC = 0.01;
+    public static double DRIVETRAIN_I_FAC = 0.0;
+    public static double DRIVETRAIN_D_FAC = 0.0;
+
     //ifdef
     public static boolean EOS = true;
+
+    //Shooter Hood Positions
+    public static double hoodabsOut = 0; //Example: 0.058
+    public static double hoodabsIn = 0; //Example: 0.956
+    public static double hoodrevOut = 0; //Example: -38
+    public static double hoodrevIn = 0; //Example: 0
+    public static double hoodAngleOut = 0; //Example: 43
+    public static double hoodAngleIn = 0; //Example: 21
+    public static double forwardVelOffset = 0; //Example: 60
+    public static double forwardHoodOffsetFar = 0; //Example: 1
+    public static double forwardHoodOffsetClose = 0; //Example: 4.5
+    public static double change = 0; //Example: 7.5
+    public static double hoodAngleToMotorRevs = 0; //Change to amount of motor revs to move one tooth on hood
+
+    public static boolean isShooting;
 }

@@ -5,8 +5,14 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import static frc.robot.Constants.Constants.*;
 
 
 /**
@@ -18,7 +24,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
-  private RobotContainer m_robotContainer;
+  public RobotContainer m_robotContainer;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -28,16 +34,44 @@ public class Robot extends TimedRobot {
   public void robotInit() {
 
     m_robotContainer = new RobotContainer();
+    NetworkTableInstance inst = NetworkTableInstance.getDefault();
+
+    //Print out existing NetworkTables for debbuging purposes
+    String tables[] = {
+      "/",
+      "/CameraPublisher",
+      "/CameraPublisher/photonvision-output",
+      "/photonvision",
+      "/photonvision/limelight",
+    };
+    for (String table : tables) {
+      NetworkTable tt = inst.getTable(table);
+      inst.startClientTeam(6418);
+
+     tt.addSubTableListener((parent, name, t) -> {
+         System.out.println("Parent: " + parent + " Name: " + name);
+      }, false);
+    }
+    // for (String i : m_robotContainer.m_visionLookup.shootingDataMap.keySet()) {
+    //   System.out.println(i);
+    // }
+      m_robotContainer.m_shooter.setFlywheelPower(-0.5);
   }
 
 
   @Override
   public void robotPeriodic() {
-    // System.out.println("hello");
-
     CommandScheduler.getInstance().run();
     m_robotContainer.updateButtons();
     m_robotContainer.updateControls();
+    //Update smartdashboard periodically
+    SmartDashboard.putNumber("LimelightX", m_robotContainer.m_vision.x);
+    SmartDashboard.putNumber("LimelightY", m_robotContainer.m_vision.y);
+    SmartDashboard.putNumber("LimelightArea", m_robotContainer.m_vision.area);
+    SmartDashboard.putNumber("Target Distance", m_robotContainer.m_vision.DISTANCE_FROM_TARGET);
+    //System.out.println(m_robotContainer.m_vision.DISTANCE_FROM_TARGET);
+    //System.out.println(m_robotContainer.m_vision.DISTANCE_FROM_TARGET);
+
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -89,7 +123,8 @@ public class Robot extends TimedRobot {
 
   /** This function is called once when the robot is first started up. */
   @Override
-  public void simulationInit() {}
+  public void simulationInit() {
+  }
 
   /** This function is called periodically whilst in simulation. */
   @Override

@@ -126,8 +126,8 @@ install_manifest.txt
 
 
 ### Gradle ###
-.gradle
-build/
+.gradle/*
+build/*
 
 # Ignore Gradle GUI config
 gradle-app.setting

@@ -2,13 +2,16 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.SensorBoard;
+
+import static frc.robot.Constants.Constants.*;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import static frc.robot.Constants.*;
 import com.revrobotics.SparkMaxRelativeEncoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.math.controller.PIDController;
 
 
 public class Drivetrain extends SubsystemBase{
@@ -33,8 +36,15 @@ public class Drivetrain extends SubsystemBase{
     private final MotorControllerGroup m_leftGroup;
     private final MotorControllerGroup m_rightGroup;
 
+    private final double m_pFac;
+    private final double m_iFac;
+    private final double m_dFac;
+    public PIDController m_driveTrainPID;
+    private final SensorBoard m_sensorControl;
+
 
     public Drivetrain(SensorBoard sensorControl) {
+        m_sensorControl = sensorControl;
         m_leftPrimary = new CANSparkMax(kCANID_MotorLeft1, MotorType.kBrushless);
         m_leftSecondary = new CANSparkMax(kCANID_MotorLeft2, MotorType.kBrushless);
         m_rightPrimary = new CANSparkMax(kCANID_MotorRight1, MotorType.kBrushless);
@@ -58,7 +68,11 @@ public class Drivetrain extends SubsystemBase{
 
         m_robotDrive = new DifferentialDrive(m_leftGroup, m_rightGroup);
         m_leftGroup.setInverted(true);
-
+    
+        m_pFac = m_sensorControl.getFlywheelFEntry();
+        m_iFac = 0.0;
+        m_dFac = 0.0;
+        m_driveTrainPID = new PIDController(m_pFac, m_iFac, m_dFac);
     }
 
     @Override
@@ -75,5 +89,9 @@ public class Drivetrain extends SubsystemBase{
     @Override
     public void simulationPeriodic() {
 
+    }
+
+    public void arcadeDrive(double forwardSpeed, double rotationSpeed) {
+        m_robotDrive.arcadeDrive(forwardSpeed, rotationSpeed);
     }
 }

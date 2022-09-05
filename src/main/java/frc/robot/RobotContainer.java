@@ -4,17 +4,20 @@
 
 package frc.robot;
 
+import static frc.robot.Constants.Constants.*;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Indexer;
+import frc.robot.subsystems.Vision;
+import frc.robot.subsystems.VisionLookup;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import frc.robot.commands.*;
-
-import static frc.robot.Constants.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -29,16 +32,23 @@ public class RobotContainer {
 
   private final OI m_humanControl;
 
-  private final Shooter m_shooter;
+  public final Shooter m_shooter;
   private final Intake m_intake;
   private final Drivetrain m_drivetrain;
   private final Indexer m_indexer;
+  public final Vision m_vision;
+  public VisionLookup m_visionLookup;
+  private Conveyor m_conveyor;
 
   private final ShootCommand m_shootCommand;
   private final IntakeCommand m_intakeCommand;
   private final IntakeReverseCommand m_intakeReverseCommand;
   private final DefaultDriveCommand m_defaultDriveCommand;
   private final DefaultIndexCommand m_defaultIndexCommand;
+  private final LimelightDriveCommand m_limelightDriveCommand;
+  private final TurnToTarget m_turnToTarget;
+  private final AimDriveToTarget m_aimDriveToTarget;
+  private final ShootUsingLimelightCommand m_shootUsingLimelightCommand;
 
 
 
@@ -46,16 +56,23 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+    //Create instances of subsystems
     m_sensorControl = new SensorBoard();
-
-
     m_humanControl = new OI();
-
-    m_shooter = new Shooter(m_sensorControl);
     m_intake = new Intake(m_sensorControl);
     m_drivetrain = new Drivetrain(m_sensorControl);
     m_indexer = new Indexer(m_sensorControl);
+    m_vision = new Vision(m_sensorControl, m_visionLookup, m_drivetrain, m_humanControl);
+    m_shooter = new Shooter(m_sensorControl, m_vision, m_conveyor);
+    m_visionLookup = null;
 
+    try {
+      m_visionLookup = new VisionLookup();
+    } catch (Exception e) {
+      e.printStackTrace();
+  }
+
+    //Commands
     m_defaultDriveCommand = new DefaultDriveCommand(m_sensorControl, m_humanControl, m_drivetrain);
     m_defaultIndexCommand = new DefaultIndexCommand(m_sensorControl, m_humanControl, m_indexer);
 
@@ -65,7 +82,10 @@ public class RobotContainer {
     m_shootCommand = new ShootCommand(m_sensorControl, m_humanControl, m_shooter, m_indexer);
     m_intakeCommand = new IntakeCommand(m_sensorControl, m_humanControl, m_intake);
     m_intakeReverseCommand = new IntakeReverseCommand(m_sensorControl, m_humanControl, m_intake);
-    
+    m_limelightDriveCommand = new LimelightDriveCommand(m_sensorControl, m_humanControl, m_drivetrain, m_vision);
+    m_turnToTarget = new TurnToTarget(m_sensorControl, m_humanControl, m_drivetrain, m_vision);
+    m_aimDriveToTarget = new AimDriveToTarget(m_sensorControl, m_humanControl, m_drivetrain, m_vision);
+    m_shootUsingLimelightCommand = new ShootUsingLimelightCommand(m_sensorControl, m_humanControl, m_vision, m_shooter);
     
     System.out.println("end of robot container constructor");
   }
@@ -110,6 +130,18 @@ public class RobotContainer {
 
     if(m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxStart)) || m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_LeftJoy, kButtonID_Drive4))) {
       CommandScheduler.getInstance().schedule(m_intakeReverseCommand);
+    }
+
+    if (m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxBack))){
+      CommandScheduler.getInstance().schedule(m_limelightDriveCommand);
+    }
+
+    if (m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxRB))){
+      CommandScheduler.getInstance().schedule(m_shootUsingLimelightCommand);
+    }
+
+    if (m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxLB))){
+      CommandScheduler.getInstance().schedule(m_aimDriveToTarget);
     }
   }
 }
