@@ -6,13 +6,21 @@ import static frc.robot.Constants.*;
 import frc.robot.SensorBoard;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.SparkMaxRelativeEncoder;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 
 public class Shooter extends SubsystemBase{
     
-    private final CANSparkMax m_shooterMotor;
-    private RelativeEncoder m_encoder;
+    private final CANSparkMax m_shooterMotor1;
+    private final CANSparkMax m_shooterMotor2;
+    private final MotorController m_shooterMotorController1;
+    private final MotorController m_shooterMotorController2;
+    private final SparkMaxRelativeEncoder m_flywheelEncoder1;
+    private final SparkMaxRelativeEncoder m_flywheelEncoder2;
+    private final MotorControllerGroup m_shooterGroup;
 
     private SensorBoard m_sensorControl;
     
@@ -38,11 +46,23 @@ public class Shooter extends SubsystemBase{
     private boolean m_atSpeed;
 
     public Shooter(SensorBoard sensorBoard) {
-        m_shooterMotor = new CANSparkMax(kCANID_MotorShooter, MotorType.kBrushless);
+
+        m_shooterMotor1 = new CANSparkMax(kCANID_MotorShooter1, MotorType.kBrushless);
+        m_shooterMotor2 = new CANSparkMax(kCANID_MotorShooter2, MotorType.kBrushless);
         m_sensorControl = sensorBoard;
-        m_shooterMotor.setInverted(false); //confirm
-        m_encoder = m_shooterMotor.getEncoder();
+
+        m_flywheelEncoder1 = (SparkMaxRelativeEncoder) m_shooterMotor1.getEncoder(SparkMaxRelativeEncoder.Type.kHallSensor, 42);
+        m_flywheelEncoder2 = (SparkMaxRelativeEncoder) m_shooterMotor2.getEncoder(SparkMaxRelativeEncoder.Type.kHallSensor, 42);
+
+        m_shooterMotor2.follow(m_shooterMotor1);
+
+        m_shooterMotorController1 = m_shooterMotor1;
+        m_shooterMotorController2 = m_shooterMotor2;
+
+        m_shooterGroup = new MotorControllerGroup(m_shooterMotorController1, m_shooterMotorController2);
         
+        m_shooterGroup.setInverted(false); //confirm
+
         m_tolerance = 50;
         m_currVel = 0.0;
         m_numTimesAtSpeed = 0;
@@ -58,7 +78,7 @@ public class Shooter extends SubsystemBase{
         m_iFac = m_sensorControl.getFlywheelIEntry();
         m_dFac = m_sensorControl.getFlywheelDEntry();
         
-        m_flywheelPID = m_shooterMotor.getPIDController();
+        m_flywheelPID = m_shooterMotor1.getPIDController();
         configFlywheelPID();
         m_flywheelPID.setOutputRange(m_minVel, m_maxVel);
 
@@ -71,7 +91,7 @@ public class Shooter extends SubsystemBase{
     @Override
     public void periodic() {
         m_currVel = getFlywheelVelocity();
-        m_currEnc = m_encoder.getPosition();
+        m_currEnc = m_flywheelEncoder1.getPosition();
         m_sensorControl.setFlywheelStates(m_currVel, m_currEnc);
         m_sensorControl.setFlywheelError(m_error);
         // configFlywheelPID();
@@ -109,7 +129,7 @@ public class Shooter extends SubsystemBase{
 
 
     public double getFlywheelVelocity() {
-        return m_encoder.getVelocity();
+        return m_flywheelEncoder1.getVelocity();
     }
 
     public void setFlywheelSpeedRPM(double desiredVelocity) { //in RPM, since using currVel
@@ -137,7 +157,7 @@ public class Shooter extends SubsystemBase{
     }
 
     public void setFlywheelPower(double power) {
-        m_shooterMotor.set(power);
+        m_shooterGroup.set(power);
     }
 
     @Override

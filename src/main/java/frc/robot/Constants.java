@@ -19,7 +19,8 @@ public final class Constants {
     public static int kCANID_MotorRight2 = 4;
     public static int kCANID_MotorIntake = 5;
     public static int kCANID_MotorConveyor = 6;
-    public static int kCANID_MotorShooter = 7;
+    public static int kCANID_MotorShooter1 = 7;
+    public static int kCANID_MotorShooter2 = 7;
     public static int kCANID_MotorClimber1 = 8;
     public static int kCANID_MotorIndex = 6; //change
     //public static int kCANID_MotorClimber2 = 9; 
