@@ -145,29 +145,29 @@ public class Vision extends SubsystemBase{
     public double shooterInterpolation(HashMap<Double, Double> map){
         double distance = SHOOTER_FROM_TARGET; //in meters
         double originalDistance = distance;
-        double lowerDistance = 1000;  
+        double closestKeyBelow = 0;  
         //Find lower distance in range by going through keys in map
         for (double x : map.keySet()){
-            if(x < originalDistance && x < lowerDistance){
-                lowerDistance = x;
+            if(x < originalDistance && x > closestKeyBelow){
+                closestKeyBelow = x;
             }
         }
     
         //if either of the int values are higher than the highest lookup table value,
         //set the values to the highest lookup table value
-        if(lowerDistance > m_visionLookup.largestKey(map)){
-            lowerDistance = m_visionLookup.largestKey(map);
+        if(closestKeyBelow > m_visionLookup.largestKey(map)){
+            closestKeyBelow = m_visionLookup.largestKey(map);
         }
 
-        double upperDistance = lowerDistance + 1;
+        double upperDistance = closestKeyBelow + 1;
 
         //gets angle from the lookup table
-        double lowerVal = map.get(lowerDistance);
+        double lowerVal = map.get(closestKeyBelow);
         double upperVal = map.get(upperDistance);
     
         //multiply the difference in the distance and floored value by the slope to get desired position of hood for that small distance 
         //then add that to the desired position of the lower floored value
-        double desiredVal = ((upperVal - lowerVal)*(originalDistance - lowerDistance)  + lowerVal);
+        double desiredVal = ((upperVal - lowerVal)*(originalDistance - closestKeyBelow)  + lowerVal);
         return desiredVal;
     }
 

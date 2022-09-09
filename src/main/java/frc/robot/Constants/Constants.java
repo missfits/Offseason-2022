@@ -22,7 +22,6 @@ public final class Constants {
     public static int kCANID_MotorShooter1 = 7;
     public static int kCANID_MotorShooter2 = 7;
     public static int kCANID_MotorHood = 0; //change
-    public static int kCANID_MotorRoller = 0; //change
     public static int kCANID_MotorClimber1 = 8;
     public static int kCANID_MotorIndex = 0; //change
     //public static int kCANID_MotorClimber2 = 0; 

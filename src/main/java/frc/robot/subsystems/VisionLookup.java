@@ -4,11 +4,11 @@ import java.io.PrintWriter;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.google.gson.Gson;
+// import com.google.gson.Gson;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+// import org.json.simple.JSONArray;
+// import org.json.simple.JSONObject;
+// import org.json.simple.parser.JSONParser;
 
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import frc.robot.Constants.*;
@@ -75,6 +75,9 @@ public class VisionLookup{
         return velocityMap.get(key);
     }
 
+    //Could call sort function on keys
+    //Sort keys at beggining and save values
+    //Binary search
     double largestKey(HashMap<Double, Double> map){
         double highest = 0;
         for (double x : map.keySet()){
@@ -86,9 +89,9 @@ public class VisionLookup{
     }
 
     double smallestKey(HashMap<Double, Double> map){
-        double lowest = 0;
+        double lowest = 100;
         for (double x : map.keySet()){
-            if(x > lowest){
+            if(x < lowest){
                 lowest = x;
             }
         }
