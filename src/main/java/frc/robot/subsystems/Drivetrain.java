@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.math.controller.PIDController;
+import java.util.ArrayList;
 
 
 public class Drivetrain extends SubsystemBase{
@@ -77,9 +78,14 @@ public class Drivetrain extends SubsystemBase{
 
     @Override
     public void periodic() {
-
-
-
+        logFaults(m_leftPrimary, true);
+        logFaults(m_leftSecondary, true);
+        logFaults(m_rightPrimary, true);
+        logFaults(m_rightSecondary, true);
+        logFaults(m_leftPrimary, false);
+        logFaults(m_leftSecondary, false);
+        logFaults(m_rightPrimary, false);
+        logFaults(m_rightSecondary, false);
     }
 
     public void tankDrive(double leftThrust, double rightThrust) {
@@ -93,5 +99,24 @@ public class Drivetrain extends SubsystemBase{
 
     public void arcadeDrive(double forwardSpeed, double rotationSpeed) {
         m_robotDrive.arcadeDrive(forwardSpeed, rotationSpeed);
+    }
+
+    /** Prints a list of faults for a given CANSparkMax motor controller to the Rio log if faults are detected
+     * @param controller the CANSparkMax controller to check for faults
+     * @param stickyFault is true for checking sticky faults, false for checking regular faults
+     */
+    public void logFaults(CANSparkMax controller, boolean stickyFault){
+        short faults = (stickyFault) ? controller.getStickyFaults() : controller.getFaults();
+        String faultType = (stickyFault)? "Sticky Faults" : "Faults";
+        if (faults > 0){
+            ArrayList<CANSparkMax.FaultID> idList = new ArrayList<>();
+            for (int i = 0; i < 15; i++){
+                if (faults % 2 == 1){                                   
+                    idList.add(CANSparkMax.FaultID.fromId(i));          // adds fault to list if corresponding bit is 1
+                }
+                faults /= 2;
+            }
+            System.out.println(controller + " " + faultType + ": " + idList);
+        }
     }
 }
