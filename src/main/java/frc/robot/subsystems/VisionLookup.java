@@ -20,19 +20,21 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.SortedMap;
+import java.util.TreeMap;
 import java.util.Iterator;
 
 
 
 
 public class VisionLookup{
-    HashMap<Double, Double> angleMap;
-    HashMap<Double, Double> velocityMap;
+    SortedMap<Double, Double> angleMap;
+    SortedMap<Double, Double> velocityMap;
     public VisionLookup() throws Exception{
         
         //Change to JSON file
         //Use 2d array or array of objects instead
-        angleMap = new HashMap<>();
+        angleMap = new TreeMap<Double, Double>();
         angleMap.put(4.0, 23.31);
         angleMap.put(5.0, 23.5);
         angleMap.put(6.0, 25.07);
@@ -40,7 +42,7 @@ public class VisionLookup{
         angleMap.put(8.0, 27.37);
         angleMap.put(9.0, 29.62);
 
-        velocityMap = new HashMap<>();
+        velocityMap = new TreeMap<Double, Double>();
         velocityMap.put(4.0, 1250.0);
         velocityMap.put(5.0, 1250.0);
         velocityMap.put(6.0, 1300.0);
@@ -78,24 +80,12 @@ public class VisionLookup{
     //Could call sort function on keys
     //Sort keys at beggining and save values
     //Binary search
-    double largestKey(HashMap<Double, Double> map){
-        double highest = 0;
-        for (double x : map.keySet()){
-            if(x > highest){
-                highest = x;
-            }
-        }
-        return highest;
+    double largestKey(SortedMap<Double, Double> map){
+        return map.lastKey();
     }
 
-    double smallestKey(HashMap<Double, Double> map){
-        double lowest = 100;
-        for (double x : map.keySet()){
-            if(x < lowest){
-                lowest = x;
-            }
-        }
-        return lowest;
+    double smallestKey(SortedMap<Double, Double> map){
+        return map.firstKey();
     }
 
     

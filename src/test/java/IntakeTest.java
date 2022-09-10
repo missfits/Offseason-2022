@@ -1,58 +1,52 @@
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import static org.junit.Assert.*;
 import org.junit.*;
 
+import edu.wpi.first.wpilibj.simulation.PWMSim;
 import frc.robot.subsystems.Intake;
 
-import org.junit.jupiter.api.Test;
-
 class MyFirstJUnitJupiterTests {
-
-    private final Intake intake = new Intake(null);
+    PWMSim simMotor;
+    public static final double DELTA = 1e-2; // acceptable deviation range
 
     @Before // this method will run before each test
     public void setup() {
-        
+        simMotor = new PWMSim(1); // create our simulation PWM motor controller
     }
 
     @After // this method will run after each test
     public void shutdown() throws Exception {
-        intake.close(); // destroy our intake object
+        simMotor.setSpeed(0);
+        //intake.close(); // destroy our intake object
     }
 
-    @Test // marks this method as a test
-    public void doesntWorkWhenClosed() {
-        intake.retract(); // close the intake
-        intake.activate(0.5); // try to activate the motor
-        assertEquals(0.0, simMotor.getSpeed(), DELTA); // make sure that the value set to the motor is 0
-    }
+    // @Test // marks this method as a test
+    // public void doesntWorkWhenClosed() {
+    //     assertEquals(0.0, simMotor.getSpeed(), DELTA); // make sure that the value set to the motor is 0
+    // }
 
-    @Test
-    public void worksWhenOpen() {
-        intake.deploy();
-        intake.activate(0.5);
-        assertEquals(0.5, simMotor.getSpeed(), DELTA);
-    }
+    // @Test
+    // public void worksWhenOpen() {
+        
+    // }
 
-    @Test
-    public void retractTest() {
-        intake.retract();
-        assertEquals(DoubleSolenoid.Value.kReverse, simPiston.get());
-    }
+    // @Test
+    // public void retractTest() {
+        
+    // }
 
     @Test
     public void deployTest() {
-        intake.deploy();
-        assertEquals(DoubleSolenoid.Value.kForward, simPiston.get());
+        simMotor.setSpeed(10);
+        System.out.println("Test");
     }
 
 
 
 
-    @Test
-    void addition() {
-        intake.setIntakeRollersPower(1);
-    }
+    // @Test
+    // void addition() {
+    //     intake.setIntakeRollersPower(1);
+    // }
 
 }

@@ -7,6 +7,7 @@ import static frc.robot.Constants.Constants.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.SortedMap;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -142,7 +143,7 @@ public class Vision extends SubsystemBase{
      }
 
     /** Generalized interpolation code for shooter */
-    public double shooterInterpolation(HashMap<Double, Double> map){
+    public double shooterInterpolation(SortedMap<Double, Double> map){
         double distance = SHOOTER_FROM_TARGET; //in meters
         double originalDistance = distance;
         double closestKeyBelow = 0;  
@@ -159,11 +160,11 @@ public class Vision extends SubsystemBase{
             closestKeyBelow = m_visionLookup.largestKey(map);
         }
 
-        double upperDistance = closestKeyBelow + 1;
+        double closestKeyAbove = closestKeyBelow + 1;
 
         //gets angle from the lookup table
         double lowerVal = map.get(closestKeyBelow);
-        double upperVal = map.get(upperDistance);
+        double upperVal = map.get(closestKeyAbove);
     
         //multiply the difference in the distance and floored value by the slope to get desired position of hood for that small distance 
         //then add that to the desired position of the lower floored value
