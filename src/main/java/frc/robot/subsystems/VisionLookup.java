@@ -29,6 +29,7 @@ import java.util.Iterator;
 
 public class VisionLookup{
     public SortedMap<Double, Double> angleMap;
+    public SortedMap<Double, Double> angleToPositionMap;
     public SortedMap<Double, Double> velocityMap;
     public SortedMap<Double, Double> testMap;
     public VisionLookup(){
@@ -42,6 +43,15 @@ public class VisionLookup{
         angleMap.put(7.0, 26.21);
         angleMap.put(8.0, 27.37);
         angleMap.put(9.0, 29.62);
+
+        //Translate angle to encoder position
+        angleToPositionMap = new TreeMap<Double, Double>();
+        angleToPositionMap.put(0.0, 0.0);
+        angleToPositionMap.put(0.0, 0.0);
+        angleToPositionMap.put(0.0, 0.0);
+        angleToPositionMap.put(0.0, 0.0);
+        angleToPositionMap.put(0.0, 0.0);
+        angleToPositionMap.put(0.0, 0.0);
 
         velocityMap = new TreeMap<Double, Double>();
         velocityMap.put(4.0, 1250.0);

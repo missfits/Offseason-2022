@@ -63,7 +63,7 @@ public class RobotContainer {
     m_drivetrain = new Drivetrain(m_sensorControl);
     m_indexer = new Indexer(m_sensorControl);
     m_vision = new Vision(m_sensorControl, m_visionLookup, m_drivetrain, m_humanControl);
-    m_shooter = new Shooter(m_sensorControl, m_vision, m_conveyor);
+    m_shooter = new Shooter(m_sensorControl, m_vision, m_conveyor, m_visionLookup);
     m_visionLookup = new VisionLookup();
 
     //Commands

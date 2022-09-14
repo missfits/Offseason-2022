@@ -124,27 +124,6 @@ public class Vision extends SubsystemBase{
 
     }
 
-    /** @return desired hood position based on angleMap */
-    public double getHoodPOS(SortedMap<Double, Double> map, double distance){
-        double desiredHood = m_visionLookup.shooterInterpolation(map, distance);
-        //To Do : Need to update hoodAngleOut and hoodAngleIn with real values during testing
-        if(desiredHood > hoodAngleOut){
-            return hoodAngleOut;
-        } else if(desiredHood < hoodAngleIn){
-            return hoodAngleIn;
-        } else{
-            return desiredHood;
-        }
-    }
-
-    /** @return the desired flywheel velocity using lookup table */
-    public double getDesiredWheelVelocity(SortedMap<Double, Double> map, double distance){
-        return m_visionLookup.shooterInterpolation(map, distance);
-     }
-
-   
-
-
     /** Does not end until yaw = 0 or there are no targets
      * @return true if robot fully turns to target
      */

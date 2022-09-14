@@ -20,7 +20,7 @@ public class TestUtilities {
         m_drivetrainTest = new Drivetrain(m_sensorControlTest);
         m_indexerTest = new Indexer(m_sensorControlTest);
         m_visionTest = new Vision(m_sensorControlTest, m_visionLookupTest, m_drivetrainTest, m_humanControlTest);
-        m_shooterTest = new Shooter(m_sensorControlTest, m_visionTest, m_conveyorTest);
+        m_shooterTest = new Shooter(m_sensorControlTest, m_visionTest, m_conveyorTest, m_visionLookupTest);
         m_conveyorTest = new Conveyor(m_sensorControlTest);
         m_visionLookupTest = new VisionLookup();
 

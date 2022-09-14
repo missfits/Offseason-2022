@@ -4,6 +4,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.Constants.*;
 
+import java.util.SortedMap;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -30,6 +32,7 @@ public class Shooter extends SubsystemBase{
 
     private Vision m_vision;
     private Conveyor m_conveyor;
+    private VisionLookup m_visionLookup;
 
     private SensorBoard m_sensorControl;
     
@@ -55,7 +58,7 @@ public class Shooter extends SubsystemBase{
 
     private boolean m_atSpeed;
 
-    public Shooter(SensorBoard sensorBoard, Vision vision, Conveyor conveyor) {
+    public Shooter(SensorBoard sensorBoard, Vision vision, Conveyor conveyor, VisionLookup visionLookup) {
         m_shooterMotor1 = new CANSparkMax(kCANID_MotorShooter1, MotorType.kBrushless);
         m_shooterMotor2 = new CANSparkMax(kCANID_MotorShooter2, MotorType.kBrushless);
         m_hoodMotor = new CANSparkMax(kCANID_MotorHood, MotorType.kBrushless);
@@ -65,6 +68,7 @@ public class Shooter extends SubsystemBase{
         m_flywheelEncoder1 = (SparkMaxRelativeEncoder) m_shooterMotor1.getEncoder(SparkMaxRelativeEncoder.Type.kHallSensor, 42);
         m_flywheelEncoder2 = (SparkMaxRelativeEncoder) m_shooterMotor2.getEncoder(SparkMaxRelativeEncoder.Type.kHallSensor, 42);
         m_hoodEncoder = m_hoodMotor.getEncoder();
+        m_hoodEncoder.setPosition(0);
 
         m_shooterMotor2.follow(m_shooterMotor1);
 
@@ -174,15 +178,32 @@ public class Shooter extends SubsystemBase{
         m_shooterMotor1.set(power);
     }
 
+    /** @return the desired flywheel velocity using lookup table */
+    public double getDesiredWheelVelocity(SortedMap<Double, Double> map, double distance){
+        return m_visionLookup.shooterInterpolation(map, distance);
+     }
     /** Set desired flywheel velocity based on limelight calculations */
     public void setFlywheelVelocityLimelight(){
-        m_flywheelPID.setReference(m_vision.getDesiredWheelVelocity(m_vision.m_visionLookup.velocityMap, m_vision.SHOOTER_FROM_TARGET), CANSparkMax.ControlType.kVelocity);
+        m_flywheelPID.setReference(getDesiredWheelVelocity(m_vision.m_visionLookup.velocityMap, m_vision.SHOOTER_FROM_TARGET), CANSparkMax.ControlType.kVelocity);
+    }
+
+    /** @return desired hood position based on angleMap */
+    public double getHoodPOS(SortedMap<Double, Double> map, double distance){
+        double desiredHood = m_visionLookup.shooterInterpolation(map, distance);
+        //To Do : Need to update hoodAngleOut and hoodAngleIn with real values during testing
+        if(desiredHood > hoodAngleOut){
+            return hoodAngleOut;
+        } else if(desiredHood < hoodAngleIn){
+            return hoodAngleIn;
+        } else{
+            return desiredHood;
+        }
     }
 
     //Need to add translation from angle to motor revs
     /** Set desired hood position */
     public void setHoodAngleLimelight(){
-        m_hoodEncoder.setPosition(hoodAngleToMotorRevs * m_vision.getHoodPOS(m_vision.m_visionLookup.angleMap, m_vision.SHOOTER_FROM_TARGET));
+        m_hoodEncoder.setPosition(hoodAngleToMotorRevs * getHoodPOS(m_vision.m_visionLookup.angleMap, m_vision.SHOOTER_FROM_TARGET));
     }
 
     //Create types for angles, motor revs, inherit/composition from int, double
@@ -198,7 +219,7 @@ public class Shooter extends SubsystemBase{
         m_conveyor.setConveyorPosition(-1);//Change to real value
         setFlywheelVelocityLimelight();
         //Wait for flywheel to speed up to desired velocity
-        if(isFlywheelAtSpeed(m_vision.getDesiredWheelVelocity(m_vision.m_visionLookup.velocityMap, m_vision.SHOOTER_FROM_TARGET))){
+        if(isFlywheelAtSpeed(getDesiredWheelVelocity(m_vision.m_visionLookup.velocityMap, m_vision.SHOOTER_FROM_TARGET))){
             //Run conveyor forward to shoot balls
             m_conveyor.setConveyorPower(0.5);
         }
