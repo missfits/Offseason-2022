@@ -176,13 +176,13 @@ public class Shooter extends SubsystemBase{
 
     /** Set desired flywheel velocity based on limelight calculations */
     public void setFlywheelVelocityLimelight(){
-        m_flywheelPID.setReference(m_vision.getDesiredWheelVelocity(), CANSparkMax.ControlType.kVelocity);
+        m_flywheelPID.setReference(m_vision.getDesiredWheelVelocity(m_vision.m_visionLookup.velocityMap, m_vision.SHOOTER_FROM_TARGET), CANSparkMax.ControlType.kVelocity);
     }
 
     //Need to add translation from angle to motor revs
     /** Set desired hood position */
     public void setHoodAngleLimelight(){
-        m_hoodEncoder.setPosition(hoodAngleToMotorRevs * m_vision.getHoodPOS());
+        m_hoodEncoder.setPosition(hoodAngleToMotorRevs * m_vision.getHoodPOS(m_vision.m_visionLookup.angleMap, m_vision.SHOOTER_FROM_TARGET));
     }
 
     //Create types for angles, motor revs, inherit/composition from int, double
@@ -198,7 +198,7 @@ public class Shooter extends SubsystemBase{
         m_conveyor.setConveyorPosition(-1);//Change to real value
         setFlywheelVelocityLimelight();
         //Wait for flywheel to speed up to desired velocity
-        if(isFlywheelAtSpeed(m_vision.getDesiredWheelVelocity())){
+        if(isFlywheelAtSpeed(m_vision.getDesiredWheelVelocity(m_vision.m_visionLookup.velocityMap, m_vision.SHOOTER_FROM_TARGET))){
             //Run conveyor forward to shoot balls
             m_conveyor.setConveyorPower(0.5);
         }

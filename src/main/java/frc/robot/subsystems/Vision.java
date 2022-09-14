@@ -125,8 +125,8 @@ public class Vision extends SubsystemBase{
     }
 
     /** @return desired hood position based on angleMap */
-    public double getHoodPOS(){
-        double desiredHood = shooterInterpolation(m_visionLookup.angleMap);
+    public double getHoodPOS(SortedMap<Double, Double> map, double distance){
+        double desiredHood = m_visionLookup.shooterInterpolation(map, distance);
         //To Do : Need to update hoodAngleOut and hoodAngleIn with real values during testing
         if(desiredHood > hoodAngleOut){
             return hoodAngleOut;
@@ -138,39 +138,11 @@ public class Vision extends SubsystemBase{
     }
 
     /** @return the desired flywheel velocity using lookup table */
-    public double getDesiredWheelVelocity(){
-        return shooterInterpolation(m_visionLookup.velocityMap);
+    public double getDesiredWheelVelocity(SortedMap<Double, Double> map, double distance){
+        return m_visionLookup.shooterInterpolation(map, distance);
      }
 
-    /** Generalized interpolation code for shooter */
-    public double shooterInterpolation(SortedMap<Double, Double> map){
-        double distance = SHOOTER_FROM_TARGET; //in meters
-        double originalDistance = distance;
-        double closestKeyBelow = 0;  
-        //Find lower distance in range by going through keys in map
-        for (double x : map.keySet()){
-            if(x < originalDistance && x > closestKeyBelow){
-                closestKeyBelow = x;
-            }
-        }
-    
-        //if either of the int values are higher than the highest lookup table value,
-        //set the values to the highest lookup table value
-        if(closestKeyBelow > m_visionLookup.largestKey(map)){
-            closestKeyBelow = m_visionLookup.largestKey(map);
-        }
-
-        double closestKeyAbove = closestKeyBelow + 1;
-
-        //gets angle from the lookup table
-        double lowerVal = map.get(closestKeyBelow);
-        double upperVal = map.get(closestKeyAbove);
-    
-        //multiply the difference in the distance and floored value by the slope to get desired position of hood for that small distance 
-        //then add that to the desired position of the lower floored value
-        double desiredVal = ((upperVal - lowerVal)*(originalDistance - closestKeyBelow)  + lowerVal);
-        return desiredVal;
-    }
+   
 
 
     /** Does not end until yaw = 0 or there are no targets

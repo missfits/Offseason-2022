@@ -64,13 +64,7 @@ public class RobotContainer {
     m_indexer = new Indexer(m_sensorControl);
     m_vision = new Vision(m_sensorControl, m_visionLookup, m_drivetrain, m_humanControl);
     m_shooter = new Shooter(m_sensorControl, m_vision, m_conveyor);
-    m_visionLookup = null;
-
-    try {
-      m_visionLookup = new VisionLookup();
-    } catch (Exception e) {
-      e.printStackTrace();
-  }
+    m_visionLookup = new VisionLookup();
 
     //Commands
     m_defaultDriveCommand = new DefaultDriveCommand(m_sensorControl, m_humanControl, m_drivetrain);

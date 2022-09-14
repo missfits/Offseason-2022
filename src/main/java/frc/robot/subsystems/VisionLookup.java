@@ -28,9 +28,10 @@ import java.util.Iterator;
 
 
 public class VisionLookup{
-    SortedMap<Double, Double> angleMap;
-    SortedMap<Double, Double> velocityMap;
-    public VisionLookup() throws Exception{
+    public SortedMap<Double, Double> angleMap;
+    public SortedMap<Double, Double> velocityMap;
+    public SortedMap<Double, Double> testMap;
+    public VisionLookup(){
         
         //Change to JSON file
         //Use 2d array or array of objects instead
@@ -49,6 +50,20 @@ public class VisionLookup{
         velocityMap.put(7.0, 1325.0);
         velocityMap.put(8.0, 1370.0);
         velocityMap.put(9.0, 1430.0);
+
+        testMap = new TreeMap<Double, Double>();
+        testMap.put(0.0, 0.0);
+        testMap.put(1.0, 15.0);
+        testMap.put(2.0, 30.0);
+        testMap.put(3.0, 45.0);
+        testMap.put(4.0, 60.0);
+        testMap.put(5.0, 75.0);
+        testMap.put(6.0, 90.0);
+        testMap.put(7.0, 105.0);
+        testMap.put(8.0, 120.0);
+        testMap.put(9.0, 135.0);
+        testMap.put(10.0,150.0);
+
 
 
 
@@ -86,6 +101,37 @@ public class VisionLookup{
 
     double smallestKey(SortedMap<Double, Double> map){
         return map.firstKey();
+    }
+
+     /** Generalized interpolation code for shooter */
+     public double shooterInterpolation(SortedMap<Double, Double> map, double d){
+        //double distance = SHOOTER_FROM_TARGET; //in meters
+        double distance = d; //in meters
+        double originalDistance = distance;
+        double closestKeyBelow = -1;  
+        //Find lower distance in range by going through keys in map
+        for (double x : map.keySet()){
+            if(x < originalDistance && x > closestKeyBelow){
+                closestKeyBelow = x;
+            }
+        }
+    
+        //if either of the int values are higher than the highest lookup table value,
+        //set the values to the highest lookup table value
+        if(closestKeyBelow > largestKey(map)){
+            closestKeyBelow = largestKey(map);
+        }
+
+        double closestKeyAbove = closestKeyBelow + 1;
+
+        //gets angle from the lookup table
+        double lowerVal = map.get(closestKeyBelow);
+        double upperVal = map.get(closestKeyAbove);
+    
+        //multiply the difference in the distance and floored value by the slope to get desired position of hood for that small distance 
+        //then add that to the desired position of the lower floored value
+        double desiredVal = ((upperVal - lowerVal)*(originalDistance - closestKeyBelow)  + lowerVal);
+        return desiredVal;
     }
 
     
