@@ -39,6 +39,7 @@ public class RobotContainer {
   private final ShootCommand m_shootCommand;
   private final IntakeCommand m_intakeCommand;
   private final IntakeReverseCommand m_intakeReverseCommand;
+  private final IntakeForwardCommand m_intakeForwardCommand;
   private final DefaultDriveCommand m_defaultDriveCommand;
   private final DefaultIndexCommand m_defaultIndexCommand;
   private final ConveyorCommand m_conveyorCommand;
@@ -71,6 +72,7 @@ public class RobotContainer {
     m_shootCommand = new ShootCommand(m_sensorControl, m_humanControl, m_shooter, m_indexer);
     m_intakeCommand = new IntakeCommand(m_sensorControl, m_humanControl, m_intake);
     m_intakeReverseCommand = new IntakeReverseCommand(m_sensorControl, m_humanControl, m_intake);
+    m_intakeForwardCommand = new IntakeForwardCommand(m_sensorControl, m_humanControl, m_intake);
     m_conveyorCommand = new ConveyorCommand(m_sensorControl, m_humanControl, m_conveyor);
     m_hoodForwardCommand = new HoodForwardCommand(m_sensorControl, m_humanControl, m_shooter, m_indexer);
     m_hoodBackwardCommand = new HoodForwardCommand(m_sensorControl, m_humanControl, m_shooter, m_indexer);
@@ -118,6 +120,10 @@ public class RobotContainer {
 
     if(m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxStart)) || m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_LeftJoy, kButtonID_Drive4))) {
       CommandScheduler.getInstance().schedule(m_intakeReverseCommand);
+    }
+
+    if(m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxY)) || m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_LeftJoy, kButtonID_Drive4))) {
+      CommandScheduler.getInstance().schedule(m_intakeForwardCommand);
     }
 
     if(m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxLB)) || m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_LeftJoy, kButtonID_Drive5))) {
