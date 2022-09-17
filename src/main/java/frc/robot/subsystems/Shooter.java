@@ -16,10 +16,12 @@ public class Shooter extends SubsystemBase{
     
     private final CANSparkMax m_shooterMotor1;
     private final CANSparkMax m_shooterMotor2;
+    public final CANSparkMax m_hoodMotor;
     private final MotorController m_shooterMotorController1;
     private final MotorController m_shooterMotorController2;
     private final SparkMaxRelativeEncoder m_flywheelEncoder1;
     private final SparkMaxRelativeEncoder m_flywheelEncoder2;
+    public final RelativeEncoder m_hoodEncoder;
     private final MotorControllerGroup m_shooterGroup;
 
     private SensorBoard m_sensorControl;
@@ -42,6 +44,7 @@ public class Shooter extends SubsystemBase{
     private int m_numTimesAtSpeed;
 
     private SparkMaxPIDController m_flywheelPID;
+    public SparkMaxPIDController m_hoodPID;
 
     private boolean m_atSpeed;
 
@@ -49,10 +52,14 @@ public class Shooter extends SubsystemBase{
 
         m_shooterMotor1 = new CANSparkMax(kCANID_MotorShooter1, MotorType.kBrushless);
         m_shooterMotor2 = new CANSparkMax(kCANID_MotorShooter2, MotorType.kBrushless);
+        m_hoodMotor = new CANSparkMax(kCANID_MotorHood, MotorType.kBrushless);
+        
         m_sensorControl = sensorBoard;
 
         m_flywheelEncoder1 = (SparkMaxRelativeEncoder) m_shooterMotor1.getEncoder(SparkMaxRelativeEncoder.Type.kHallSensor, 42);
         m_flywheelEncoder2 = (SparkMaxRelativeEncoder) m_shooterMotor2.getEncoder(SparkMaxRelativeEncoder.Type.kHallSensor, 42);
+        m_hoodEncoder = m_hoodMotor.getEncoder();
+        m_hoodEncoder.setPosition(0);
 
         m_shooterMotor2.follow(m_shooterMotor1);
 
@@ -79,6 +86,7 @@ public class Shooter extends SubsystemBase{
         m_dFac = m_sensorControl.getFlywheelDEntry();
         
         m_flywheelPID = m_shooterMotor1.getPIDController();
+        m_hoodPID = m_hoodMotor.getPIDController();
         configFlywheelPID();
         m_flywheelPID.setOutputRange(m_minVel, m_maxVel);
 
@@ -168,5 +176,19 @@ public class Shooter extends SubsystemBase{
     @Override
     public void simulationPeriodic() {
 
+    }
+
+    public void setHoodPowerForward(double power){
+        while(m_hoodEncoder.getPosition() < 88.7/1.0833){
+            m_hoodMotor.set(power);
+        }
+        m_hoodMotor.set(0);
+    }
+
+    public void setHoodPowerBackward(double power){
+        while(m_hoodEncoder.getPosition() > 0){
+            m_hoodMotor.set(-0.1);
+        }
+        m_hoodMotor.set(0);
     }
 }

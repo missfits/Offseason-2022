@@ -42,6 +42,8 @@ public class RobotContainer {
   private final DefaultDriveCommand m_defaultDriveCommand;
   private final DefaultIndexCommand m_defaultIndexCommand;
   private final ConveyorCommand m_conveyorCommand;
+  private final HoodForwardCommand m_hoodForwardCommand;
+  private final HoodForwardCommand m_hoodBackwardCommand;
 
 
 
@@ -70,6 +72,8 @@ public class RobotContainer {
     m_intakeCommand = new IntakeCommand(m_sensorControl, m_humanControl, m_intake);
     m_intakeReverseCommand = new IntakeReverseCommand(m_sensorControl, m_humanControl, m_intake);
     m_conveyorCommand = new ConveyorCommand(m_sensorControl, m_humanControl, m_conveyor);
+    m_hoodForwardCommand = new HoodForwardCommand(m_sensorControl, m_humanControl, m_shooter, m_indexer);
+    m_hoodBackwardCommand = new HoodForwardCommand(m_sensorControl, m_humanControl, m_shooter, m_indexer);
     
     System.out.println("end of robot container constructor");
   }
@@ -118,6 +122,14 @@ public class RobotContainer {
 
     if(m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxLB)) || m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_LeftJoy, kButtonID_Drive5))) {
       CommandScheduler.getInstance().schedule(m_conveyorCommand);
+    }
+
+    if(m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxRB)) || m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_LeftJoy, kButtonID_Drive5))) {
+      CommandScheduler.getInstance().schedule(m_hoodForwardCommand);
+    }
+
+    if(m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxBack)) || m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_LeftJoy, kButtonID_Drive5))) {
+      CommandScheduler.getInstance().schedule(m_hoodBackwardCommand);
     }
   }
 }
