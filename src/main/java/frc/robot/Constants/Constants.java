@@ -103,8 +103,8 @@ public final class Constants {
     public static double forwardHoodOffsetClose = 0; //Example: 4.5
     public static double change = 0; //Example: 7.5
     //1.625 degrees/tooth
-    //1.08333 motor rev per 1.625 degrees
-    public static double hoodAngleToMotorRevs = (1.08333/1.625);
+    //1.0833 hood degrees/motor revs
+    public static double hoodAngleToMotorRevs = (1/1.0833);
     //Fully extended angle: 88.7 degrees
     public static boolean isShooting;
 }
