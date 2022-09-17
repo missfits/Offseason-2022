@@ -35,7 +35,8 @@ public class ShootCommand extends CommandBase{
 
     @Override
     public void execute() {
-        m_desiredVelocity = m_shooter.calculateStaticFlywheelVelocity(); //desired
+        m_shooter.setShooterPower(1.0);
+        /* m_desiredVelocity = m_shooter.calculateStaticFlywheelVelocity(); //desired
         // System.out.println(m_desiredVelocity);
         m_shooter.setFlywheelSpeedRPM(m_desiredVelocity); 
         if (m_shooter.isFlywheelAtSpeed(m_desiredVelocity)) {
@@ -51,7 +52,7 @@ public class ShootCommand extends CommandBase{
         }
         else {
             m_indexer.reset();
-        }
+        } */
 
         //m_shooter.setFlywheelPower(0.4); //velocity = 2000
 

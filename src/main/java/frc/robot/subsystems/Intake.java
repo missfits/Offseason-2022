@@ -39,7 +39,7 @@ public class Intake extends SubsystemBase{
     }
 
     public void setIntakeRollersPower(double power) {
-        m_intakeMotor.set(power);
+        m_intakeMotor.set(-power);
     }
 
     public double getIntakeRollersPower(double power) {

@@ -13,17 +13,19 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static int kCANID_MotorLeft1 = 1;
+    public static int kCANID_MotorLeft1 = 6;
     public static int kCANID_MotorLeft2 = 2;
     public static int kCANID_MotorRight1 = 3;
     public static int kCANID_MotorRight2 = 4;
-    public static int kCANID_MotorIntake = 5;
-    public static int kCANID_MotorConveyor = 6;
-    public static int kCANID_MotorShooter1 = 7;
-    public static int kCANID_MotorShooter2 = 7;
-    public static int kCANID_MotorClimber1 = 8;
-    public static int kCANID_MotorIndex = 6; //change
-    //public static int kCANID_MotorClimber2 = 9; 
+    public static int kCANID_MotorIntake = 5; 
+    //public static int kCANID_MotorConveyor = 0; //delete!!!
+    public static int kCANID_MotorClimber1 = 1;
+    public static int kCANID_MotorShooter1 = 7; // rename to MotorShooter1
+    public static int kCANID_MotorShooter2 = 8; 
+    public static int kCANID_MotorHood = 9; //change
+    public static int kCANID_MotorConveyor = 10; //change 
+    public static int kCANID_MotorIndex = 0; //change
+    public static int kCANID_MotorClimber2 = 11; 
 
     public static int kMXP = 13;
 
