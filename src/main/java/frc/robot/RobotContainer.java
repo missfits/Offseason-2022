@@ -10,6 +10,7 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Indexer;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -35,6 +36,7 @@ public class RobotContainer {
   private final Drivetrain m_drivetrain;
   private final Indexer m_indexer;
   private final Conveyor m_conveyor;
+  private final Hood m_hood;
 
   private final ShootCommand m_shootCommand;
   private final IntakeCommand m_intakeCommand;
@@ -62,6 +64,7 @@ public class RobotContainer {
     m_drivetrain = new Drivetrain(m_sensorControl);
     m_indexer = new Indexer(m_sensorControl);
     m_conveyor = new Conveyor(m_sensorControl);
+    m_hood = new Hood(m_sensorControl);
 
     m_defaultDriveCommand = new DefaultDriveCommand(m_sensorControl, m_humanControl, m_drivetrain);
     m_defaultIndexCommand = new DefaultIndexCommand(m_sensorControl, m_humanControl, m_indexer);
@@ -74,8 +77,8 @@ public class RobotContainer {
     m_intakeReverseCommand = new IntakeReverseCommand(m_sensorControl, m_humanControl, m_intake);
     m_intakeForwardCommand = new IntakeForwardCommand(m_sensorControl, m_humanControl, m_intake);
     m_conveyorCommand = new ConveyorCommand(m_sensorControl, m_humanControl, m_conveyor);
-    m_hoodForwardCommand = new HoodForwardCommand(m_sensorControl, m_humanControl, m_shooter, m_indexer);
-    m_hoodBackwardCommand = new HoodForwardCommand(m_sensorControl, m_humanControl, m_shooter, m_indexer);
+    m_hoodForwardCommand = new HoodForwardCommand(m_sensorControl, m_humanControl, m_hood, m_indexer);
+    m_hoodBackwardCommand = new HoodForwardCommand(m_sensorControl, m_humanControl, m_hood, m_indexer);
     
     System.out.println("end of robot container constructor");
   }

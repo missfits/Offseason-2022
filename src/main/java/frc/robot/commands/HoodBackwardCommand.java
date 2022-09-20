@@ -4,17 +4,18 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.OI;
 import frc.robot.SensorBoard;
+import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Shooter;
 
 public class HoodBackwardCommand extends CommandBase{
-    private Shooter m_shooter;
+    private Hood m_hood;
     SensorBoard m_sensorControl;
     OI m_humanControl;
     Indexer m_indexer;
 
-    public HoodBackwardCommand(SensorBoard sensorControl, OI humanControl, Shooter shooter, Indexer indexer){
-        m_shooter = shooter;
+    public HoodBackwardCommand(SensorBoard sensorControl, OI humanControl, Hood hood, Indexer indexer){
+        m_hood = hood;
         m_sensorControl = sensorControl;
         m_humanControl = humanControl;
         m_indexer = indexer;
@@ -28,7 +29,7 @@ public class HoodBackwardCommand extends CommandBase{
 
     @Override
     public void execute() {
-        m_shooter.m_hoodEncoder.setPosition(0);
+        m_hood.m_hoodEncoder.setPosition(0);
     }
     
     @Override
