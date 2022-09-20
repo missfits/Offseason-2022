@@ -11,6 +11,7 @@ public class TestUtilities {
   public Vision m_visionTest ;
   public VisionLookup m_visionLookupTest ;
   public Conveyor m_conveyorTest;
+  public Hood m_hoodTest;
 
     public void testUtilities(){
 
@@ -20,9 +21,10 @@ public class TestUtilities {
         m_drivetrainTest = new Drivetrain(m_sensorControlTest);
         m_indexerTest = new Indexer(m_sensorControlTest);
         m_visionTest = new Vision(m_sensorControlTest, m_visionLookupTest, m_drivetrainTest, m_humanControlTest);
-        m_shooterTest = new Shooter(m_sensorControlTest, m_visionTest, m_conveyorTest, m_visionLookupTest);
+        m_shooterTest = new Shooter(m_sensorControlTest, m_visionTest, m_conveyorTest, m_visionLookupTest, m_hoodTest);
         m_conveyorTest = new Conveyor(m_sensorControlTest);
         m_visionLookupTest = new VisionLookup();
+        m_hoodTest = new Hood(m_sensorControlTest, m_visionLookupTest, m_visionTest);
 
        
     }

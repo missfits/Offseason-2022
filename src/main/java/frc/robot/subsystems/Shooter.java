@@ -22,17 +22,16 @@ public class Shooter extends SubsystemBase{
     
     private final CANSparkMax m_shooterMotor1;
     private final CANSparkMax m_shooterMotor2;
-    private final CANSparkMax m_hoodMotor;
     private final MotorController m_shooterMotorController1;
     private final MotorController m_shooterMotorController2;
     private final SparkMaxRelativeEncoder m_flywheelEncoder1;
     private final SparkMaxRelativeEncoder m_flywheelEncoder2;
-    public final RelativeEncoder m_hoodEncoder;
     private final MotorControllerGroup m_shooterGroup;
 
     private Vision m_vision;
     private Conveyor m_conveyor;
     private VisionLookup m_visionLookup;
+    private Hood m_hood;
 
     private SensorBoard m_sensorControl;
     
@@ -54,21 +53,17 @@ public class Shooter extends SubsystemBase{
     private int m_numTimesAtSpeed;
 
     public SparkMaxPIDController m_flywheelPID;
-    public SparkMaxPIDController m_hoodPID;
 
     private boolean m_atSpeed;
 
-    public Shooter(SensorBoard sensorBoard, Vision vision, Conveyor conveyor, VisionLookup visionLookup) {
+    public Shooter(SensorBoard sensorBoard, Vision vision, Conveyor conveyor, VisionLookup visionLookup, Hood hood) {
         m_shooterMotor1 = new CANSparkMax(kCANID_MotorShooter1, MotorType.kBrushless);
         m_shooterMotor2 = new CANSparkMax(kCANID_MotorShooter2, MotorType.kBrushless);
-        m_hoodMotor = new CANSparkMax(kCANID_MotorHood, MotorType.kBrushless);
-
         m_sensorControl = sensorBoard;
+        m_hood = hood;
 
         m_flywheelEncoder1 = (SparkMaxRelativeEncoder) m_shooterMotor1.getEncoder(SparkMaxRelativeEncoder.Type.kHallSensor, 42);
         m_flywheelEncoder2 = (SparkMaxRelativeEncoder) m_shooterMotor2.getEncoder(SparkMaxRelativeEncoder.Type.kHallSensor, 42);
-        m_hoodEncoder = m_hoodMotor.getEncoder();
-        m_hoodEncoder.setPosition(0);
 
         m_shooterMotor2.follow(m_shooterMotor1);
 
@@ -96,7 +91,6 @@ public class Shooter extends SubsystemBase{
         m_dFac = m_sensorControl.getFlywheelDEntry();
         
         m_flywheelPID = m_shooterMotor1.getPIDController();
-        m_hoodPID = m_hoodMotor.getPIDController();
         configFlywheelPID();
         m_flywheelPID.setOutputRange(m_minVel, m_maxVel);
 
@@ -187,30 +181,13 @@ public class Shooter extends SubsystemBase{
         m_flywheelPID.setReference(getDesiredWheelVelocity(m_vision.m_visionLookup.velocityMap, m_vision.SHOOTER_FROM_TARGET), CANSparkMax.ControlType.kVelocity);
     }
 
-    /** @return desired hood position based on angleMap */
-    public double getHoodPOS(SortedMap<Double, Double> map, double distance){
-        double desiredHood = m_visionLookup.shooterInterpolation(map, distance);
-        //To Do : Need to update hoodAngleOut and hoodAngleIn with real values during testing
-        if(desiredHood > hoodAngleOut){
-            return hoodAngleOut;
-        } else if(desiredHood < hoodAngleIn){
-            return hoodAngleIn;
-        } else{
-            return desiredHood;
-        }
-    }
-
-    //Need to add translation from angle to motor revs
-    /** Set desired hood position */
-    public void setHoodAngleLimelight(){
-        m_hoodEncoder.setPosition(hoodAngleToMotorRevs * getHoodPOS(m_vision.m_visionLookup.angleMap, m_vision.SHOOTER_FROM_TARGET));
-    }
+    
 
     //Create types for angles, motor revs, inherit/composition from int, double
 
     /** Set desired hood angle before shooting */
     public void shootSetup(){
-        setHoodAngleLimelight();
+        m_hood.setHoodAngleLimelight();
     }
 
     /** Run conveyor backwards, set flywheel to desired velocity, run conveyor forward and shoot balls */

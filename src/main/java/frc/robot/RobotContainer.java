@@ -12,6 +12,7 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.VisionLookup;
@@ -39,6 +40,7 @@ public class RobotContainer {
   public final Vision m_vision;
   public VisionLookup m_visionLookup;
   private Conveyor m_conveyor;
+  private Hood m_hood;
 
   private final ShootCommand m_shootCommand;
   private final IntakeCommand m_intakeCommand;
@@ -63,7 +65,8 @@ public class RobotContainer {
     m_drivetrain = new Drivetrain(m_sensorControl);
     m_indexer = new Indexer(m_sensorControl);
     m_vision = new Vision(m_sensorControl, m_visionLookup, m_drivetrain, m_humanControl);
-    m_shooter = new Shooter(m_sensorControl, m_vision, m_conveyor, m_visionLookup);
+    m_shooter = new Shooter(m_sensorControl, m_vision, m_conveyor, m_visionLookup, m_hood);
+    m_hood = new Hood(m_sensorControl, m_visionLookup, m_vision);
     m_visionLookup = new VisionLookup();
 
     //Commands
