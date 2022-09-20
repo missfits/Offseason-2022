@@ -23,7 +23,9 @@ public class Hood {
     }
 
     public void setHoodPowerForward(double power){
-        while(m_hoodEncoder.getPosition() < 88.7/1.0833){
+        // real value: 88.7/1.0833
+        // Use (88.7/1.0833)/2 to test and not break hood
+        while(m_hoodEncoder.getPosition() < (88.7/1.0833)/2){
             m_hoodMotor.set(power);
         }
         m_hoodMotor.set(0);

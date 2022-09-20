@@ -29,7 +29,7 @@ public class HoodBackwardCommand extends CommandBase{
 
     @Override
     public void execute() {
-        m_hood.m_hoodEncoder.setPosition(0);
+        m_hood.setHoodPowerBackward(-0.1);
     }
     
     @Override

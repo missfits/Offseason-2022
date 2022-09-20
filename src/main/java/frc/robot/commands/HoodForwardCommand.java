@@ -29,7 +29,7 @@ public class HoodForwardCommand extends CommandBase{
 
     @Override
     public void execute() {
-        m_hood.m_hoodEncoder.setPosition((88.7/1.0833)/2);
+        m_hood.setHoodPowerForward(0.1);
         //m_shooter.m_hoodEncoder.setPosition(88.7/1.0833); // Real Value
     }
     
