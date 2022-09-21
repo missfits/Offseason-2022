@@ -31,6 +31,7 @@ public class RobotContainer {
 
   private final OI m_humanControl;
 
+  //Creating subsystem objects
   private final Shooter m_shooter;
   private final Intake m_intake;
   private final Drivetrain m_drivetrain;
@@ -38,6 +39,7 @@ public class RobotContainer {
   private final Conveyor m_conveyor;
   private final Hood m_hood;
 
+  //Creating instances of commands
   private final ShootCommand m_shootCommand;
   private final IntakeCommand m_intakeCommand;
   private final IntakeReverseCommand m_intakeReverseCommand;
@@ -46,7 +48,7 @@ public class RobotContainer {
   private final DefaultIndexCommand m_defaultIndexCommand;
   private final ConveyorCommand m_conveyorCommand;
   private final HoodForwardCommand m_hoodForwardCommand;
-  private final HoodForwardCommand m_hoodBackwardCommand;
+  private final HoodBackwardCommand m_hoodBackwardCommand;
 
 
 
@@ -78,7 +80,7 @@ public class RobotContainer {
     m_intakeForwardCommand = new IntakeForwardCommand(m_sensorControl, m_humanControl, m_intake);
     m_conveyorCommand = new ConveyorCommand(m_sensorControl, m_humanControl, m_conveyor);
     m_hoodForwardCommand = new HoodForwardCommand(m_sensorControl, m_humanControl, m_hood, m_indexer);
-    m_hoodBackwardCommand = new HoodForwardCommand(m_sensorControl, m_humanControl, m_hood, m_indexer);
+    m_hoodBackwardCommand = new HoodBackwardCommand(m_sensorControl, m_humanControl, m_hood, m_indexer);
     
     System.out.println("end of robot container constructor");
   }

@@ -25,15 +25,18 @@ public class Hood {
     public void setHoodPowerForward(double power){
         // real value: 88.7/1.0833
         // Use (88.7/1.0833)/2 to test and not break hood
-        while(m_hoodEncoder.getPosition() < (88.7/1.0833)/2){
+        // Subtract 30 for padding
+        while(m_hoodEncoder.getPosition() < (((88.7-30)/1.0833))){
             m_hoodMotor.set(power);
         }
         m_hoodMotor.set(0);
     }
 
+    //power should be negative
+    //Need to set lower limit that is slightly above 0 to account for drift
     public void setHoodPowerBackward(double power){
-        while(m_hoodEncoder.getPosition() > 0){
-            m_hoodMotor.set(-0.1);
+        while(m_hoodEncoder.getPosition() > 1){
+            m_hoodMotor.set(power);
         }
         m_hoodMotor.set(0);
     }
