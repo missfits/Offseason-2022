@@ -17,13 +17,13 @@ public final class Constants {
     public static int kCANID_MotorLeft2 = 2;
     public static int kCANID_MotorRight1 = 3;
     public static int kCANID_MotorRight2 = 4;
-    public static int kCANID_MotorIntake = 5; 
+    public static int kCANID_MotorIntake = 10; 
     //public static int kCANID_MotorConveyor = 0; //delete!!!
     public static int kCANID_MotorClimber1 = 1;
     public static int kCANID_MotorShooter1 = 7; // rename to MotorShooter1
     public static int kCANID_MotorShooter2 = 8; 
     public static int kCANID_MotorHood = 9; //change
-    public static int kCANID_MotorConveyor = 10; //change 
+    public static int kCANID_MotorConveyor = 5; //change 
     public static int kCANID_MotorIndex = 0; //change
     public static int kCANID_MotorClimber2 = 11; 
 
@@ -63,7 +63,7 @@ public final class Constants {
 
     //intake pneumatics
     public static int kSolenoidID_ForwardChannel = 7;
-    public static int kSolenoidID_ReverseChannel = 6;
+    public static int kSolenoidID_ReverseChannel = 0;
 
     //sensors
     public static int kSensorID_TopLight = 0;

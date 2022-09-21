@@ -26,7 +26,8 @@ public class Hood {
         // real value: 88.7/1.0833
         // Use (88.7/1.0833)/2 to test and not break hood
         // Subtract 30 for padding
-        while(m_hoodEncoder.getPosition() < (((88.7-30)/1.0833))){
+        //while(m_hoodEncoder.getPosition() < (((88.7-30)/1.0833))){
+        while(m_hoodEncoder.getPosition() < (((5)/1.0833))){
             m_hoodMotor.set(power);
         }
         m_hoodMotor.set(0);
