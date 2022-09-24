@@ -30,15 +30,15 @@ public class Hood {
     }
 
     public void setHoodPowerForward(double power){
-        while(m_hoodEncoder.getPosition() < 88.7/1.0833){
+        while(m_hoodEncoder.getPosition() < ((88.7-30)/1.0833)){
             m_hoodMotor.set(power);
         }
         m_hoodMotor.set(0);
     }
 
     public void setHoodPowerBackward(double power){
-        while(m_hoodEncoder.getPosition() > 0){
-            m_hoodMotor.set(-0.1);
+        while(m_hoodEncoder.getPosition() > 1){
+            m_hoodMotor.set(power);
         }
         m_hoodMotor.set(0);
     }
