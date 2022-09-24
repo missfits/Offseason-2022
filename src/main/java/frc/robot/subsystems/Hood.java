@@ -29,6 +29,9 @@ public class Hood {
         m_hoodPID = m_hoodMotor.getPIDController();
     }
 
+        // real value: 88.7/1.0833
+        // Use (88.7/1.0833)/2 to test and not break hood
+        // Subtract 30 for padding
     public void setHoodPowerForward(double power){
         while(m_hoodEncoder.getPosition() < ((88.7-30)/1.0833)){
             m_hoodMotor.set(power);
@@ -36,6 +39,8 @@ public class Hood {
         m_hoodMotor.set(0);
     }
 
+    //power should be negative
+    //Need to set lower limit that is slightly above 0 to account for drift
     public void setHoodPowerBackward(double power){
         while(m_hoodEncoder.getPosition() > 1){
             m_hoodMotor.set(power);

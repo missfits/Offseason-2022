@@ -31,7 +31,7 @@ public class IntakeReverseCommand extends CommandBase{
 
     @Override
     public void execute() {
-        m_intake.setIntakeRollersPower(INTAKE_ROLLERS_REVERSE_POWER);
+        //m_intake.setIntakeRollersPower(INTAKE_ROLLERS_REVERSE_POWER);
         m_intake.lowerIntakeArm();
     }
 

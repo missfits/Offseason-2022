@@ -42,15 +42,20 @@ public class RobotContainer {
   private Conveyor m_conveyor;
   private Hood m_hood;
 
+  //Creating instances of commands
   private final ShootCommand m_shootCommand;
   private final IntakeCommand m_intakeCommand;
   private final IntakeReverseCommand m_intakeReverseCommand;
+  private final IntakeForwardCommand m_intakeForwardCommand;
   private final DefaultDriveCommand m_defaultDriveCommand;
   private final DefaultIndexCommand m_defaultIndexCommand;
   private final LimelightDriveCommand m_limelightDriveCommand;
   private final TurnToTarget m_turnToTarget;
   private final AimDriveToTarget m_aimDriveToTarget;
   private final ShootUsingLimelightCommand m_shootUsingLimelightCommand;
+  private final ConveyorCommand m_conveyorCommand;
+  private final HoodForwardCommand m_hoodForwardCommand;
+  private final HoodBackwardCommand m_hoodBackwardCommand;
 
 
 
@@ -68,6 +73,7 @@ public class RobotContainer {
     m_shooter = new Shooter(m_sensorControl, m_vision, m_conveyor, m_visionLookup, m_hood);
     m_hood = new Hood(m_sensorControl, m_visionLookup, m_vision);
     m_visionLookup = new VisionLookup();
+    m_conveyor = new Conveyor(m_sensorControl);
 
     //Commands
     m_defaultDriveCommand = new DefaultDriveCommand(m_sensorControl, m_humanControl, m_drivetrain);
@@ -83,6 +89,10 @@ public class RobotContainer {
     m_turnToTarget = new TurnToTarget(m_sensorControl, m_humanControl, m_drivetrain, m_vision);
     m_aimDriveToTarget = new AimDriveToTarget(m_sensorControl, m_humanControl, m_drivetrain, m_vision);
     m_shootUsingLimelightCommand = new ShootUsingLimelightCommand(m_sensorControl, m_humanControl, m_vision, m_shooter);
+    m_intakeForwardCommand = new IntakeForwardCommand(m_sensorControl, m_humanControl, m_intake);
+    m_conveyorCommand = new ConveyorCommand(m_sensorControl, m_humanControl, m_conveyor);
+    m_hoodForwardCommand = new HoodForwardCommand(m_sensorControl, m_humanControl, m_hood, m_indexer);
+    m_hoodBackwardCommand = new HoodBackwardCommand(m_sensorControl, m_humanControl, m_hood, m_indexer);
     
     System.out.println("end of robot container constructor");
   }
@@ -140,5 +150,21 @@ public class RobotContainer {
     if (m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxLB))){
       CommandScheduler.getInstance().schedule(m_aimDriveToTarget);
     }
+
+    if(m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxY)) || m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_LeftJoy, kButtonID_Drive4))) {
+      CommandScheduler.getInstance().schedule(m_intakeForwardCommand);
+    }
+
+    // if(m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxLB)) || m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_LeftJoy, kButtonID_Drive5))) {
+    //   CommandScheduler.getInstance().schedule(m_conveyorCommand);
+    // }
+
+    // if(m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxRB)) || m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_LeftJoy, kButtonID_Drive5))) {
+    //   CommandScheduler.getInstance().schedule(m_hoodForwardCommand);
+    // }
+
+    // if(m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxBack)) || m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_LeftJoy, kButtonID_Drive5))) {
+    //   CommandScheduler.getInstance().schedule(m_hoodBackwardCommand);
+    // }
   }
 }

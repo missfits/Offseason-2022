@@ -8,23 +8,23 @@ package frc.robot.Constants;
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
  * globally (i.e. public static). Do not put anything functional in this class.
- *
+ *g
  * <p>It is advised to statically import this class (or one of its inner classes) wherever the
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static int kCANID_MotorLeft1 = 1;
+    public static int kCANID_MotorLeft1 = 6;
     public static int kCANID_MotorLeft2 = 2;
     public static int kCANID_MotorRight1 = 3;
     public static int kCANID_MotorRight2 = 4;
-    public static int kCANID_MotorIntake = 5;
-    public static int kCANID_MotorConveyor = 6;
-    public static int kCANID_MotorShooter1 = 7;
-    public static int kCANID_MotorShooter2 = 7;
-    public static int kCANID_MotorHood = 0; //change
-    public static int kCANID_MotorClimber1 = 8;
+    public static int kCANID_MotorIntake = 10; 
+    public static int kCANID_MotorClimber1 = 1;
+    public static int kCANID_MotorShooter1 = 7; // rename to MotorShooter1
+    public static int kCANID_MotorShooter2 = 8; 
+    public static int kCANID_MotorHood = 9; //change
+    public static int kCANID_MotorConveyor = 5; //change 
     public static int kCANID_MotorIndex = 0; //change
-    //public static int kCANID_MotorClimber2 = 0; 
+    public static int kCANID_MotorClimber2 = 11; 
 
     public static int kMXP = 13;
 
@@ -62,7 +62,7 @@ public final class Constants {
 
     //intake pneumatics
     public static int kSolenoidID_ForwardChannel = 7;
-    public static int kSolenoidID_ReverseChannel = 6;
+    public static int kSolenoidID_ReverseChannel = 0;
 
     //sensors
     public static int kSensorID_TopLight = 0;
@@ -97,7 +97,7 @@ public final class Constants {
     public static double hoodrevOut = 0; //Example: -38
     public static double hoodrevIn = 0; //Example: 0
     public static double hoodAngleOut = 88.7;
-    public static double hoodAngleIn = 0; //Example: 21
+    public static double hoodAngleIn = 0; 
     public static double forwardVelOffset = 0; //Example: 60
     public static double forwardHoodOffsetFar = 0; //Example: 1
     public static double forwardHoodOffsetClose = 0; //Example: 4.5

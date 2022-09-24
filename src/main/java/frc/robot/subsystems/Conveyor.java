@@ -14,8 +14,6 @@ public class Conveyor extends SubsystemBase{
     public final CANSparkMax m_conveyorMotor;
     public final RelativeEncoder m_conveyorEncoder;
 
-    
-
     public Conveyor(SensorBoard sensorBoard) {
         m_sensorControl = sensorBoard;
         m_conveyorMotor = new CANSparkMax(kCANID_MotorConveyor, MotorType.kBrushless);

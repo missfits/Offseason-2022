@@ -110,6 +110,11 @@ public class Shooter extends SubsystemBase{
 
     }
 
+    
+    public void setShooterPower(double power) {
+        m_shooterGroup.set(power);
+    }
+
     public void configFlywheelPID() {
         m_fFac = m_sensorControl.getFlywheelFEntry();
         m_pFac = m_sensorControl.getFlywheelPEntry();
@@ -207,4 +212,6 @@ public class Shooter extends SubsystemBase{
     public void simulationPeriodic() {
 
     }
+
+    
 }
