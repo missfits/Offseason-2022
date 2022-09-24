@@ -40,7 +40,7 @@ public class RobotContainer {
   public final Vision m_vision;
   public VisionLookup m_visionLookup;
   private Conveyor m_conveyor;
-  private Hood m_hood;
+  public Hood m_hood;
 
   //Creating instances of commands
   private final ShootCommand m_shootCommand;
@@ -56,6 +56,7 @@ public class RobotContainer {
   private final ConveyorCommand m_conveyorCommand;
   private final HoodForwardCommand m_hoodForwardCommand;
   private final HoodBackwardCommand m_hoodBackwardCommand;
+  private final HoodPositionCommand m_hoodPositionCommand;
 
 
 
@@ -93,7 +94,8 @@ public class RobotContainer {
     m_conveyorCommand = new ConveyorCommand(m_sensorControl, m_humanControl, m_conveyor);
     m_hoodForwardCommand = new HoodForwardCommand(m_sensorControl, m_humanControl, m_hood, m_indexer);
     m_hoodBackwardCommand = new HoodBackwardCommand(m_sensorControl, m_humanControl, m_hood, m_indexer);
-    
+    m_hoodPositionCommand = new HoodPositionCommand(m_sensorControl, m_humanControl, m_hood, m_indexer);
+
     System.out.println("end of robot container constructor");
   }
 
@@ -139,17 +141,29 @@ public class RobotContainer {
       CommandScheduler.getInstance().schedule(m_intakeReverseCommand);
     }
 
-    if (m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxBack))){
-      CommandScheduler.getInstance().schedule(m_limelightDriveCommand);
-    }
+    // if (m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxBack))){
+    //   CommandScheduler.getInstance().schedule(m_limelightDriveCommand);
+    // }
 
-    if (m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxRB))){
-      CommandScheduler.getInstance().schedule(m_shootUsingLimelightCommand);
+    // if (m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxRB))){
+    //   CommandScheduler.getInstance().schedule(m_shootUsingLimelightCommand);
+    // }
+
+    // if (m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxRB))){
+    //     CommandScheduler.getInstance().schedule(m_shootCommand);
+    // }
+
+    if (m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxBack))){
+      CommandScheduler.getInstance().schedule(m_hoodPositionCommand);
     }
 
     if (m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxLB))){
-      CommandScheduler.getInstance().schedule(m_aimDriveToTarget);
+      CommandScheduler.getInstance().schedule(m_conveyorCommand);
     }
+
+    // if (m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxLB))){
+    //   CommandScheduler.getInstance().schedule(m_aimDriveToTarget);
+    // }
 
     if(m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxY)) || m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_LeftJoy, kButtonID_Drive4))) {
       CommandScheduler.getInstance().schedule(m_intakeForwardCommand);

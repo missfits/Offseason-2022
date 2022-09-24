@@ -77,4 +77,18 @@ public class Hood {
             m_hoodMotor.set(0);
         } 
     }
+
+    public void setHoodPosition(double setpoint){
+        if(setpoint < m_hoodEncoder.getPosition()){
+            while(m_hoodEncoder.getPosition() > setpoint){
+                m_hoodMotor.set(-0.1);
+            }
+        }
+        else{
+            while(m_hoodEncoder.getPosition() < setpoint){
+                m_hoodMotor.set(0.1);
+            }
+        }
+        m_hoodMotor.set(0);
+    }
 }

@@ -37,7 +37,7 @@ public class ShootCommand extends CommandBase{
 
     @Override
     public void execute() {
-        m_shooter.setShooterPower(0.6);
+        m_shooter.launch(m_desiredVelocity);
         /* m_desiredVelocity = m_shooter.calculateStaticFlywheelVelocity(); //desired
         // System.out.println(m_desiredVelocity);
         m_shooter.setFlywheelSpeedRPM(m_desiredVelocity); 
@@ -63,7 +63,7 @@ public class ShootCommand extends CommandBase{
     @Override
     public void end(boolean interrupted) {
         m_shooter.setFlywheelSetpoint(FLYWHEEL_RESET_POWER);
-        m_shooter.setFlywheelPower(FLYWHEEL_RESET_POWER);
+        m_shooter.setFlywheelVelocity(FLYWHEEL_RESET_POWER);
         m_indexer.reset();
         //index 0
     }

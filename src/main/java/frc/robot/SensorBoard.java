@@ -24,11 +24,14 @@ public class SensorBoard {
         SmartDashboard.putNumber("flywheel F", FLYWHEEL_F_FAC);
 
         SmartDashboard.putNumber("flywheel position", 0.0);
-        SmartDashboard.putNumber("flywheel velocity", 0.0);
+        SmartDashboard.putNumber("flywheel velocity", FLYWHEEL_VEL);
+
+        SmartDashboard.putNumber("desired hood position", DESIRED_HOOD_POSITION);
 
         SmartDashboard.putNumber("drivetrain P", DRIVETRAIN_P_FAC);
         SmartDashboard.putNumber("drivetrain I", DRIVETRAIN_I_FAC);
         SmartDashboard.putNumber("drivetrain D", DRIVETRAIN_D_FAC);
+
 
         SmartDashboard.putNumber("distance", 0.0);
         SmartDashboard.putNumber("static flywheel vel", 2000.0);
@@ -85,7 +88,11 @@ public class SensorBoard {
     }
 
     public double getStaticFlywheelVelocityDesired() {
-        return SmartDashboard.getNumber("static flywheel vel", 2000.0);
+        return SmartDashboard.getNumber("static flywheel vel", FLYWHEEL_VEL);
+    }
+
+    public double getHoodPositionDesired() {
+        return SmartDashboard.getNumber("desired hood position", DESIRED_HOOD_POSITION);
     }
 
     public void setFlywheelError(double error) {

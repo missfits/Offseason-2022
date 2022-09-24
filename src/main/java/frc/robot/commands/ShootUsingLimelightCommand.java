@@ -40,7 +40,7 @@ public class ShootUsingLimelightCommand extends CommandBase{
             //Shoot balls if robot has fully turned to target and yaw = 0
             if(robotHasTurned == true){
                 m_shooter.shootSetup();
-                m_shooter.launch();
+                m_shooter.launch(m_shooter.getDesiredWheelVelocity(m_vision.m_visionLookup.velocityMap, m_vision.SHOOTER_FROM_TARGET));
             }
             
         } else {
@@ -51,7 +51,7 @@ public class ShootUsingLimelightCommand extends CommandBase{
 
     @Override
     public void end(boolean interrupted) {
-        m_shooter.setFlywheelPower(-0.5);
+        m_shooter.setFlywheelVelocity(-1000);
     }
 
     @Override

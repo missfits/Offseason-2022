@@ -56,6 +56,8 @@ public class Shooter extends SubsystemBase{
 
     private boolean m_atSpeed;
 
+    private double m_desiredFlywheelVel;
+
     public Shooter(SensorBoard sensorBoard, Vision vision, Conveyor conveyor, VisionLookup visionLookup, Hood hood) {
         m_shooterMotor1 = new CANSparkMax(kCANID_MotorShooter1, MotorType.kBrushless);
         m_shooterMotor2 = new CANSparkMax(kCANID_MotorShooter2, MotorType.kBrushless);
@@ -89,6 +91,8 @@ public class Shooter extends SubsystemBase{
         m_pFac = m_sensorControl.getFlywheelPEntry();
         m_iFac = m_sensorControl.getFlywheelIEntry();
         m_dFac = m_sensorControl.getFlywheelDEntry();
+
+        m_desiredFlywheelVel = m_sensorControl.getStaticFlywheelVelocityDesired();
         
         m_flywheelPID = m_shooterMotor1.getPIDController();
         configFlywheelPID();
@@ -111,8 +115,8 @@ public class Shooter extends SubsystemBase{
     }
 
     
-    public void setShooterPower(double power) {
-        m_shooterGroup.set(power);
+    public void setFlywheelVelocity(double velocity) {
+        m_flywheelPID.setReference(velocity, CANSparkMax.ControlType.kVelocity);
     }
 
     public void configFlywheelPID() {
@@ -173,10 +177,6 @@ public class Shooter extends SubsystemBase{
         m_flywheelPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity);
     }
 
-    public void setFlywheelPower(double power) {
-        m_shooterMotor1.set(power);
-    }
-
     /** @return the desired flywheel velocity using lookup table */
     public double getDesiredWheelVelocity(SortedMap<Double, Double> map, double distance){
         return m_visionLookup.shooterInterpolation(map, distance);
@@ -196,12 +196,17 @@ public class Shooter extends SubsystemBase{
     }
 
     /** Run conveyor backwards, set flywheel to desired velocity, run conveyor forward and shoot balls */
-    public void launch(){
+    public void launch(double velocity){
         //Move balls away from flywheel
-        m_conveyor.setConveyorPosition(-1);//Change to real value
-        setFlywheelVelocityLimelight();
+        m_conveyor.setConveyorPosition(0);
+        while(m_conveyor.getConveyorPosition() > -4){
+            m_conveyor.setConveyorPower(0.1);
+        }
+        setFlywheelSetpoint(velocity);
+        //setFlywheelVelocityLimelight();
         //Wait for flywheel to speed up to desired velocity
-        if(isFlywheelAtSpeed(getDesiredWheelVelocity(m_vision.m_visionLookup.velocityMap, m_vision.SHOOTER_FROM_TARGET))){
+        //if(isFlywheelAtSpeed(getDesiredWheelVelocity(m_vision.m_visionLookup.velocityMap, m_vision.SHOOTER_FROM_TARGET))){
+        if(isFlywheelAtSpeed(velocity)){
             //Run conveyor forward to shoot balls
             m_conveyor.setConveyorPower(0.5);
         }

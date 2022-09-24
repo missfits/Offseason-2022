@@ -38,7 +38,7 @@ public class Conveyor extends SubsystemBase{
         m_conveyorEncoder.setPosition(position);
     }
 
-    public double getConveyorPosition(double position) {
+    public double getConveyorPosition() {
         return m_conveyorEncoder.getPosition();
     }
 

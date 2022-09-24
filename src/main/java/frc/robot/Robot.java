@@ -55,7 +55,7 @@ public class Robot extends TimedRobot {
     // for (String i : m_robotContainer.m_visionLookup.shootingDataMap.keySet()) {
     //   System.out.println(i);
     // }
-      m_robotContainer.m_shooter.setFlywheelPower(-0.5);
+      m_robotContainer.m_shooter.setFlywheelVelocity(-1000);
   }
 
 
@@ -69,6 +69,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("LimelightY", m_robotContainer.m_vision.y);
     SmartDashboard.putNumber("LimelightArea", m_robotContainer.m_vision.area);
     SmartDashboard.putNumber("Target Distance", m_robotContainer.m_vision.DISTANCE_FROM_TARGET);
+    SmartDashboard.putNumber("Hood Position", m_robotContainer.m_hood.m_hoodEncoder.getPosition());
     //System.out.println(m_robotContainer.m_vision.DISTANCE_FROM_TARGET);
     //System.out.println(m_robotContainer.m_vision.DISTANCE_FROM_TARGET);
 
