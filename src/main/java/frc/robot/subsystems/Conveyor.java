@@ -18,6 +18,7 @@ public class Conveyor extends SubsystemBase{
         m_sensorControl = sensorBoard;
         m_conveyorMotor = new CANSparkMax(kCANID_MotorConveyor, MotorType.kBrushless);
         m_conveyorEncoder = m_conveyorMotor.getEncoder();
+        m_conveyorMotor.setInverted(true);
 
 
     }

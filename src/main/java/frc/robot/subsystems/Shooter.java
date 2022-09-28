@@ -116,7 +116,8 @@ public class Shooter extends SubsystemBase{
 
     
     public void setFlywheelVelocity(double velocity) {
-        m_flywheelPID.setReference(velocity, CANSparkMax.ControlType.kVelocity);
+        m_shooterMotor1.set(velocity);
+        //m_flywheelPID.setReference(velocity, CANSparkMax.ControlType.kVelocity);
     }
 
     public void configFlywheelPID() {
@@ -135,7 +136,7 @@ public class Shooter extends SubsystemBase{
 
         if (rpm > m_currVel - m_tolerance) {
             m_numTimesAtSpeed ++;
-            if (m_numTimesAtSpeed >= 5) {
+            if (m_numTimesAtSpeed >= 2) {
                 m_atSpeed = true;
             }
         }
@@ -174,7 +175,8 @@ public class Shooter extends SubsystemBase{
     }
 
     public void setFlywheelSetpoint(double setpoint) {
-        m_flywheelPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity);
+        m_shooterMotor1.set(setpoint);
+        //m_flywheelPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity);
     }
 
     /** @return the desired flywheel velocity using lookup table */
@@ -206,10 +208,11 @@ public class Shooter extends SubsystemBase{
         //setFlywheelVelocityLimelight();
         //Wait for flywheel to speed up to desired velocity
         //if(isFlywheelAtSpeed(getDesiredWheelVelocity(m_vision.m_visionLookup.velocityMap, m_vision.SHOOTER_FROM_TARGET))){
-        if(isFlywheelAtSpeed(velocity)){
-            //Run conveyor forward to shoot balls
-            m_conveyor.setConveyorPower(0.5);
+        while(!isFlywheelAtSpeed(velocity)){
+            
         }
+        //Run conveyor forward to shoot balls
+        m_conveyor.setConveyorPower(0.5);
     }
 
 

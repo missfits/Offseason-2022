@@ -24,12 +24,12 @@ public class HoodPositionCommand extends CommandBase{
 
     @Override
     public void initialize() {
-
+        m_hood.setHoodPosition(m_sensorControl.getHoodPositionDesired());
     }
 
     @Override
     public void execute() {
-        m_hood.setHoodPosition(m_sensorControl.getHoodPositionDesired());
+        
     }
     
     @Override
@@ -39,6 +39,6 @@ public class HoodPositionCommand extends CommandBase{
 
     @Override
     public boolean isFinished() {
-        return !(m_humanControl.isDown(m_humanControl.getDesiredButton(Constants.kControllerID_XBOX, Constants.kButtonID_XboxRB))); //kControllerID_XBOX, kButtonID_XboxB
+        return !(m_humanControl.isDown(m_humanControl.getDesiredButton(Constants.kControllerID_XBOX, Constants.kButtonID_XboxBack))); //kControllerID_XBOX, kButtonID_XboxB
     }
 }

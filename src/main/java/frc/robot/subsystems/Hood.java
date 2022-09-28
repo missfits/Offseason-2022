@@ -80,12 +80,12 @@ public class Hood {
 
     public void setHoodPosition(double setpoint){
         if(setpoint < m_hoodEncoder.getPosition()){
-            while(m_hoodEncoder.getPosition() > setpoint){
+            while(m_hoodEncoder.getPosition() > setpoint + 0.24){
                 m_hoodMotor.set(-0.1);
             }
         }
         else{
-            while(m_hoodEncoder.getPosition() < setpoint){
+            while(m_hoodEncoder.getPosition() < setpoint - 0.24){
                 m_hoodMotor.set(0.1);
             }
         }

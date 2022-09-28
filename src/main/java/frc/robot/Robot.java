@@ -55,7 +55,7 @@ public class Robot extends TimedRobot {
     // for (String i : m_robotContainer.m_visionLookup.shootingDataMap.keySet()) {
     //   System.out.println(i);
     // }
-      m_robotContainer.m_shooter.setFlywheelVelocity(-1000);
+      m_robotContainer.m_shooter.setFlywheelVelocity(-0.5);
   }
 
 

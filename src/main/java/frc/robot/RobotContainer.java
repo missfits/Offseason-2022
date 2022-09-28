@@ -83,7 +83,7 @@ public class RobotContainer {
     m_drivetrain.setDefaultCommand(m_defaultDriveCommand);
     m_indexer.setDefaultCommand(m_defaultIndexCommand);
 
-    m_shootCommand = new ShootCommand(m_sensorControl, m_humanControl, m_shooter, m_indexer);
+    m_shootCommand = new ShootCommand(m_sensorControl, m_humanControl, m_shooter, m_indexer, m_conveyor);
     m_intakeCommand = new IntakeCommand(m_sensorControl, m_humanControl, m_intake);
     m_intakeReverseCommand = new IntakeReverseCommand(m_sensorControl, m_humanControl, m_intake);
     m_limelightDriveCommand = new LimelightDriveCommand(m_sensorControl, m_humanControl, m_drivetrain, m_vision);

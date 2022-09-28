@@ -51,7 +51,7 @@ public class ShootUsingLimelightCommand extends CommandBase{
 
     @Override
     public void end(boolean interrupted) {
-        m_shooter.setFlywheelVelocity(-1000);
+        m_shooter.setFlywheelVelocity(-0.5);
     }
 
     @Override

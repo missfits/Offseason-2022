@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.Indexer;
 
 import static frc.robot.Constants.Constants.*;
@@ -16,10 +17,11 @@ public class ShootCommand extends CommandBase{
     SensorBoard m_sensorControl;
     OI m_humanControl;
     Indexer m_indexer;
+    Conveyor m_conveyor;
 
     private double m_desiredVelocity;
 
-    public ShootCommand(SensorBoard sensorControl, OI humanControl, Shooter shooter, Indexer indexer) {
+    public ShootCommand(SensorBoard sensorControl, OI humanControl, Shooter shooter, Indexer indexer, Conveyor conveyor) {
         m_sensorControl = sensorControl;
         m_humanControl = humanControl;
         m_shooter = shooter;
@@ -33,11 +35,12 @@ public class ShootCommand extends CommandBase{
     @Override
     public void initialize() {
         m_desiredVelocity = m_shooter.calculateStaticFlywheelVelocity();
+        m_shooter.launch(m_desiredVelocity);
     }
 
     @Override
     public void execute() {
-        m_shooter.launch(m_desiredVelocity);
+        
         /* m_desiredVelocity = m_shooter.calculateStaticFlywheelVelocity(); //desired
         // System.out.println(m_desiredVelocity);
         m_shooter.setFlywheelSpeedRPM(m_desiredVelocity); 
@@ -62,8 +65,8 @@ public class ShootCommand extends CommandBase{
 
     @Override
     public void end(boolean interrupted) {
+        m_conveyor.setConveyorPower(0.0);
         m_shooter.setFlywheelSetpoint(FLYWHEEL_RESET_POWER);
-        m_shooter.setFlywheelVelocity(FLYWHEEL_RESET_POWER);
         m_indexer.reset();
         //index 0
     }
