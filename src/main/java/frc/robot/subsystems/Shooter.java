@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 import static frc.robot.Constants.Constants.*;
 
@@ -15,6 +16,7 @@ import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.SparkMaxRelativeEncoder;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 
@@ -199,20 +201,36 @@ public class Shooter extends SubsystemBase{
 
     /** Run conveyor backwards, set flywheel to desired velocity, run conveyor forward and shoot balls */
     public void launch(double velocity){
+        //m_shooterMotor1.set(0.5);
+        
+        //WaitCommand wait = new WaitCommand(0.01);
         //Move balls away from flywheel
-        m_conveyor.setConveyorPosition(0);
-        while(m_conveyor.getConveyorPosition() > -4){
-            m_conveyor.setConveyorPower(0.1);
-        }
-        setFlywheelSetpoint(velocity);
+        //m_conveyor.setConveyorPosition(0);
+        //m_conveyor.setConveyorPower(-0.1);
+        //try{ Thread.sleep(2000);} catch(Exception e){System.out.println("No sleep");}
+        //m_conveyor.setConveyorPower(0.0);
+        // while(m_conveyor.getConveyorPosition() > -4){
+        //     try{ Thread.sleep(10);} catch(Exception e){System.out.println("No sleep");}
+
+        // }
+        //m_conveyor.setConveyorPower(0.0);
+        m_shooterMotor1.set(velocity);
+        try{Thread.sleep(5000);} catch(Exception e){System.out.println("No sleep");}
+        m_shooterMotor1.set(0.0);
+        try{Thread.sleep(5000);} catch(Exception e){System.out.println("No sleep");}
+        m_shooterMotor1.set(velocity);
+        //try{ Thread.sleep(1000);} catch(Exception e){System.out.println("No sleep");}
+        //setFlywheelSetpoint(velocity);
         //setFlywheelVelocityLimelight();
         //Wait for flywheel to speed up to desired velocity
         //if(isFlywheelAtSpeed(getDesiredWheelVelocity(m_vision.m_visionLookup.velocityMap, m_vision.SHOOTER_FROM_TARGET))){
-        while(!isFlywheelAtSpeed(velocity)){
-            
-        }
+        // while(!isFlywheelAtSpeed(velocity)){
+        //     try{ Thread.sleep(10);} catch(Exception e){System.out.println("No sleep");}
+        // }
         //Run conveyor forward to shoot balls
-        m_conveyor.setConveyorPower(0.5);
+        //m_conveyor.setConveyorPower(0.5);
+        //try{Thread.sleep(5000);} catch(Exception e){System.out.println("No sleep");}
+
     }
 
 

@@ -27,14 +27,15 @@ public class ShootCommand extends CommandBase{
         m_shooter = shooter;
         m_indexer = indexer;
 
-        m_desiredVelocity = 0.0;
+        //m_desiredVelocity = 0.0;
+        m_desiredVelocity = 0.5;
 
         System.out.println("end of shoot command constructor");
     }
 
     @Override
     public void initialize() {
-        m_desiredVelocity = m_shooter.calculateStaticFlywheelVelocity();
+        //m_desiredVelocity = m_shooter.calculateStaticFlywheelVelocity();
         m_shooter.launch(m_desiredVelocity);
     }
 
