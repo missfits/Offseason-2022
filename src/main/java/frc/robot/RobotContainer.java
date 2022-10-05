@@ -43,7 +43,9 @@ public class RobotContainer {
   public Hood m_hood;
 
   //Creating instances of commands
-  private final ShootCommand m_shootCommand;
+  private final ShootCommand m_shootHubCommand;
+  private final ShootCommand m_shootTapeCommand;
+  private final ShootCommand m_shootSafeZoneCommand;
   private final IntakeCommand m_intakeCommand;
   private final IntakeReverseCommand m_intakeReverseCommand;
   private final IntakeForwardCommand m_intakeForwardCommand;
@@ -83,7 +85,9 @@ public class RobotContainer {
     m_drivetrain.setDefaultCommand(m_defaultDriveCommand);
     m_indexer.setDefaultCommand(m_defaultIndexCommand);
 
-    m_shootCommand = new ShootCommand(m_sensorControl, m_humanControl, m_shooter, m_indexer, m_conveyor);
+    m_shootHubCommand = new ShootCommand(m_sensorControl, m_shooter, m_indexer, m_conveyor, m_visionLookup, m_hood, 1.2446, m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxX));
+    m_shootTapeCommand = new ShootCommand(m_sensorControl, m_shooter, m_indexer, m_conveyor, m_visionLookup, m_hood, 4.65, m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxRB));
+    m_shootSafeZoneCommand = new ShootCommand(m_sensorControl, m_shooter, m_indexer, m_conveyor, m_visionLookup, m_hood, 6, m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxB));
     m_intakeCommand = new IntakeCommand(m_sensorControl, m_humanControl, m_intake);
     m_intakeReverseCommand = new IntakeReverseCommand(m_sensorControl, m_humanControl, m_intake);
     m_limelightDriveCommand = new LimelightDriveCommand(m_sensorControl, m_humanControl, m_drivetrain, m_vision);
@@ -126,7 +130,15 @@ public class RobotContainer {
 
     // System.out.println("updating controls");
     if (m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxX))) { //kControllerID_XBOX, kButtonID_XboxB
-      CommandScheduler.getInstance().schedule(m_shootCommand);
+      CommandScheduler.getInstance().schedule(m_shootHubCommand);
+    }
+
+    if (m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxRB))) { //kControllerID_XBOX, kButtonID_XboxB
+      CommandScheduler.getInstance().schedule(m_shootTapeCommand);
+    }
+
+    if (m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxB))) { //kControllerID_XBOX, kButtonID_XboxB
+      CommandScheduler.getInstance().schedule(m_shootSafeZoneCommand);
     }
 
     if(m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxA)) || m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_LeftJoy, kButtonID_Drive2))) {

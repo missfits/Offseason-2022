@@ -1,13 +1,16 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.VisionLookup;
 import frc.robot.subsystems.Conveyor;
+import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Indexer;
 
 import static frc.robot.Constants.Constants.*;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.SensorBoard;
+import frc.robot.ButtonReader;
 import frc.robot.OI;
 
 
@@ -18,24 +21,30 @@ public class ShootCommand extends CommandBase{
     OI m_humanControl;
     Indexer m_indexer;
     Conveyor m_conveyor;
+    Double m_distance;
+    VisionLookup m_visionLookup;
+    Hood m_hood;
+    ButtonReader m_button;
 
     private double m_desiredVelocity;
+    private double m_hoodPosition;
 
-    public ShootCommand(SensorBoard sensorControl, OI humanControl, Shooter shooter, Indexer indexer, Conveyor conveyor) {
+    public ShootCommand(SensorBoard sensorControl, Shooter shooter, Indexer indexer, Conveyor conveyor, VisionLookup visionLookup, Hood hood, double distance, ButtonReader button) {
         m_sensorControl = sensorControl;
-        m_humanControl = humanControl;
         m_shooter = shooter;
         m_indexer = indexer;
-
-        //m_desiredVelocity = 0.0;
-        m_desiredVelocity = 0.5;
+        m_distance = distance;
+        m_visionLookup = visionLookup;
+        m_desiredVelocity = m_shooter.getDesiredWheelVelocity(m_visionLookup.velocityMap, m_distance);
+        m_hoodPosition = m_hood.getHoodPOS(m_visionLookup.angleMap, m_distance);
+        m_button = button;
 
         System.out.println("end of shoot command constructor");
     }
 
     @Override
     public void initialize() {
-        //m_desiredVelocity = m_shooter.calculateStaticFlywheelVelocity();
+        m_hood.setHoodPosition(m_hoodPosition);
         m_shooter.launch(m_desiredVelocity);
     }
 
@@ -67,7 +76,7 @@ public class ShootCommand extends CommandBase{
     @Override
     public void end(boolean interrupted) {
         m_conveyor.setConveyorPower(0.0);
-        m_shooter.setFlywheelSetpoint(FLYWHEEL_RESET_POWER);
+        m_shooter.setFlywheelVelocity(-0.1);
         m_indexer.reset();
         //index 0
     }
@@ -77,6 +86,7 @@ public class ShootCommand extends CommandBase{
         // if (!(m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxX)))){
         //     System.out.println("finished!");
         // }
-        return !(m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxX))); //kControllerID_XBOX, kButtonID_XboxB
+        //return !(m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxX))); //kControllerID_XBOX, kButtonID_XboxB
+        return !(m_button.isDown());
     }
 }

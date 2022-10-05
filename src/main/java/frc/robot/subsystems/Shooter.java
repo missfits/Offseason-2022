@@ -76,7 +76,7 @@ public class Shooter extends SubsystemBase{
 
         m_shooterGroup = new MotorControllerGroup(m_shooterMotorController1, m_shooterMotorController2);
         
-        m_shooterGroup.setInverted(false); //confirm
+        m_shooterGroup.setInverted(true); //confirm
         m_conveyor = conveyor;
 
         m_tolerance = 50;
@@ -206,19 +206,20 @@ public class Shooter extends SubsystemBase{
         //WaitCommand wait = new WaitCommand(0.01);
         //Move balls away from flywheel
         //m_conveyor.setConveyorPosition(0);
-        //m_conveyor.setConveyorPower(-0.1);
-        //try{ Thread.sleep(2000);} catch(Exception e){System.out.println("No sleep");}
-        //m_conveyor.setConveyorPower(0.0);
+        m_conveyor.setConveyorPower(-0.1);
+        try{ Thread.sleep(2000);} catch(Exception e){System.out.println("No sleep");}
+        m_conveyor.setConveyorPower(0.0);
         // while(m_conveyor.getConveyorPosition() > -4){
         //     try{ Thread.sleep(10);} catch(Exception e){System.out.println("No sleep");}
-
         // }
         //m_conveyor.setConveyorPower(0.0);
         m_shooterMotor1.set(velocity);
-        try{Thread.sleep(5000);} catch(Exception e){System.out.println("No sleep");}
-        m_shooterMotor1.set(0.0);
-        try{Thread.sleep(5000);} catch(Exception e){System.out.println("No sleep");}
-        m_shooterMotor1.set(velocity);
+        try{Thread.sleep(2000);} catch(Exception e){System.out.println("No sleep");}
+        m_conveyor.setConveyorPower(0.1);
+        try{Thread.sleep(3000);} catch(Exception e){System.out.println("No sleep");}
+        //m_shooterMotor1.set(0.0);
+        //try{Thread.sleep(5000);} catch(Exception e){System.out.println("No sleep");}
+        //m_shooterMotor1.set(velocity);
         //try{ Thread.sleep(1000);} catch(Exception e){System.out.println("No sleep");}
         //setFlywheelSetpoint(velocity);
         //setFlywheelVelocityLimelight();

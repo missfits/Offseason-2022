@@ -36,30 +36,34 @@ public class VisionLookup{
         
         //Change to JSON file
         //Use 2d array or array of objects instead
+        //Distance in meters
+        //Distance: how far away from front of robot to where ball lands
         angleMap = new TreeMap<Double, Double>();
-        angleMap.put(4.0, 23.31);
-        angleMap.put(5.0, 23.5);
-        angleMap.put(6.0, 25.07);
-        angleMap.put(7.0, 26.21);
-        angleMap.put(8.0, 27.37);
-        angleMap.put(9.0, 29.62);
+        //Closest Shot, against hub
+        angleMap.put(1.2446, 5.0);
+        angleMap.put(3.0, 15.0);
+        //Shoot from tape corner on tarmac
+        angleMap.put(4.65, 20.0);
+        //Shoot from safe zone
+        angleMap.put(6.0, 23.0);
+        
 
-        //Translate angle to encoder position
-        angleToPositionMap = new TreeMap<Double, Double>();
-        angleToPositionMap.put(0.0, 0.0);
-        angleToPositionMap.put(0.0, 0.0);
-        angleToPositionMap.put(0.0, 0.0);
-        angleToPositionMap.put(0.0, 0.0);
-        angleToPositionMap.put(0.0, 0.0);
-        angleToPositionMap.put(0.0, 0.0);
+        // //Translate angle to encoder position
+        // angleToPositionMap = new TreeMap<Double, Double>();
+        // angleToPositionMap.put(0.0, 0.0);
+        // angleToPositionMap.put(0.0, 0.0);
+        // angleToPositionMap.put(0.0, 0.0);
+        // angleToPositionMap.put(0.0, 0.0);
+        // angleToPositionMap.put(0.0, 0.0);
+        // angleToPositionMap.put(0.0, 0.0);
 
+        //Distance in meters
         velocityMap = new TreeMap<Double, Double>();
-        velocityMap.put(4.0, 1250.0);
-        velocityMap.put(5.0, 1250.0);
-        velocityMap.put(6.0, 1300.0);
-        velocityMap.put(7.0, 1325.0);
-        velocityMap.put(8.0, 1370.0);
-        velocityMap.put(9.0, 1430.0);
+        velocityMap.put(1.2446, 0.6);
+        velocityMap.put(3.0, 0.65);
+        velocityMap.put(4.65, 0.75);
+        velocityMap.put(6.0, 0.825);
+       
 
         testMap = new TreeMap<Double, Double>();
         testMap.put(0.0, 0.0);
