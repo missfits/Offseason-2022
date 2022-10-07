@@ -85,6 +85,9 @@ public final class Constants {
     public static double FLYWHEEL_I_FAC = 0.0;
     public static double FLYWHEEL_D_FAC = 0.008;
 
+    public static double climberMaxEncoderPosition = 100;
+    public static double climberLowestEncoderPosition = 0;
+
     //ifdef
     public static boolean EOS = true;
 }
