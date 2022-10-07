@@ -30,8 +30,8 @@ public final class Constants {
     public static int kMXP = 13;
 
     // IDs for the XBOX port, joystick IDs, joystick IDs on the XBOX
-    public static int kControllerID_XBOX = 0;
-    public static int kControllerID_LeftJoy = 1;
+    public static int kControllerID_XBOX = 1; //0
+    public static int kControllerID_LeftJoy = 0; //1
     public static int kControllerID_RightJoy = 2;
     public static int kControllerID_DriveLeftXBOX = 1;
     public static int kControllerID_DriveRightXBOX = 2;
@@ -85,7 +85,7 @@ public final class Constants {
     public static double FLYWHEEL_I_FAC = 0.0;
     public static double FLYWHEEL_D_FAC = 0.008;
 
-    public static double climberMaxEncoderPosition = 100;
+    public static double climberMaxEncoderPosition = 97;
     public static double climberLowestEncoderPosition = 0;
 
     //ifdef

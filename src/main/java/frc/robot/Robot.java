@@ -39,7 +39,7 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
     m_robotContainer.updateButtons();
     m_robotContainer.updateControls();
-    SmartDashboard.putNumber("Climber Encoder", m_robotContainer.m_climber.climberEncoder.getPosition());
+    SmartDashboard.putNumber("Climber Encoder", m_robotContainer.m_climber.m_climberEncoder2.getPosition());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -77,6 +77,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     CommandScheduler.getInstance().run();
     m_robotContainer.updateControls();
+    SmartDashboard.putNumber("Climber Encoder", m_robotContainer.m_climber.m_climberEncoder2.getPosition());
   }
 
   @Override
