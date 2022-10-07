@@ -8,6 +8,7 @@ import static frc.robot.Constants.Constants.*;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Conveyor;
@@ -16,8 +17,9 @@ import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.VisionLookup;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.*;
 
 /**
@@ -27,6 +29,9 @@ import frc.robot.commands.*;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  public static Object m_DriveStraightCommand;
+
+
   // The robot's subsystems and commands are defined here...
   private final SensorBoard m_sensorControl;
   
@@ -35,7 +40,7 @@ public class RobotContainer {
 
   public final Shooter m_shooter;
   private final Intake m_intake;
-  private final Drivetrain m_drivetrain;
+  private Drivetrain m_drivetrain;
   private final Indexer m_indexer;
   public final Vision m_vision;
   public VisionLookup m_visionLookup;
@@ -77,6 +82,8 @@ public class RobotContainer {
     m_hood = new Hood(m_sensorControl, m_visionLookup, m_vision);
     m_visionLookup = new VisionLookup();
     m_conveyor = new Conveyor(m_sensorControl);
+
+    SendableChooser<Command> m_chooser = new SendableChooser<>();
 
     //Commands
     m_defaultDriveCommand = new DefaultDriveCommand(m_sensorControl, m_humanControl, m_drivetrain);
@@ -193,4 +200,12 @@ public class RobotContainer {
     //   CommandScheduler.getInstance().schedule(m_hoodBackwardCommand);
     // }
   }
+
+    //does nothing
+    public SequentialCommandGroup m_justTaxi = new SequentialCommandGroup(
+      new  DriveStraightCommand(1.0, m_drivetrain)
+    );
+
+
+    public Object m_chooser;
 }

@@ -56,6 +56,8 @@ public class Robot extends TimedRobot {
     //   System.out.println(i);
     // }
       m_robotContainer.m_shooter.setFlywheelVelocity(-0.05);
+
+      m_robotContainer.m_chooser.setDefaultOption("Two Ball Auto (Shoot Last)", RobotContainer.m_DriveStraightCommand); 
   }
 
 
