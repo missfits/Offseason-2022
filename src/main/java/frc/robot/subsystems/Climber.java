@@ -19,11 +19,13 @@ import frc.robot.SensorBoard;
 public class Climber extends SubsystemBase {
 
   private final CANSparkMax m_climberMotor1 = new CANSparkMax(kCANID_MotorClimber1, MotorType.kBrushless);
+  private final CANSparkMax m_climberMotor2 = new CANSparkMax(kCANID_MotorClimber2, MotorType.kBrushless);
   public final SparkMaxRelativeEncoder climberEncoder = (SparkMaxRelativeEncoder) m_climberMotor1.getEncoder(SparkMaxRelativeEncoder.Type.kHallSensor, 42);
   private final SensorBoard m_sensorControl;
 /** Climber Subsystem */
   public Climber(SensorBoard sensorBoard) {
       m_sensorControl = sensorBoard;
+      m_climberMotor2.follow(m_climberMotor1);
   }
   @Override
   public void periodic() {
