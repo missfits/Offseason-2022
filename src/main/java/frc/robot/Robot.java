@@ -29,6 +29,9 @@ public class Robot extends TimedRobot {
   public void robotInit() {
 
     m_robotContainer = new RobotContainer();
+    m_robotContainer.m_chooser.addOption("Drive out", RobotContainer.m_justTaxi); 
+
+    SmartDashboard.putData(m_robotContainer.m_chooser);
   }
 
 
@@ -52,12 +55,12 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    // m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // // schedule the autonomous command (example)
-    // if (m_autonomousCommand != null) {
-    //   m_autonomousCommand.schedule();
-    // }
+    if (m_autonomousCommand != null) {
+        m_autonomousCommand.schedule();
+   }
   }
 
   /** This function is called periodically during autonomous. */

@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Climber;
@@ -13,8 +14,9 @@ import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Indexer;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.*;
 
 import static frc.robot.Constants.*;
@@ -26,6 +28,10 @@ import static frc.robot.Constants.*;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  public static Command m_DriveStraightCommand;
+  final SendableChooser<Command> m_chooser = new SendableChooser<>();
+
+
   // The robot's subsystems and commands are defined here...
   private final SensorBoard m_sensorControl;
   
@@ -35,7 +41,7 @@ public class RobotContainer {
   //Creating subsystem objects
   private final Shooter m_shooter;
   private final Intake m_intake;
-  private final Drivetrain m_drivetrain;
+  private static Drivetrain m_drivetrain;
   private final Indexer m_indexer;
   private final Conveyor m_conveyor;
   private final Hood m_hood;
@@ -60,6 +66,7 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+
     // Configure the button bindings
     configureButtonBindings();
     m_sensorControl = new SensorBoard();
@@ -92,7 +99,8 @@ public class RobotContainer {
     m_conveyorBackwards = new ConveyorBackwards(m_sensorControl, m_humanControl, m_conveyor);
     m_climberUpCommand = new ClimberUpCommand(m_humanControl, m_climber);
     m_climberDownCommand = new ClimberDownCommand(m_humanControl, m_climber);
-    
+    m_DriveStraightCommand = new DriveStraightCommand(5, m_drivetrain);
+
     System.out.println("end of robot container constructor");
   }
 
@@ -155,4 +163,17 @@ public class RobotContainer {
       CommandScheduler.getInstance().schedule(m_hoodForwardCommand);
     }
   }
+
+    //does nothing
+    public static SequentialCommandGroup m_justTaxi = new SequentialCommandGroup(
+      new  DriveStraightCommand(1.0, m_drivetrain)
+    );
+
+
+
+
+    public Command getAutonomousCommand() {
+      //Poll Sendable Chooser
+      return m_chooser.getSelected();
+    }
 }
