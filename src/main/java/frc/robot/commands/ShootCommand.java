@@ -29,14 +29,15 @@ public class ShootCommand extends CommandBase{
     private double m_desiredVelocity;
     private double m_hoodPosition;
 
-    public ShootCommand(SensorBoard sensorControl, Shooter shooter, Indexer indexer, Conveyor conveyor, VisionLookup visionLookup, Hood hood, double distance, ButtonReader button) {
+    public ShootCommand(SensorBoard sensorControl, Shooter shooter, Indexer indexer, Conveyor conveyor, VisionLookup visionLookup, Hood hood, double velocity, double hoodPosition, ButtonReader button) {
         m_sensorControl = sensorControl;
         m_shooter = shooter;
         m_indexer = indexer;
-        m_distance = distance;
+        m_desiredVelocity = velocity;
+        m_hoodPosition = hoodPosition;
         m_visionLookup = visionLookup;
-        m_desiredVelocity = m_shooter.getDesiredWheelVelocity(m_visionLookup.velocityMap, m_distance);
-        m_hoodPosition = m_hood.getHoodPOS(m_visionLookup.angleMap, m_distance);
+        //m_desiredVelocity = m_shooter.getDesiredWheelVelocity(m_visionLookup.velocityMap, m_distance);
+        //m_hoodPosition = m_hood.getHoodPOS(m_visionLookup.angleMap, m_distance);
         m_button = button;
 
         System.out.println("end of shoot command constructor");

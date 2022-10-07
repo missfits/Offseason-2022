@@ -85,9 +85,9 @@ public class RobotContainer {
     m_drivetrain.setDefaultCommand(m_defaultDriveCommand);
     m_indexer.setDefaultCommand(m_defaultIndexCommand);
 
-    m_shootHubCommand = new ShootCommand(m_sensorControl, m_shooter, m_indexer, m_conveyor, m_visionLookup, m_hood, 1.2446, m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxX));
-    m_shootTapeCommand = new ShootCommand(m_sensorControl, m_shooter, m_indexer, m_conveyor, m_visionLookup, m_hood, 4.65, m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxRB));
-    m_shootSafeZoneCommand = new ShootCommand(m_sensorControl, m_shooter, m_indexer, m_conveyor, m_visionLookup, m_hood, 6, m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxB));
+    m_shootHubCommand = new ShootCommand(m_sensorControl, m_shooter, m_indexer, m_conveyor, m_visionLookup, m_hood, 0.6, 5.0, m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxX));
+    m_shootTapeCommand = new ShootCommand(m_sensorControl, m_shooter, m_indexer, m_conveyor, m_visionLookup, m_hood, 0.75, 20.0, m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxRB));
+    m_shootSafeZoneCommand = new ShootCommand(m_sensorControl, m_shooter, m_indexer, m_conveyor, m_visionLookup, m_hood, 0.825, 23.0, m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxB));
     m_intakeCommand = new IntakeCommand(m_sensorControl, m_humanControl, m_intake);
     m_intakeReverseCommand = new IntakeReverseCommand(m_sensorControl, m_humanControl, m_intake);
     m_limelightDriveCommand = new LimelightDriveCommand(m_sensorControl, m_humanControl, m_drivetrain, m_vision);
