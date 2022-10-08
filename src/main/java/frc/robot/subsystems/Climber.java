@@ -45,9 +45,11 @@ public class Climber extends SubsystemBase {
   public void climberUp(){
     if(m_climberEncoder1.getPosition() < climberMaxEncoderPosition){
       m_climberMotor1.set(0.1);
+      m_climberMotor2.set(0.1);
     }
     else{
       m_climberMotor1.set(0);
+      m_climberMotor2.set(0);
     }
   }
 
@@ -55,20 +57,28 @@ public class Climber extends SubsystemBase {
   public void climberDown(){
     if(m_climberEncoder1.getPosition() > climberLowestEncoderPosition){
       m_climberMotor1.set(-0.1);
+      m_climberMotor2.set(-0.1);
     }
     else{
       m_climberMotor1.set(0);
+      m_climberMotor2.set(0);
     }
   } 
 
   //set the climber speed to zero (the climber is off)
   public void climberOff(){
     m_climberMotor1.set(0);
+    m_climberMotor2.set(0);
   }
 
   //set the climber speed at a slower speed than normal
   public void climberLow(){
     m_climberMotor1.set(0.1);
+    m_climberMotor2.set(0.1);
+  }
+
+  public void climberReset(){
+    
   }
 
 }
