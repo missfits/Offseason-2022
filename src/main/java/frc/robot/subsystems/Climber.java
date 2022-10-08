@@ -43,26 +43,26 @@ public class Climber extends SubsystemBase {
   
   //extends climber to full length determined by encoder value (continues motor speed until the maximum encoder value is reached)
   public void climberUp(){
-    if(m_climberEncoder1.getPosition() < climberMaxEncoderPosition){
+    //if(m_climberEncoder1.getPosition() < climberMaxEncoderPosition){
       m_climberMotor1.set(1.0);
       m_climberMotor2.set(1.0);
-    }
-    else{
-      m_climberMotor1.set(0);
-      m_climberMotor2.set(0);
-    }
+    //}
+    //else{
+      //m_climberMotor1.set(0);
+      //m_climberMotor2.set(0);
+    //}
   }
 
   //retracts climber to shortest length determined by encoder value (reverses motor speed until the minimum encoder value is reached)
   public void climberDown(){
-    if(m_climberEncoder1.getPosition() > climberLowestEncoderPosition){
+    //if(m_climberEncoder1.getPosition() > climberLowestEncoderPosition){
       m_climberMotor1.set(-1.0);
       m_climberMotor2.set(-1.0);
-    }
-    else{
-      m_climberMotor1.set(0);
-      m_climberMotor2.set(0);
-    }
+    //}
+    // else{
+    //   m_climberMotor1.set(0);
+    //   m_climberMotor2.set(0);
+    // }
   }
   
   public void climberReverse(){
