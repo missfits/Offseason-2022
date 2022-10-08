@@ -24,7 +24,7 @@ public class Intake extends SubsystemBase{
         // m_compressor = new Compressor(PneumaticsModuleType.CTREPCM);
         m_intakeSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, kSolenoidID_ForwardChannel, kSolenoidID_ReverseChannel);
 
-        m_intakeMotor.setInverted(true);
+        m_intakeMotor.setInverted(false);
 
         raiseIntakeArm();
 
