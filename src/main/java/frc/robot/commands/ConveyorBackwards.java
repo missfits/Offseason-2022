@@ -37,7 +37,7 @@ public class ConveyorBackwards extends CommandBase{
 
     @Override
     public boolean isFinished() {
-        return !(m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxRB))); 
+        return !(m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxStart))); 
     }
 }
 
