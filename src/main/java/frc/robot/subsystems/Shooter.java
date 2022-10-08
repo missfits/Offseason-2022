@@ -63,7 +63,7 @@ public class Shooter extends SubsystemBase{
 
         m_shooterGroup = new MotorControllerGroup(m_shooterMotorController1, m_shooterMotorController2);
         
-        m_shooterGroup.setInverted(false); //confirm
+        m_shooterGroup.setInverted(true); //confirm
 
         m_tolerance = 50;
         m_currVel = 0.0;
