@@ -85,3 +85,10 @@ jar {
 deployArtifact.jarTask = jar
 wpi.java.configureExecutableTasks(jar)
 wpi.java.configureTestTasks(test)
+
+test {
+   useJUnit()
+   testLogging {
+		events "passed", "skipped", "failed"
+	}
+}

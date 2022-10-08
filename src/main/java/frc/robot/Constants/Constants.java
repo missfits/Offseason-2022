@@ -2,33 +2,35 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot;
+package frc.robot.Constants;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
  * globally (i.e. public static). Do not put anything functional in this class.
- *
+ *g
  * <p>It is advised to statically import this class (or one of its inner classes) wherever the
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static int kCANID_MotorLeft1 = 1;
+    public static int kCANID_MotorLeft1 = 6;
     public static int kCANID_MotorLeft2 = 2;
     public static int kCANID_MotorRight1 = 3;
     public static int kCANID_MotorRight2 = 4;
-    public static int kCANID_MotorIntake = 5;
-    public static int kCANID_MotorConveyor = 6;
-    public static int kCANID_MotorShooter = 7;
-    public static int kCANID_MotorClimber1 = 8;
-    public static int kCANID_MotorIndex = 6; //change
-    //public static int kCANID_MotorClimber2 = 9; 
+    public static int kCANID_MotorIntake = 5; 
+    public static int kCANID_MotorClimber1 = 1;
+    public static int kCANID_MotorShooter1 = 7; // rename to MotorShooter1
+    public static int kCANID_MotorShooter2 = 8; 
+    public static int kCANID_MotorHood = 9; //change
+    public static int kCANID_MotorConveyor = 10; //change 
+    public static int kCANID_MotorIndex = 0; //change
+    public static int kCANID_MotorClimber2 = 11; 
 
     public static int kMXP = 13;
 
     // IDs for the XBOX port, joystick IDs, joystick IDs on the XBOX
-    public static int kControllerID_XBOX = 0;
-    public static int kControllerID_LeftJoy = 1;
+    public static int kControllerID_XBOX = 1;
+    public static int kControllerID_LeftJoy = 0;
     public static int kControllerID_RightJoy = 2;
     public static int kControllerID_DriveLeftXBOX = 1;
     public static int kControllerID_DriveRightXBOX = 2;
@@ -60,7 +62,7 @@ public final class Constants {
 
     //intake pneumatics
     public static int kSolenoidID_ForwardChannel = 7;
-    public static int kSolenoidID_ReverseChannel = 6;
+    public static int kSolenoidID_ReverseChannel = 0;
 
     //sensors
     public static int kSensorID_TopLight = 0;
@@ -82,6 +84,30 @@ public final class Constants {
     public static double FLYWHEEL_I_FAC = 0.0;
     public static double FLYWHEEL_D_FAC = 0.008;
 
+    public static double FLYWHEEL_VEL = 1;
+    public static double DESIRED_HOOD_POSITION = 0;
+
+    public static double DRIVETRAIN_P_FAC = 0.01;
+    public static double DRIVETRAIN_I_FAC = 0.0;
+    public static double DRIVETRAIN_D_FAC = 0.0;
+
     //ifdef
     public static boolean EOS = true;
+
+    //Shooter Hood Positions
+    public static double hoodabsOut = 0; //Example: 0.058
+    public static double hoodabsIn = 0; //Example: 0.956
+    public static double hoodrevOut = 0; //Example: -38
+    public static double hoodrevIn = 0; //Example: 0
+    public static double hoodAngleOut = 88.7;
+    public static double hoodAngleIn = 0; 
+    public static double forwardVelOffset = 0; //Example: 60
+    public static double forwardHoodOffsetFar = 0; //Example: 1
+    public static double forwardHoodOffsetClose = 0; //Example: 4.5
+    public static double change = 0; //Example: 7.5
+    //1.625 degrees/tooth
+    //1.0833 hood degrees/motor revs
+    public static double hoodAngleToMotorRevs = (1/1.0833);
+    //Fully extended angle: 88.7 degrees
+    public static boolean isShooting;
 }

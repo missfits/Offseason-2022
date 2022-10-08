@@ -1,7 +1,9 @@
 package frc.robot.commands;
 
-import static frc.robot.Constants.*;
 import frc.robot.subsystems.Intake;
+
+import static frc.robot.Constants.Constants.*;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.SensorBoard;
 import frc.robot.OI;
@@ -29,7 +31,7 @@ public class IntakeReverseCommand extends CommandBase{
 
     @Override
     public void execute() {
-        m_intake.setIntakeRollersPower(INTAKE_ROLLERS_REVERSE_POWER);
+        //m_intake.setIntakeRollersPower(INTAKE_ROLLERS_REVERSE_POWER);
         m_intake.lowerIntakeArm();
     }
 

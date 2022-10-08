@@ -2,9 +2,11 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import static frc.robot.Constants.*;
+
 import frc.robot.SensorBoard;
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
+import static frc.robot.Constants.Constants.*;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
@@ -12,34 +14,33 @@ public class Intake extends SubsystemBase{
 
     private SensorBoard m_sensorControl;
 
+    public final CANSparkMax m_intakeMotor;
 
-    private final CANSparkMax m_intakeMotor;
+    private DoubleSolenoid m_intakeSolenoid;
     // private final Compressor m_compressor;
-    private final DoubleSolenoid m_intakeSolenoid;
+    
 
     public Intake(SensorBoard sensorBoard) {
         m_sensorControl = sensorBoard;
 
         m_intakeMotor = new CANSparkMax(kCANID_MotorIntake, MotorType.kBrushless);
+
+        m_intakeSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 7, 6);
         // m_compressor = new Compressor(PneumaticsModuleType.CTREPCM);
-        m_intakeSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, kSolenoidID_ForwardChannel, kSolenoidID_ReverseChannel);
+        
 
         m_intakeMotor.setInverted(true);
 
         raiseIntakeArm();
 
-
     }
 
     @Override
     public void periodic() {
-
-
-
     }
 
     public void setIntakeRollersPower(double power) {
-        m_intakeMotor.set(power);
+        m_intakeMotor.set(-power);
     }
 
     public double getIntakeRollersPower(double power) {
@@ -52,6 +53,7 @@ public class Intake extends SubsystemBase{
 
     public void raiseIntakeArm() {
         m_intakeSolenoid.set(kReverse);
+        
     }
 
     @Override
