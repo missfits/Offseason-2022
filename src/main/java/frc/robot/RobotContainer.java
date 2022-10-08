@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hood;
@@ -38,6 +39,7 @@ public class RobotContainer {
   private final Indexer m_indexer;
   private final Conveyor m_conveyor;
   private final Hood m_hood;
+  public final Climber m_climber;
 
   //Creating instances of commands
   private final ShootCommand m_shootCommand;
@@ -51,6 +53,9 @@ public class RobotContainer {
   private final HoodBackwardCommand m_hoodBackwardCommand;
   private final ShooterBackwards m_shooterBackwards;
   private final ConveyorBackwards m_conveyorBackwards;
+  private final ClimberUpCommand m_climberUpCommand;
+  private final ClimberDownCommand m_climberDownCommand;
+
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -68,6 +73,7 @@ public class RobotContainer {
     m_indexer = new Indexer(m_sensorControl);
     m_conveyor = new Conveyor(m_sensorControl);
     m_hood = new Hood(m_sensorControl);
+    m_climber = new Climber(m_sensorControl);
 
     m_defaultDriveCommand = new DefaultDriveCommand(m_sensorControl, m_humanControl, m_drivetrain);
     m_defaultIndexCommand = new DefaultIndexCommand(m_sensorControl, m_humanControl, m_indexer);
@@ -84,6 +90,9 @@ public class RobotContainer {
     m_hoodBackwardCommand = new HoodBackwardCommand(m_sensorControl, m_humanControl, m_hood, m_indexer);
     m_shooterBackwards = new ShooterBackwards(m_sensorControl, m_humanControl, m_shooter, m_indexer);
     m_conveyorBackwards = new ConveyorBackwards(m_sensorControl, m_humanControl, m_conveyor);
+    m_climberUpCommand = new ClimberUpCommand(m_humanControl, m_climber);
+    m_climberDownCommand = new ClimberDownCommand(m_humanControl, m_climber);
+    
     System.out.println("end of robot container constructor");
   }
 
@@ -127,6 +136,14 @@ public class RobotContainer {
 
     if(m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxStart)) || m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_LeftJoy, kButtonID_Drive4))) {
       CommandScheduler.getInstance().schedule(m_conveyorBackwards);
+    }
+
+    if(m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxB)) || m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_LeftJoy, kButtonID_Drive4))) {
+      CommandScheduler.getInstance().schedule(m_climberUpCommand);
+    }
+
+    if(m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxRB)) || m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_LeftJoy, kButtonID_Drive4))) {
+      CommandScheduler.getInstance().schedule(m_climberDownCommand);
     }
 
     if(m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxY)) || m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_LeftJoy, kButtonID_Drive4))) {
