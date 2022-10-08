@@ -49,7 +49,8 @@ public class RobotContainer {
   private final ConveyorCommand m_conveyorCommand;
   private final HoodForwardCommand m_hoodForwardCommand;
   private final HoodBackwardCommand m_hoodBackwardCommand;
-
+  private final ShooterBackwards m_shooterBackwards;
+  private final ConveyorBackwards m_conveyorBackwards;
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -81,7 +82,8 @@ public class RobotContainer {
     m_conveyorCommand = new ConveyorCommand(m_sensorControl, m_humanControl, m_conveyor);
     m_hoodForwardCommand = new HoodForwardCommand(m_sensorControl, m_humanControl, m_hood, m_indexer);
     m_hoodBackwardCommand = new HoodBackwardCommand(m_sensorControl, m_humanControl, m_hood, m_indexer);
-    
+    m_shooterBackwards = new ShooterBackwards(m_sensorControl, m_humanControl, m_shooter, m_indexer);
+    m_conveyorBackwards = new ConveyorBackwards(m_sensorControl, m_humanControl, m_conveyor);
     System.out.println("end of robot container constructor");
   }
 
@@ -124,7 +126,7 @@ public class RobotContainer {
     }
 
     if(m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxStart)) || m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_LeftJoy, kButtonID_Drive4))) {
-      CommandScheduler.getInstance().schedule(m_intakeReverseCommand);
+      CommandScheduler.getInstance().schedule(m_shooterBackwards);
     }
 
     if(m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxY)) || m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_LeftJoy, kButtonID_Drive4))) {
@@ -136,11 +138,11 @@ public class RobotContainer {
     }
 
     if(m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxRB)) || m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_LeftJoy, kButtonID_Drive5))) {
-      CommandScheduler.getInstance().schedule(m_hoodForwardCommand);
+      CommandScheduler.getInstance().schedule(m_conveyorBackwards);
     }
 
     if(m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxBack)) || m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_LeftJoy, kButtonID_Drive5))) {
-      CommandScheduler.getInstance().schedule(m_hoodBackwardCommand);
+      CommandScheduler.getInstance().schedule(m_hoodForwardCommand);
     }
   }
 }
