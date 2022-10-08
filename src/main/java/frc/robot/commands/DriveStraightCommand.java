@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.Timer;
 /** DriveStraightCommand usues DriveTrain subsystem */
 public class DriveStraightCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final Drivetrain m_drivetrain; //although it is unused, the class cannot function without it
+  private static Drivetrain m_drivetrain; //although it is unused, the class cannot function without it
   private final Timer timer = new Timer();
   private final double duration;
 
@@ -33,7 +33,7 @@ public class DriveStraightCommand extends CommandBase {
    */
   public DriveStraightCommand(double duration, Drivetrain subsystem){
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
+    addRequirements(subsystem); // What does this do?
     m_drivetrain = subsystem;
     this.duration = duration;
   }
