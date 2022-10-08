@@ -32,8 +32,8 @@ public final class Constants {
     public static int kControllerID_XBOX = 1;
     public static int kControllerID_LeftJoy = 0;
     public static int kControllerID_RightJoy = 2;
-    public static int kControllerID_DriveLeftXBOX = 1;
-    public static int kControllerID_DriveRightXBOX = 2;
+   // public static int kControllerID_DriveLeftXBOX = 1;
+   // public static int kControllerID_DriveRightXBOX = 2;
 
     //XBOX button IDs
     public static int kButtonID_XboxA = 1;  // INTAKE

@@ -75,8 +75,8 @@ public class Shooter extends SubsystemBase{
         m_shooterMotorController2 = m_shooterMotor2;
 
         m_shooterGroup = new MotorControllerGroup(m_shooterMotorController1, m_shooterMotorController2);
-        
-        m_shooterGroup.setInverted(true); //confirm
+    
+        m_shooterGroup.setInverted(false); //confirm
         m_conveyor = conveyor;
 
         m_tolerance = 50;
