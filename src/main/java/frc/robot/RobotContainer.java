@@ -29,7 +29,8 @@ import frc.robot.commands.*;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  public static Object m_DriveStraightCommand;
+  public static Command m_DriveStraightCommand;
+  final SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 
   // The robot's subsystems and commands are defined here...
@@ -69,6 +70,7 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+
     // Configure the button bindings
     configureButtonBindings();
     //Create instances of subsystems
@@ -82,8 +84,6 @@ public class RobotContainer {
     m_hood = new Hood(m_sensorControl, m_visionLookup, m_vision);
     m_visionLookup = new VisionLookup();
     m_conveyor = new Conveyor(m_sensorControl);
-
-    SendableChooser<Command> m_chooser = new SendableChooser<>();
 
     //Commands
     m_defaultDriveCommand = new DefaultDriveCommand(m_sensorControl, m_humanControl, m_drivetrain);
@@ -207,5 +207,8 @@ public class RobotContainer {
     );
 
 
-    public Object m_chooser;
+    public Command getAutonomousCommand() {
+      //Poll Sendable Chooser
+      return m_chooser.getSelected();
+    }
 }
