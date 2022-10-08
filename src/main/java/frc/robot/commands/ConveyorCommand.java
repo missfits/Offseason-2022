@@ -27,7 +27,7 @@ public class ConveyorCommand extends CommandBase{
 
     @Override
     public void execute() {
-       m_conveyor.setConveyorPower(-1);
+       m_conveyor.setConveyorPower(-0.5);
     }
 
     @Override
