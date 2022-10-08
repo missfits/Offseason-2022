@@ -30,11 +30,11 @@ public final class Constants {
     public static int kMXP = 13;
 
     // IDs for the XBOX port, joystick IDs, joystick IDs on the XBOX
-    public static int kControllerID_XBOX = 0;
-    public static int kControllerID_LeftJoy = 1;
-    public static int kControllerID_RightJoy = 2;
-    public static int kControllerID_DriveLeftXBOX = 1;
-    public static int kControllerID_DriveRightXBOX = 2;
+    public static int kControllerID_XBOX = 1;
+    public static int kControllerID_LeftJoy = 2;
+    public static int kControllerID_RightJoy = 0;
+    //public static int kControllerID_DriveLeftXBOX = 1;
+    //public static int kControllerID_DriveRightXBOX = 2;
 
     //XBOX button IDs
     public static int kButtonID_XboxA = 1;  // INTAKE
