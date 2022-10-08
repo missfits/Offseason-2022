@@ -41,7 +41,7 @@ public class RobotContainer {
 
   public final Shooter m_shooter;
   private final Intake m_intake;
-  private Drivetrain m_drivetrain;
+  private static Drivetrain m_drivetrain;
   private final Indexer m_indexer;
   public final Vision m_vision;
   public VisionLookup m_visionLookup;
@@ -204,7 +204,7 @@ public class RobotContainer {
   }
 
     //does nothing
-    public SequentialCommandGroup m_justTaxi = new SequentialCommandGroup(
+    public static SequentialCommandGroup m_justTaxi = new SequentialCommandGroup(
       new  DriveStraightCommand(1.0, m_drivetrain)
     );
 

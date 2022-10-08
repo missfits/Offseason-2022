@@ -57,7 +57,7 @@ public class Robot extends TimedRobot {
     // }
       m_robotContainer.m_shooter.setFlywheelVelocity(-0.05);
 
-      m_robotContainer.m_chooser.addOption("Drive out", RobotContainer.m_DriveStraightCommand); 
+      m_robotContainer.m_chooser.addOption("Drive out", RobotContainer.m_justTaxi); 
 
       SmartDashboard.putData(m_robotContainer.m_chooser);
   }
