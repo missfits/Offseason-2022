@@ -71,6 +71,6 @@ public class ShooterBackwards extends CommandBase{
         // if (!(m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxX)))){
         //     System.out.println("finished!");
         // }
-        return !(m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxStart))); //kControllerID_XBOX, kButtonID_XboxB
+        return !(m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxBack))); //kControllerID_XBOX, kButtonID_XboxB
     }
 }

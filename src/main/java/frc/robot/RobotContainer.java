@@ -152,7 +152,7 @@ public class RobotContainer {
 
 
     if(m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxBack)) || m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_LeftJoy, kButtonID_Drive5))) {
-      CommandScheduler.getInstance().schedule(m_hoodForwardCommand);
+      CommandScheduler.getInstance().schedule(m_shooterBackwards);
     }
   }
 }
