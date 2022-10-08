@@ -46,16 +46,6 @@ public class VisionLookup{
         angleMap.put(4.65, 20.0);
         //Shoot from safe zone
         angleMap.put(6.0, 23.0);
-        
-
-        // //Translate angle to encoder position
-        // angleToPositionMap = new TreeMap<Double, Double>();
-        // angleToPositionMap.put(0.0, 0.0);
-        // angleToPositionMap.put(0.0, 0.0);
-        // angleToPositionMap.put(0.0, 0.0);
-        // angleToPositionMap.put(0.0, 0.0);
-        // angleToPositionMap.put(0.0, 0.0);
-        // angleToPositionMap.put(0.0, 0.0);
 
         //Distance in meters
         velocityMap = new TreeMap<Double, Double>();

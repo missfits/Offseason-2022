@@ -46,7 +46,7 @@ public class ShootCommand extends CommandBase{
     @Override
     public void initialize() {
         m_hood.setHoodPosition(m_hoodPosition);
-        m_shooter.launch(m_desiredVelocity);
+        m_shooter.setFlywheelVelocity(m_desiredVelocity);
     }
 
     @Override
@@ -76,7 +76,7 @@ public class ShootCommand extends CommandBase{
 
     @Override
     public void end(boolean interrupted) {
-        m_conveyor.setConveyorPower(0.0);
+        //m_conveyor.setConveyorPower(0.0);
         m_shooter.setFlywheelVelocity(-0.1);
         m_indexer.reset();
         //index 0
