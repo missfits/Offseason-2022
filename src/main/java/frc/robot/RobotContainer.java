@@ -41,7 +41,7 @@ public class RobotContainer {
   //Creating subsystem objects
   private final Shooter m_shooter;
   private final Intake m_intake;
-  private static Drivetrain m_drivetrain;
+  private final Drivetrain m_drivetrain;
   private final Indexer m_indexer;
   private final Conveyor m_conveyor;
   private final Hood m_hood;
