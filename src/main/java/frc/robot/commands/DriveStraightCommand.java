@@ -26,9 +26,9 @@ public class DriveStraightCommand extends CommandBase {
   }
 
   /**
-   * Creates a new durationd Driving Command
+   * Creates a new duration Driving Command
    *
-   * @param duration The time this command runs (autonomous mode).
+   * @param duration The time this command runs (autonomous mode) in seconds.
    * @param subsystem The subsystem used by this command.
    */
   public DriveStraightCommand(double duration, Drivetrain subsystem){

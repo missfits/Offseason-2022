@@ -107,6 +107,8 @@ public class RobotContainer {
     m_hoodBackwardCommand = new HoodBackwardCommand(m_sensorControl, m_humanControl, m_hood, m_indexer);
     m_hoodPositionCommand = new HoodPositionCommand(m_sensorControl, m_humanControl, m_hood, m_indexer);
 
+    m_DriveStraightCommand = new DriveStraightCommand(5, m_drivetrain);
+
     System.out.println("end of robot container constructor");
   }
 
@@ -205,6 +207,8 @@ public class RobotContainer {
     public SequentialCommandGroup m_justTaxi = new SequentialCommandGroup(
       new  DriveStraightCommand(1.0, m_drivetrain)
     );
+
+
 
 
     public Command getAutonomousCommand() {
