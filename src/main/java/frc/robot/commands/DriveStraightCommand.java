@@ -33,8 +33,8 @@ public class DriveStraightCommand extends CommandBase {
    */
   public DriveStraightCommand(double duration, Drivetrain subsystem){
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem); // What does this do?
     m_drivetrain = subsystem;
+    addRequirements(subsystem); // What does this do?
     this.duration = duration;
   }
 
@@ -52,11 +52,11 @@ public class DriveStraightCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // System.out.println(timer.get());
+    System.out.println("drive forward time:"+ timer.get());
     double timeSoFar = timer.get();
     //Creates ramp for motors
     double multiplier = (isTimed() && timeSoFar < 0.5)? 2 * timeSoFar : 1.0;
-    Drivetrain.m_robotDrive.tankDrive(multiplier * -0.7, multiplier * -0.7);
+    Drivetrain.m_robotDrive.tankDrive(multiplier * 0.5, multiplier * 0.5);
   }
 
   // Called once the command ends or is interrupted.

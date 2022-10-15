@@ -9,6 +9,8 @@ import static frc.robot.Constants.*;
 
 public class Conveyor extends SubsystemBase{
 
+    public static Object m_conveyor;
+
     private SensorBoard m_sensorControl;
 
     public final CANSparkMax m_conveyorMotor;

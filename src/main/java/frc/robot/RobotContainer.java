@@ -16,6 +16,7 @@ import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Indexer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.*;
 
@@ -101,6 +102,13 @@ public class RobotContainer {
     m_climberDownCommand = new ClimberDownCommand(m_humanControl, m_climber);
     m_DriveStraightCommand = new DriveStraightCommand(5, m_drivetrain);
 
+
+    m_justTaxi = new SequentialCommandGroup(
+      new ShootAutoCommand(3.0, m_shooter, m_indexer), 
+      new ParallelCommandGroup(new ShootAutoCommand(3.0, m_shooter, m_indexer), new  ConveyorAutoCommand(3.0, m_conveyor)),
+      new  DriveStraightCommand(3.0, m_drivetrain)
+    );
+
     System.out.println("end of robot container constructor");
   }
 
@@ -165,9 +173,7 @@ public class RobotContainer {
   }
 
     //does nothing
-    public static SequentialCommandGroup m_justTaxi = new SequentialCommandGroup(
-      new  DriveStraightCommand(1.0, m_drivetrain)
-    );
+    public static SequentialCommandGroup m_justTaxi;
 
 
 
