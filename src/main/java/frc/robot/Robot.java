@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -30,7 +32,24 @@ public class Robot extends TimedRobot {
 
     m_robotContainer = new RobotContainer();
     m_robotContainer.m_chooser.addOption("Drive out", RobotContainer.m_justTaxi); 
+    NetworkTableInstance inst = NetworkTableInstance.getDefault();
 
+    //Print out existing NetworkTables for debbuging purposes
+    String tables[] = {
+      "/",
+      "/CameraPublisher",
+      "/CameraPublisher/photonvision-output",
+      "/photonvision",
+      "/photonvision/limelight",
+    };
+    for (String table : tables) {
+      NetworkTable tt = inst.getTable(table);
+      inst.startClientTeam(6418);
+
+     tt.addSubTableListener((parent, name, t) -> {
+         System.out.println("Parent: " + parent + " Name: " + name);
+      }, false);
+    }
     SmartDashboard.putData(m_robotContainer.m_chooser);
   }
 

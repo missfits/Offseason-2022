@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Conveyor;
@@ -47,6 +48,7 @@ public class RobotContainer {
   private final Conveyor m_conveyor;
   private final Hood m_hood;
   public final Climber m_climber;
+  private final Vision m_vision;
 
   //Creating instances of commands
   private final ShootCommand m_shootCommand;
@@ -62,6 +64,7 @@ public class RobotContainer {
   private final ConveyorBackwards m_conveyorBackwards;
   private final ClimberUpCommand m_climberUpCommand;
   private final ClimberDownCommand m_climberDownCommand;
+  private final TurnToTargetCommand m_turnToTargetCommand;
 
 
 
@@ -82,6 +85,7 @@ public class RobotContainer {
     m_conveyor = new Conveyor(m_sensorControl);
     m_hood = new Hood(m_sensorControl);
     m_climber = new Climber(m_sensorControl);
+    m_vision = new Vision(m_sensorControl);
 
     m_defaultDriveCommand = new DefaultDriveCommand(m_sensorControl, m_humanControl, m_drivetrain);
     m_defaultIndexCommand = new DefaultIndexCommand(m_sensorControl, m_humanControl, m_indexer);
@@ -101,7 +105,7 @@ public class RobotContainer {
     m_climberUpCommand = new ClimberUpCommand(m_humanControl, m_climber);
     m_climberDownCommand = new ClimberDownCommand(m_humanControl, m_climber);
     m_DriveStraightCommand = new DriveStraightCommand(5, m_drivetrain);
-
+    m_turnToTargetCommand = new TurnToTargetCommand(m_sensorControl, m_humanControl, m_drivetrain, m_vision);
 
     m_justTaxi = new SequentialCommandGroup(
       new ShootAutoCommand(3.0, m_shooter, m_indexer), 
@@ -169,6 +173,10 @@ public class RobotContainer {
 
     if(m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxBack)) || m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_LeftJoy, kButtonID_Drive5))) {
       CommandScheduler.getInstance().schedule(m_hoodForwardCommand);
+    }
+
+    if (m_humanControl.isDown(m_humanControl.getDesiredButton(kControllerID_XBOX, kButtonID_XboxLB))){
+      CommandScheduler.getInstance().schedule(m_turnToTargetCommand);
     }
   }
 
