@@ -29,7 +29,7 @@ public class TurnToTargetCommand extends CommandBase{
         m_humanControl = humanControl;
         m_drivetrain = drivetrain;
         m_vision = vision;
-        ANGULAR_P = 0.1;
+        ANGULAR_P = 0.05;
         ANGULAR_D = 0.0;
         turnController = new PIDController(ANGULAR_P, 0, ANGULAR_D);
 
