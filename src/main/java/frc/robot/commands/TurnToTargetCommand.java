@@ -30,9 +30,9 @@ public class TurnToTargetCommand extends CommandBase{
         m_humanControl = humanControl;
         m_drivetrain = drivetrain;
         m_vision = vision;
-        ANGULAR_P = 0.075;
-        ANGULAR_I = 0;
-        ANGULAR_D = 0.0;
+        ANGULAR_P = 0.053;
+        ANGULAR_I = 0.02;
+        ANGULAR_D = 0.01;
         turnController = new PIDController(ANGULAR_P, ANGULAR_I, ANGULAR_D);
 
         addRequirements(drivetrain);
