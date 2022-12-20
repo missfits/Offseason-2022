@@ -20,6 +20,7 @@ public class TurnToTargetCommand extends CommandBase{
     double rotationSpeed;
     PIDController turnController;
     final double ANGULAR_P;
+    final double ANGULAR_I;
     final double ANGULAR_D;
 
     // Robot turns towards target
@@ -29,9 +30,10 @@ public class TurnToTargetCommand extends CommandBase{
         m_humanControl = humanControl;
         m_drivetrain = drivetrain;
         m_vision = vision;
-        ANGULAR_P = 0.05;
+        ANGULAR_P = 0.075;
+        ANGULAR_I = 0;
         ANGULAR_D = 0.0;
-        turnController = new PIDController(ANGULAR_P, 0, ANGULAR_D);
+        turnController = new PIDController(ANGULAR_P, ANGULAR_I, ANGULAR_D);
 
         addRequirements(drivetrain);
     }

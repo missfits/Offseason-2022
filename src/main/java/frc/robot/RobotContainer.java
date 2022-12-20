@@ -66,6 +66,10 @@ public class RobotContainer {
   private final ClimberDownCommand m_climberDownCommand;
   private final TurnToTargetCommand m_turnToTargetCommand;
 
+  public static SequentialCommandGroup m_justTaxi;
+
+  public static SequentialCommandGroup lil_ah;
+  
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -112,6 +116,13 @@ public class RobotContainer {
       new ParallelCommandGroup(new ShootAutoCommand(3.0, m_shooter, m_indexer), new  ConveyorAutoCommand(3.0, m_conveyor)),
       new  DriveStraightCommand(3.0, m_drivetrain)
     );
+
+    lil_ah = new SequentialCommandGroup(
+      new ShootAutoCommand(1.6, m_shooter, m_indexer),
+      new ConveyorAutoCommand(1.1, m_conveyor),
+      new DriveStraightCommand(8.0, m_drivetrain)
+    );
+
 
     System.out.println("end of robot container constructor");
   }
@@ -180,8 +191,7 @@ public class RobotContainer {
     }
   }
 
-    //does nothing
-    public static SequentialCommandGroup m_justTaxi;
+    
 
 
 

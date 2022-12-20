@@ -32,6 +32,7 @@ public class Robot extends TimedRobot {
 
     m_robotContainer = new RobotContainer();
     m_robotContainer.m_chooser.addOption("Drive out", RobotContainer.m_justTaxi); 
+    m_robotContainer.m_chooser.addOption("blue whale", RobotContainer.lil_ah);
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
 
     //Print out existing NetworkTables for debbuging purposes
